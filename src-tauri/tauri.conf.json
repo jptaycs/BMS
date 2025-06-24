@@ -12,9 +12,9 @@
   "app": {
     "windows": [
       {
-        "title": "bms",
-        "width": 800,
-        "height": 600
+        "title": "Barangay Management System",
+        "width": 1000,
+        "height": 800
       }
     ],
     "security": {

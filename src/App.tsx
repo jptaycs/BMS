@@ -1,9 +1,34 @@
-import { Button } from "./components/ui/button";
-
+import { QueryClient } from '@tanstack/query-core'
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
+import { QueryClientProvider } from '@tanstack/react-query'
+//import AppRouter from './router';
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+} from 'react-router-dom';
+import LoginPage from './pages/Login';
 function App() {
-  return <div className="flex justify-center items-center w-screen h-screen">
-    <Button>Press</Button>
-  </div>
+  const queryClient: QueryClient = new QueryClient({
+    defaultOptions: {
+      queries: {
+        staleTime: 60 * 1000,
+        gcTime: 1000 * 60 * 60 * 24
+      },
+    },
+  });
+  return (
+    <QueryClientProvider client={queryClient}>
+      <ReactQueryDevtools initialIsOpen={false} />
+      {/*<AppRouter />*/}
+
+      <Router>
+        <Routes>
+          <Route index element={<LoginPage />}></Route>
+        </Routes>
+      </Router >
+    </QueryClientProvider>
+  )
 }
 
 export default App;

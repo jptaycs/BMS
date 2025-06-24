@@ -1,7 +1,32 @@
+@font-face{
+  font-family: RedHatDisplay;
+  src: url("./assets/fonts/RedHatDisplay-ExtraBold.ttf");
+  font-weight: 800;
+}
+@font-face{
+  font-family: RedHatDisplay;
+  src: url("./assets/fonts/RedHatDisplay-Bold.ttf");
+  font-weight: 700;
+}
+@font-face{
+  font-family: RedHatDisplay;
+  src: url("./assets/fonts/RedHatDisplay-Regular.ttf");
+  font-weight: 400;
+}
+@font-face{
+  font-family: RedHatDisplay;
+  src: url("./assets/fonts/RedHatDisplay-Light.ttf");
+  font-weight: 300;
+}
 @import "tailwindcss";
 @import "tw-animate-css";
 
+
 @custom-variant dark (&:is(.dark *));
+
+@theme{
+--font-redhat: RedHatDisplay, "sans-serif"
+}
 
 :root {
   --background: #F6F6F6;
