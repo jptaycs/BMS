@@ -5,6 +5,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Button } from "@/components/ui/button";
+import logo from "../assets/new_logo_small.png";
 
 const formSchema = z.object({
   name: z.string().min(2, {
@@ -36,7 +37,9 @@ export default function LoginPage() {
     <div className="min-w-screen min-h-screen bg-background flex flex-col items-center justify-center ">
       <Card className="w-full max-w-[41rem] h-[42rem] max-h-[47rem] py-[3rem]">
         <CardHeader className="space-y-4">
-          <div className="w-[7rem] h-[7rem] rounded-full bg-[#CDCDCD] mx-auto "></div>
+          <div className="w-[7rem] h-[7rem] rounded-full bg-[#CDCDCD] mx-auto flex items-center justify-center">
+            <img src={logo} alt="logo" width={80} />
+          </div>
           <div className="mx-auto font-redhat text-center">
             <CardTitle className="text-2xl font-extrabold">Welcome Back</CardTitle>
             <CardDescription className="text-md font-normal text-[#848484]">Enter the credentials to access BMS</CardDescription>
