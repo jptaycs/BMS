@@ -7,10 +7,16 @@ import { Outlet } from "react-router-dom";
 export default function AppLayout() {
   const [open, setOpen] = useState(false)
   return <>
-    <Header />
     <SidebarProvider open={open} onOpenChange={setOpen} >
-      <AppSidebar />
+      <div className="fixed">
+        <AppSidebar />
+        <div className="flex flex-col min-h-screen max-h-screen overflow-hidden">
+          <Header />
+          <main className="flex-1 overflow-auto font-redhat bg-red  text-black mx-[10rem] my-[2rem]">
+            <Outlet />
+          </main>
+        </div>
+      </div>
     </SidebarProvider>
-    <Outlet />
   </>
 }

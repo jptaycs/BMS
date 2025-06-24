@@ -59,7 +59,7 @@ export default function AppSidebar() {
   }
 
   return (
-    <Sidebar collapsible="icon" className="z-20">
+    <Sidebar collapsible="icon"  >
       <SidebarHeader className="mt-2">
         <SidebarTrigger className=" hover:bg-primary hover:text-foreground "
           size="lg"
