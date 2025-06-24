@@ -1,5 +1,6 @@
 import { LayoutDashboard, Calendar, Users, House, FileBadge2, TrendingUp, BanknoteArrowUpIcon, Files, Settings, LogOut } from "lucide-react";
 import { Sidebar, SidebarContent, SidebarFooter, SidebarGroup, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem, SidebarTrigger } from "./sidebar";
+import { NavLink } from "react-router-dom";
 
 const items = [
   {
@@ -50,23 +51,37 @@ const items = [
 ]
 
 export default function AppSidebar() {
+  const currentPath = location.pathname
+  const isActive = (currentPath: string, targetPath: string): boolean => {
+    if (currentPath === targetPath) return true;
+    if (targetPath !== "/" && currentPath.startsWith(targetPath)) return true
+    return false
+  }
+
   return (
     <Sidebar collapsible="icon" className="z-20">
       <SidebarHeader className="mt-2">
-        <SidebarTrigger className=" hover:bg-primary hover:text-foreground ml-3" />
+        <SidebarTrigger className=" hover:bg-primary hover:text-foreground "
+          size="lg"
+        />
       </SidebarHeader>
       <SidebarContent>
         <SidebarGroup>
           <SidebarMenu>
             {items.map((item) => (
-              <SidebarMenuItem key={item.title} className=" font-redhat text-black max-w-[10rem] ">
-                <SidebarMenuButton asChild
-                  className="hover:bg-primary hover:text-foreground ml-3"
+              <SidebarMenuItem
+                key={item.title}
+                className=" font-redhat text-black max-w-[10rem] hover:max-w-[10rem]">
+                <SidebarMenuButton
+                  asChild
+                  className="hover:bg-primary hover:text-foreground "
+                  size="lg"
+                  isActive={isActive(currentPath, item.url)}
                 >
-                  <a href={item.url}>
-                    <item.icon />
-                    <span>{item.title}</span>
-                  </a>
+                  <NavLink to={item.url}>
+                    <item.icon className="group-data-[collapsible=icon]:mx-auto" />
+                    <span className={"group-data-[collapsible=icon]:hidden"}>{item.title}</span>
+                  </NavLink>
                 </SidebarMenuButton>
               </SidebarMenuItem>
             ))}
@@ -74,21 +89,28 @@ export default function AppSidebar() {
         </SidebarGroup >
       </SidebarContent >
       <SidebarFooter className="mb-3">
-        <SidebarMenuItem className="font-redhat text-black max-w-[10rem]">
+        <SidebarMenuItem className="font-redhat text-black max-w-[10rem]"
+        >
           <SidebarMenuButton asChild
-            className="hover:bg-primary hover:text-foreground ml-3"
+            className="hover:bg-primary hover:text-foreground "
+            size="lg"
           >
             <a href="/settings">
-              <Settings />
-              <span>Settings</span>
+              <Settings className="group-data-[collapsible=icon]:mx-auto" />
+              <span
+                className={"group-data-[collapsible=icon]:hidden"}
+              >Settings</span>
             </a>
           </SidebarMenuButton>
           <SidebarMenuButton asChild
-            className="hover:bg-red-500 hover:text-foreground ml-3"
+            className="hover:bg-red-500 hover:text-foreground "
+            size="lg"
           >
             <a href="/login">
-              <LogOut />
-              <span>Logout</span>
+              <LogOut className="group-data-[collapsible=icon]:mx-auto" />
+              <span
+                className={"group-data-[collapsible=icon]:hidden"}
+              >Logout</span>
             </a>
           </SidebarMenuButton>
         </SidebarMenuItem>
