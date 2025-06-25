@@ -8,6 +8,7 @@ import CustomSenior from "@/components/icons/CustomSenior";
 import CustomVoters from "@/components/icons/CustomVoters";
 import CategoryCard from "@/components/ui/categorycard";
 import Greet from "@/components/ui/greetings";
+import PopulationChart from "@/components/ui/populationchart";
 
 const categories = [
   {
@@ -52,16 +53,51 @@ const categories = [
   },
 ]
 
+const DashBoardData = [
+  {
+    population: 100,
+    zone: 1
+  },
+  {
+    population: 100,
+    zone: 2
+  },
+  {
+    population: 100,
+    zone: 3
+  },
+  {
+    population: 100,
+    zone: 4
+  },
+  {
+    population: 100,
+    zone: 5
+  },
+  {
+    population: 200,
+    zone: 6
+  },
+]
+
 export default function Dashboard() {
   return (
-    <div>
+    <div >
       <Greet />
-      <div className="flex gap-7 my-7 overflow-clip flex-wrap justify-around ">
+      <div className="flex gap-7 my-7 overflow-clip flex-wrap justify-around flex-1 ">
         {categories.map((category, i) => (
           <div key={i}>
             < CategoryCard title={category.title} count={category.count} icon={category.icon} />
           </div>
         ))}
+      </div>
+      <div className="flex gap-10">
+        <div className="flex-1">
+          <PopulationChart data={DashBoardData} />
+        </div>
+        <div className="flex-1">
+          <PopulationChart data={DashBoardData} />
+        </div>
       </div>
     </div >
   )
