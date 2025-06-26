@@ -30,7 +30,7 @@ export default function IncomeChart({ data }: ChartProps) {
         <CardDescription>Visual Summary of Barangay Income Sources</CardDescription>
       </CardHeader>
       <CardContent className="flex  ">
-        <div >
+        <div className="hidden xl:block" >
           {data.map((d, i) => {
             return <div key={i} className="flex gap-1 items-normal mt-2">
               <div className="w-[1.5rem] h-[1rem] rounded-[4px]" style={{ backgroundColor: d.fill }} />
@@ -43,7 +43,7 @@ export default function IncomeChart({ data }: ChartProps) {
         </div>
         <ChartContainer
           config={chartConfig}
-          className="text-xs font-bold h-[13.6rem]  "
+          className="text-xs font-bold h-[13.6rem] mx-auto"
         >
           <PieChart >
             <ChartTooltip content={(props) => <ChartTooltipContent {...props} hideLabel />} />
