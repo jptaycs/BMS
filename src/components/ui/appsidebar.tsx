@@ -106,7 +106,7 @@ export default function AppSidebar() {
             className="hover:bg-red-500 hover:text-foreground "
             size="lg"
           >
-            <a href="/login">
+            <a href="/">
               <LogOut className="group-data-[collapsible=icon]:mx-auto" />
               <span
                 className={"group-data-[collapsible=icon]:hidden"}
