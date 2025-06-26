@@ -17,6 +17,7 @@ import Income from './pages/Income';
 import Expense from './pages/Expense';
 import BlotterRecord from './pages/BlotterRecord';
 import Official from './pages/Official';
+import Settings from './pages/Settings';
 function App() {
   const queryClient: QueryClient = new QueryClient({
     defaultOptions: {
@@ -43,6 +44,7 @@ function App() {
             <Route path='/expense' element={<Expense />} />
             <Route path='/blotter' element={<BlotterRecord />} />
             <Route path='/officials' element={<Official />} />
+            <Route path='/settings' element={<Settings />} />
           </Route>
           <Route index element={<LoginPage />}></Route>
         </Routes>
