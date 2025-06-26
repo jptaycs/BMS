@@ -8,17 +8,18 @@ import CustomSenior from "@/components/icons/CustomSenior";
 import CustomVoters from "@/components/icons/CustomVoters";
 import CategoryCard from "@/components/ui/categorycard";
 import Greet from "@/components/ui/greetings";
+import IncomeChart from "@/components/ui/incomechart";
 import PopulationChart from "@/components/ui/populationchart";
 
 const categories = [
   {
     title: "Households",
-    count: 2,
+    count: 200,
     icon: CustomHouse,
   },
   {
     title: "Population",
-    count: 2,
+    count: 22000,
     icon: CustomPopulation,
   },
   {
@@ -53,7 +54,7 @@ const categories = [
   },
 ]
 
-const DashBoardData = [
+const PopulationData = [
   {
     population: 100,
     zone: 1
@@ -80,6 +81,46 @@ const DashBoardData = [
   },
 ]
 
+
+const IncomeData = [
+  {
+    source: "Internal Revenue Allotment",
+    description: "Largest source of income",
+    fill: "#7F50CC",
+    value: 43.7,
+  },
+  {
+    source: "Share from Local Taxes",
+    description: "Real Property Tax/Community Tax",
+    fill: "#440987",
+    value: 21.1,
+  },
+  {
+    source: "Fees and Charges for Services",
+    description: "Barangay Clearance/Permit Fees",
+    fill: "#3830CE",
+    value: 14.1,
+  },
+  {
+    source: "Other Services",
+    description: "Cockfighting/Permit to Operate",
+    fill: "#8D9BFF",
+    value: 7,
+  },
+  {
+    source: "Economic Enterprise",
+    description: "Barangay Market/Livelihood Projects",
+    fill: "#5165F6",
+    value: 10.6,
+  },
+  {
+    source: "Other Income",
+    description: "Donations and Grants/Sale of Assets or Properties",
+    fill: "#4E3D8F",
+    value: 3.5,
+  },
+]
+
 export default function Dashboard() {
   return (
     <div >
@@ -93,10 +134,10 @@ export default function Dashboard() {
       </div>
       <div className="flex gap-10">
         <div className="flex-1">
-          <PopulationChart data={DashBoardData} />
+          <PopulationChart data={PopulationData} />
         </div>
         <div className="flex-1">
-          <PopulationChart data={DashBoardData} />
+          <IncomeChart data={IncomeData} />
         </div>
       </div>
     </div >

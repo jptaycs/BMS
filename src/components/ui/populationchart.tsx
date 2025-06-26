@@ -1,4 +1,4 @@
-import { Bar, BarChart, CartesianGrid, ResponsiveContainer, XAxis, YAxis } from "recharts";
+import { Bar, BarChart, CartesianGrid, XAxis, YAxis } from "recharts";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "./card";
 import { ChartContainer, type ChartConfig } from "./chart";
 const chartConfig = {
@@ -25,25 +25,22 @@ export default function PopulationChart({ data }: ChartProps) {
         <CardDescription>Resident Distribution by Zone</CardDescription>
       </CardHeader>
       <CardContent className="flex-1">
-        <ChartContainer config={chartConfig} className="h-[200px] w-full">
-          <ResponsiveContainer width="100%" height="100%">
-
-            <BarChart accessibilityLayer data={data} >
-              <CartesianGrid vertical={false} />
-              <XAxis
-                dataKey="zone"
-                tickLine={false}
-                tickMargin={10}
-                axisLine={false}
-                tickFormatter={(value) => `Zone ${value}`}
-              />
-              <Bar dataKey="population" fill="#5165F6" radius={25} barSize={75} />
-              <YAxis
-                tickMargin={10}
-                dataKey="population"
-              />
-            </BarChart>
-          </ResponsiveContainer>
+        <ChartContainer config={chartConfig} className="h-[13.6rem] w-full">
+          <BarChart accessibilityLayer data={data} >
+            <CartesianGrid vertical={false} />
+            <XAxis
+              dataKey="zone"
+              tickLine={false}
+              tickMargin={10}
+              axisLine={false}
+              tickFormatter={(value) => `Zone ${value}`}
+            />
+            <Bar dataKey="population" fill="#5165F6" radius={25} barSize={75} />
+            <YAxis
+              tickMargin={10}
+              dataKey="population"
+            />
+          </BarChart>
         </ChartContainer>
       </CardContent>
     </Card>
