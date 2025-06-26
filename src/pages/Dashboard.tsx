@@ -132,11 +132,11 @@ export default function Dashboard() {
           </div>
         ))}
       </div>
-      <div className="flex gap-10">
-        <div className="flex-1">
+      <div className="flex flex-wrap overflow-clip gap-10">
+        <div className="flex-1 md:flex-2">
           <PopulationChart data={PopulationData} />
         </div>
-        <div className="flex-1">
+        <div className="flex-1 md:flex-2">
           <IncomeChart data={IncomeData} />
         </div>
       </div>
