@@ -1,5 +1,5 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "./card"
-import { ChartContainer, ChartTooltip, ChartTooltipContent, type ChartConfig } from "./chart";
+import { ChartContainer, ChartTooltip, type ChartConfig } from "./chart";
 import { Pie, PieChart } from "recharts";
 
 type Data = {
@@ -33,11 +33,11 @@ export default function IncomeChart({ data }: ChartProps) {
         <div>
           {data.map((d, i) => {
             console.log(d.value)
-            return <div key={i} className="flex gap-1 items-center mt-2">
+            return <div key={i} className="flex gap-1 items-normal mt-2">
               <div className="w-[1.5rem] h-[1rem] rounded-[4px]" style={{ backgroundColor: d.fill }} />
-              <div className="flex flex-col">
-                <h2 className="font-bold text-[1rem]">{d.source}</h2>
-                <p className="text-[0.8rem] leading-1 font-light ">{d.description}</p>
+              <div className="flex flex-col min-w-0">
+                <h2 className="font-bold text-[1rem] leading-2 md:text-red">{d.source}</h2>
+                <p className="text-[0.8rem]  font-light ">{d.description}</p>
               </div>
             </div>
           })}
@@ -47,7 +47,7 @@ export default function IncomeChart({ data }: ChartProps) {
           className="text-xs font-bold h-[13.6rem] "
         >
           <PieChart >
-            <ChartTooltip content={<ChartTooltipContent hideLabel />} />
+            <ChartTooltip />
             <Pie
               data={data}
               dataKey="value"
