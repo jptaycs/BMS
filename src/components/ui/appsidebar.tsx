@@ -1,6 +1,6 @@
 import { LayoutDashboard, Calendar, Users, House, FileBadge2, TrendingUp, BanknoteArrowUpIcon, Files, Settings, LogOut } from "lucide-react";
 import { Sidebar, SidebarContent, SidebarFooter, SidebarGroup, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem, SidebarTrigger } from "./sidebar";
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 
 const items = [
   {
@@ -51,13 +51,13 @@ const items = [
 ]
 
 export default function AppSidebar() {
+  const location = useLocation()
   const currentPath = location.pathname
   const isActive = (currentPath: string, targetPath: string): boolean => {
     if (currentPath === targetPath) return true;
     if (targetPath !== "/" && currentPath.startsWith(targetPath)) return true
     return false
   }
-
   return (
     <Sidebar collapsible="icon"  >
       <SidebarHeader className="mt-2">
@@ -94,13 +94,14 @@ export default function AppSidebar() {
           <SidebarMenuButton asChild
             className="hover:bg-primary hover:text-foreground "
             size="lg"
+            isActive={isActive(currentPath, "/settings")}
           >
-            <a href="/settings">
+            <NavLink to={"/settings"}>
               <Settings className="group-data-[collapsible=icon]:mx-auto" />
               <span
                 className={"group-data-[collapsible=icon]:hidden"}
               >Settings</span>
-            </a>
+            </NavLink>
           </SidebarMenuButton>
           <SidebarMenuButton asChild
             className="hover:bg-red-500 hover:text-foreground "

@@ -123,7 +123,7 @@ const IncomeData = [
 
 export default function Dashboard() {
   return (
-    <div >
+    <>
       <Greet />
       <div className="flex gap-7 my-7 overflow-clip flex-wrap justify-around flex-1 ">
         {categories.map((category, i) => (
@@ -140,6 +140,6 @@ export default function Dashboard() {
           <IncomeChart data={IncomeData} />
         </div>
       </div>
-    </div >
+    </>
   )
 }
