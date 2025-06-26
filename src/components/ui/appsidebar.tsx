@@ -57,7 +57,6 @@ export default function AppSidebar() {
     if (targetPath !== "/" && currentPath.startsWith(targetPath)) return true
     return false
   }
-
   return (
     <Sidebar collapsible="icon"  >
       <SidebarHeader className="mt-2">
