@@ -5,6 +5,7 @@ import { Plus, Trash } from "lucide-react";
 
 const filters = [
   "All Events",
+  "Alphabetical",
   "Date",
   "Venue",
 ]
@@ -14,7 +15,7 @@ export default function EventManager() {
     <>
       <div className="flex gap-5 w-full items-center justify-center">
         <Searchbar placeholder="Search event" classname="flex flex-5" />
-        <Filter filters={filters} initial="All Events" />
+        <Filter filters={filters} initial="All Events" classname="flex-1" />
         <Button variant="destructive" size="lg" >
           <Trash />
           Delete Selected

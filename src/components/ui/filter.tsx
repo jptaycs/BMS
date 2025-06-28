@@ -12,12 +12,12 @@ export default function Filter({ initial, filters, classname }: FilterOption) {
   return (
     <div className={cn("relative ", classname)}>
       <Select>
-        <SelectTrigger className="min-h-12 border-1">
-          <div className="flex gap-2">
+        <SelectTrigger className="min-h-12 border-1 w-full">
+          <div className="flex gap-2 ">
             <FilterIcon />
             <span>Filter By:</span>
           </div>
-          <SelectValue placeholder={initial}></SelectValue>
+          <SelectValue placeholder={initial} />
         </SelectTrigger>
         <SelectContent >
           <SelectGroup>
