@@ -40,7 +40,7 @@ const columns: ColumnDef<Event>[] = [
         aria-label="Select row"
         className="flex items-center justify-center"
       />
-    )
+    ),
   },
   {
     header: "Name",
