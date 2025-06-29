@@ -64,7 +64,7 @@ export default function LoginPage() {
                             type="text"
                             placeholder="Enter your name"
                             required
-                            className="h-[3rem]  "
+                            className="h-[3rem]"
                             {...field}
                           />
                         </FormControl>
@@ -86,7 +86,7 @@ export default function LoginPage() {
                             type="password"
                             placeholder="Enter the password"
                             required
-                            className="h-[3rem]  "
+                            className="h-[3rem]"
                             {...field}
                           />
                         </FormControl>
