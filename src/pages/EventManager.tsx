@@ -3,14 +3,18 @@ import { Checkbox } from "@/components/ui/checkbox";
 import DataTable from "@/components/ui/datatable";
 import Filter from "@/components/ui/filter";
 import Searchbar from "@/components/ui/searchbar";
+import AddEventModal from "@/features/event-manager/addEventModal";
 import { ColumnDef } from "@tanstack/react-table";
-import { Plus, Trash } from "lucide-react";
+import { Trash } from "lucide-react";
 
 const filters = [
   "All Events",
   "Alphabetical",
   "Date",
   "Venue",
+  "Upcoming",
+  "Finished",
+  "Cancelled",
 ]
 
 type Event = {
@@ -122,10 +126,7 @@ export default function EventManager() {
           <Trash />
           Delete Selected
         </Button>
-        <Button size="lg" >
-          <Plus />
-          Add Event
-        </Button>
+        <AddEventModal />
       </div >
       <DataTable<Event> data={data} columns={[...columns,
       {
