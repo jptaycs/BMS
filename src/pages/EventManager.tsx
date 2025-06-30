@@ -181,7 +181,7 @@ export default function EventManager() {
         cell: ({ row }) => {
           const status = row.original.status
           return (
-            < div className="flex gap-3 " >
+            < div className="flex gap-3 ">
               <ViewEventModal {...row.original} />
               {status !== "Cancelled" && status !== "Finished" && <CancelEventModal />}
             </div >
