@@ -1,4 +1,18 @@
 import { z } from "zod"
+
+export const loginSchema = z.object({
+  name: z.string().min(2, {
+    message: "Name is too short"
+  }).max(50, {
+    message: "Password is too long"
+  }),
+  password: z.string().min(2, {
+    message: "Password is too short"
+  }).max(50, {
+    message: "Password is too long"
+  })
+})
+
 export const eventSchema = z.object({
   name: z.string().min(2, {
     message: "Event name is too short"
