@@ -15,7 +15,11 @@ export default function AppLayout() {
           <Header />
           <main className="flex-1 overflow-auto font-redhat bg-red  text-black mx-[10rem] my-[2rem]">
             <Outlet />
-            <Toaster />
+            <Toaster
+              position="top-center"
+              richColors
+              closeButton
+            />
           </main>
         </div>
       </div>
