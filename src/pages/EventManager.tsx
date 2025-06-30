@@ -4,6 +4,7 @@ import DataTable from "@/components/ui/datatable";
 import Filter from "@/components/ui/filter";
 import Searchbar from "@/components/ui/searchbar";
 import AddEventModal from "@/features/event-manager/addEventModal";
+import CancelEventModal from "@/features/event-manager/cancelEventModal";
 import ViewEventModal from "@/features/event-manager/viewEventModal";
 import { ColumnDef } from "@tanstack/react-table";
 import { format } from "date-fns";
@@ -175,12 +176,16 @@ export default function EventManager() {
       </div >
       <DataTable<Event> data={data} columns={[...columns,
       {
-        id: "action",
+        id: "view",
         header: "",
         cell: ({ row }) => (
-          <ViewEventModal {...row.original} />
+          <div className="flex gap-3">
+            <ViewEventModal {...row.original} />
+            <CancelEventModal />
+          </div>
         )
-      }]} />
+      }
+      ]} />
     </>
   )
 }

@@ -57,7 +57,7 @@ export default function ViewEventModal(props: ViewProps) {
           <Form {...form}>
             <form onSubmit={form.handleSubmit((onSubmit))}>
               <DialogHeader>
-                <DialogTitle className="text-black">{props.name}</DialogTitle>
+                <DialogTitle className="text-black">View More Details</DialogTitle>
                 <DialogDescription className="text-sm">
                   All the fields are required unless it is mentioned otherwise
                 </DialogDescription>
