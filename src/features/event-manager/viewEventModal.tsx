@@ -79,6 +79,7 @@ export default function ViewEventModal(props: ViewProps) {
                             required
                             {...field}
                             className="text-black"
+                            disabled={props.status === "Finished"}
                           />
                         </FormControl>
                         <FormMessage />
@@ -93,7 +94,11 @@ export default function ViewEventModal(props: ViewProps) {
                     render={({ field }) => (
                       <FormItem className="w-full">
                         <FormLabel htmlFor="type" className="text-black font-bold text-xs">Type</FormLabel>
-                        <Select onValueChange={field.onChange} defaultValue={field.value}>
+                        <Select
+                          onValueChange={field.onChange}
+                          defaultValue={field.value}
+                          disabled={props.status === "Finished"}
+                        >
                           <FormControl>
                             <SelectTrigger className="w-full text-black border-black/15">
                               <SelectValue placeholder={"Please select the event type"} />
@@ -119,7 +124,11 @@ export default function ViewEventModal(props: ViewProps) {
                         <FormLabel htmlFor="date" className="text-black font-bold text-xs">Date</FormLabel>
                         <Popover>
                           <FormControl>
-                            <PopoverTrigger asChild className="w-full text-black hover:bg-primary hover:text-white">
+                            <PopoverTrigger
+                              asChild
+                              className="w-full text-black hover:bg-primary hover:text-white"
+                              disabled={props.status === "Finished"}
+                            >
                               <Button
                                 variant="outline"
                               >
@@ -162,8 +171,9 @@ export default function ViewEventModal(props: ViewProps) {
                             type="text"
                             placeholder="Enter Venue Location"
                             required
-                            {...field}
                             className="text-black"
+                            disabled={props.status === "Finished"}
+                            {...field}
                           />
                         </FormControl>
                         <FormMessage />
@@ -184,8 +194,9 @@ export default function ViewEventModal(props: ViewProps) {
                             type="text"
                             placeholder="Enter Atendees"
                             required
-                            {...field}
                             className="text-black"
+                            disabled={props.status === "Finished"}
+                            {...field}
                           />
                         </FormControl>
                         <FormMessage />
@@ -207,6 +218,7 @@ export default function ViewEventModal(props: ViewProps) {
                             placeholder="Enter important notes"
                             required
                             className="text-black"
+                            disabled={props.status === "Finished"}
                             {...field}
                           />
                         </FormControl>
@@ -217,7 +229,7 @@ export default function ViewEventModal(props: ViewProps) {
                 </div>
               </div>
               <div className="mt-4 flex justify-end">
-                <Button>Save Event</Button>
+                {props.status !== "Finished" && <Button type="submit">Save Event</Button>}
               </div>
             </form>
           </Form>

@@ -178,12 +178,15 @@ export default function EventManager() {
       {
         id: "view",
         header: "",
-        cell: ({ row }) => (
-          <div className="flex gap-3">
-            <ViewEventModal {...row.original} />
-            <CancelEventModal />
-          </div>
-        )
+        cell: ({ row }) => {
+          const status = row.original.status
+          return (
+            < div className="flex gap-3 " >
+              <ViewEventModal {...row.original} />
+              {status !== "Cancelled" && status !== "Finished" && <CancelEventModal />}
+            </div >
+          )
+        }
       }
       ]} />
     </>
