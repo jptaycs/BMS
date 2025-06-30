@@ -4,7 +4,10 @@ import DataTable from "@/components/ui/datatable";
 import Filter from "@/components/ui/filter";
 import Searchbar from "@/components/ui/searchbar";
 import AddEventModal from "@/features/event-manager/addEventModal";
+import CancelEventModal from "@/features/event-manager/cancelEventModal";
+import ViewEventModal from "@/features/event-manager/viewEventModal";
 import { ColumnDef } from "@tanstack/react-table";
+import { format } from "date-fns";
 import { Trash } from "lucide-react";
 
 const filters = [
@@ -19,9 +22,12 @@ const filters = [
 
 type Event = {
   name: string,
+  type: string,
   status: "Upcoming" | "Finished" | "Ongoing" | "Cancelled",
-  date: string,
-  venue: string
+  date: Date,
+  venue: string,
+  atendee: string,
+  notes: string
 }
 
 const columns: ColumnDef<Event>[] = [
@@ -49,6 +55,10 @@ const columns: ColumnDef<Event>[] = [
   {
     header: "Name",
     accessorKey: "name"
+  },
+  {
+    header: "Type",
+    accessorKey: "type"
   },
   {
     header: "Status",
@@ -81,7 +91,13 @@ const columns: ColumnDef<Event>[] = [
   },
   {
     header: "Date",
-    accessorKey: "date"
+    accessorKey: "date",
+    cell: ({ row }) => {
+      return (
+        <div>{format(row.original.date, "MMMM do, yyyy")}</div>
+      )
+    }
+
   },
   {
     header: "Venue",
@@ -91,29 +107,59 @@ const columns: ColumnDef<Event>[] = [
 
 const data: Event[] = [
   {
-    name: "Assembly",
+    name: "Meeting for event",
+    type: "Assembly",
     status: "Upcoming",
-    date: "June 29, 2025 - 3:30PM Monday",
-    venue: "Barangay Hall"
+    date: new Date("June 2, 2025"),
+    venue: "Barangay Hall",
+    atendee: "All Officials",
+    notes: "Sample Notes",
   },
   {
-    name: "Assembly",
+    name: "Meeting for event",
+    type: "Assembly",
+    status: "Upcoming",
+    date: new Date("June 3, 2025"),
+    venue: "Barangay Hall",
+    atendee: "All Officials",
+    notes: "Sample Notes",
+  },
+  {
+    name: "Livelihood Progra",
+    type: "Seminar",
     status: "Finished",
-    date: "June 29, 2025 - 3:30PM Monday",
-    venue: "Barangay Hall"
+    date: new Date("June 2, 2025"),
+    venue: "Barangay Hall",
+    atendee: "All Officials",
+    notes: "Sample Notes",
   },
   {
-    name: "Assembly",
-    status: "Ongoing",
-    date: "June 29, 2025 - 3:30PM Monday",
-    venue: "Barangay Hall"
-  },
-  {
-    name: "Assembly",
+    name: "Livelihood Progra",
+    type: "Seminar",
     status: "Cancelled",
-    date: "June 29, 2025 - 3:30PM Monday",
-    venue: "Barangay Hall"
-  }
+    date: new Date("June 2, 2025"),
+    venue: "Barangay Hall",
+    atendee: "All Officials",
+    notes: "Sample Notes",
+  },
+  {
+    name: "Livelihood Progra",
+    type: "Seminar",
+    status: "Ongoing",
+    date: new Date("June 2, 2025"),
+    venue: "Barangay Hall",
+    atendee: "All Officials",
+    notes: "Sample Notes",
+  },
+  {
+    name: "Livelihood Progra",
+    type: "Seminar",
+    status: "Finished",
+    date: new Date("June 2, 2025"),
+    venue: "Barangay Hall",
+    atendee: "All Officials",
+    notes: "Sample Notes",
+  },
 ]
 
 export default function EventManager() {
@@ -130,14 +176,19 @@ export default function EventManager() {
       </div >
       <DataTable<Event> data={data} columns={[...columns,
       {
-        id: "action",
+        id: "view",
         header: "",
-        cell: () => (
-          <div>
-            <Button>View More</Button>
-          </div>
-        )
-      }]} />
+        cell: ({ row }) => {
+          const status = row.original.status
+          return (
+            < div className="flex gap-3 " >
+              <ViewEventModal {...row.original} />
+              {status !== "Cancelled" && status !== "Finished" && <CancelEventModal />}
+            </div >
+          )
+        }
+      }
+      ]} />
     </>
   )
 }

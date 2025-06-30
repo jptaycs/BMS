@@ -64,6 +64,10 @@
   --sidebar-ring: oklch(0.708 0 0);
 }
 
+html, body{
+  font-family: "RedHatDisplay", sans-serif; 
+}
+
 main{
   background: var(--background); 
 }
