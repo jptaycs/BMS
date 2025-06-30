@@ -12,6 +12,7 @@ import { format } from "date-fns"
 import { Calendar } from "@/components/ui/calendar";
 import { Textarea } from "@/components/ui/textarea";
 import { useState } from "react";
+import { toast } from "sonner";
 
 const selectOption: string[] = [
   "Seminar",
@@ -48,7 +49,8 @@ const formSchema = z.object({
 })
 
 export default function AddEventModal() {
-  const [open, setOpen] = useState(false)
+  const [openCalendar, setOpenCalendar] = useState(false)
+  const [openModal, setOpenModal] = useState(false)
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -63,12 +65,18 @@ export default function AddEventModal() {
   })
 
   function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values)
+    toast.success("Event added sucessfully", {
+      description: `${values.name} was added`
+    })
+    setOpenModal(false)
   }
 
   return (
     <>
-      <Dialog>
+      <Dialog
+        open={openModal}
+        onOpenChange={setOpenModal}
+      >
         <DialogTrigger asChild>
           <Button size="lg" >
             <Plus />
@@ -140,8 +148,8 @@ export default function AddEventModal() {
                       <FormItem>
                         <FormLabel htmlFor="date" className="text-black font-bold text-xs">Date</FormLabel>
                         <Popover
-                          open={open}
-                          onOpenChange={setOpen}
+                          open={openCalendar}
+                          onOpenChange={setOpenCalendar}
                         >
                           <FormControl>
                             <PopoverTrigger asChild className="w-full text-black hover:bg-primary hover:text-white">
@@ -166,7 +174,7 @@ export default function AddEventModal() {
                                 date > new Date() || date < new Date("1900-01-01")
                               }
                               captionLayout="dropdown"
-                              onDayClick={() => setOpen(false)}
+                              onDayClick={() => setOpenCalendar(false)}
                             />
                           </PopoverContent>
                         </Popover>

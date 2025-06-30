@@ -12,6 +12,8 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { format } from "date-fns"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Calendar } from "@/components/ui/calendar";
+import { useState } from "react";
+import { toast } from "sonner";
 
 type ViewProps = {
   name: string,
@@ -29,6 +31,8 @@ const selectOption: string[] = [
 ]
 
 export default function ViewEventModal(props: ViewProps) {
+  const [openCalendar, setOpenCalendar] = useState(false)
+  const [openModal, setOpenModal] = useState(false)
   const form = useForm<z.infer<typeof eventSchema>>({
     resolver: zodResolver(eventSchema),
     defaultValues: {
@@ -42,11 +46,17 @@ export default function ViewEventModal(props: ViewProps) {
   })
 
   function onSubmit(values: z.infer<typeof eventSchema>) {
-    console.log(values)
+    toast.success("Event updated successfully", {
+      description: `${values.name} was updated`
+    })
+    setOpenModal(false)
   }
   return (
     <>
-      <Dialog>
+      <Dialog
+        open={openModal}
+        onOpenChange={setOpenModal}
+      >
         <DialogTrigger asChild>
           <Button>
             <Eye />
@@ -122,7 +132,10 @@ export default function ViewEventModal(props: ViewProps) {
                     render={({ field }) => (
                       <FormItem>
                         <FormLabel htmlFor="date" className="text-black font-bold text-xs">Date</FormLabel>
-                        <Popover>
+                        <Popover
+                          open={openCalendar}
+                          onOpenChange={setOpenCalendar}
+                        >
                           <FormControl>
                             <PopoverTrigger
                               asChild
@@ -150,6 +163,7 @@ export default function ViewEventModal(props: ViewProps) {
                                 date > new Date() || date < new Date("1900-01-01")
                               }
                               captionLayout="dropdown"
+                              onDayClick={() => setOpenCalendar(false)}
                             />
                           </PopoverContent>
                         </Popover>
