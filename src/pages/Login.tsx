@@ -7,31 +7,20 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import { Button } from "@/components/ui/button";
 import logo from "../assets/new_logo_small.png";
 import { useNavigate } from "react-router-dom";
+import { loginSchema } from "@/types/formSchema";
 
-const formSchema = z.object({
-  name: z.string().min(2, {
-    message: "Name is too short"
-  }).max(50, {
-    message: "Password is too long"
-  }),
-  password: z.string().min(2, {
-    message: "Password is too short"
-  }).max(50, {
-    message: "Password is too long"
-  })
-})
 
 export default function LoginPage() {
   const navigate = useNavigate()
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
+  const form = useForm<z.infer<typeof loginSchema>>({
+    resolver: zodResolver(loginSchema),
     defaultValues: {
       name: "",
       password: "",
     }
   })
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
+  function onSubmit(values: z.infer<typeof loginSchema>) {
     navigate("/dashboard")
     console.log(values)
   }
