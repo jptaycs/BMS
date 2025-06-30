@@ -11,6 +11,7 @@ import { z } from "zod"
 import { format } from "date-fns"
 import { Calendar } from "@/components/ui/calendar";
 import { Textarea } from "@/components/ui/textarea";
+import { useState } from "react";
 
 const selectOption: string[] = [
   "Seminar",
@@ -47,6 +48,8 @@ const formSchema = z.object({
 })
 
 export default function AddEventModal() {
+  const [open, setOpen] = useState(false)
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -136,7 +139,10 @@ export default function AddEventModal() {
                     render={({ field }) => (
                       <FormItem>
                         <FormLabel htmlFor="date" className="text-black font-bold text-xs">Date</FormLabel>
-                        <Popover>
+                        <Popover
+                          open={open}
+                          onOpenChange={setOpen}
+                        >
                           <FormControl>
                             <PopoverTrigger asChild className="w-full text-black hover:bg-primary hover:text-white">
                               <Button
@@ -160,6 +166,7 @@ export default function AddEventModal() {
                                 date > new Date() || date < new Date("1900-01-01")
                               }
                               captionLayout="dropdown"
+                              onDayClick={() => setOpen(false)}
                             />
                           </PopoverContent>
                         </Popover>

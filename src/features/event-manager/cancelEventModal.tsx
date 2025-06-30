@@ -7,7 +7,6 @@ export default function CancelEventModal() {
   function onConfirm() {
     console.log("Event Cancelled")
   }
-
   return (
     <>
       <Dialog>
