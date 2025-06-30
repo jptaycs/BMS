@@ -129,111 +129,111 @@ export default function AddEventModal() {
                     )}
                   />
                 </div>
-              </div>
-              <div>
-                <FormField
-                  control={form.control}
-                  name="date"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel htmlFor="date" className="text-black font-bold text-xs">Date</FormLabel>
-                      <Popover>
+                <div>
+                  <FormField
+                    control={form.control}
+                    name="date"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel htmlFor="date" className="text-black font-bold text-xs">Date</FormLabel>
+                        <Popover>
+                          <FormControl>
+                            <PopoverTrigger asChild className="w-full text-black hover:bg-primary hover:text-white">
+                              <Button
+                                variant="outline"
+                              >
+                                {field.value ? (
+                                  format(field.value, "PPP")
+                                ) : (
+                                  <span>Pick a date</span>
+                                )}
+                                <CalendarIcon className="ml-auto h-4 w-4  hover:text-white" />
+                              </Button>
+                            </PopoverTrigger>
+                          </FormControl>
+                          <PopoverContent className="w-auto p-0" align="center">
+                            <Calendar
+                              mode="single"
+                              selected={field.value}
+                              onSelect={field.onChange}
+                              disabled={(date) =>
+                                date > new Date() || date < new Date("1900-01-01")
+                              }
+                              captionLayout="dropdown"
+                            />
+                          </PopoverContent>
+                        </Popover>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </div>
+                <div>
+                  <FormField
+                    control={form.control}
+                    name="venue"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel htmlFor="name" className="text-black font-bold text-xs">Venue</FormLabel>
                         <FormControl>
-                          <PopoverTrigger asChild className="w-full text-black hover:bg-primary hover:text-white">
-                            <Button
-                              variant="outline"
-                            >
-                              {field.value ? (
-                                format(field.value, "PPP")
-                              ) : (
-                                <span>Pick a date</span>
-                              )}
-                              <CalendarIcon className="ml-auto h-4 w-4  hover:text-white" />
-                            </Button>
-                          </PopoverTrigger>
-                        </FormControl>
-                        <PopoverContent className="w-auto p-0" align="center">
-                          <Calendar
-                            mode="single"
-                            selected={field.value}
-                            onSelect={field.onChange}
-                            disabled={(date) =>
-                              date > new Date() || date < new Date("1900-01-01")
-                            }
-                            captionLayout="dropdown"
+                          <Input
+                            id="venue"
+                            type="text"
+                            placeholder="Enter Venue Location"
+                            required
+                            {...field}
+                            className="text-black"
                           />
-                        </PopoverContent>
-                      </Popover>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-              </div>
-              <div>
-                <FormField
-                  control={form.control}
-                  name="venue"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel htmlFor="name" className="text-black font-bold text-xs">Venue</FormLabel>
-                      <FormControl>
-                        <Input
-                          id="venue"
-                          type="text"
-                          placeholder="Enter Venue Location"
-                          required
-                          {...field}
-                          className="text-black"
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-              </div>
-              <div>
-                <FormField
-                  control={form.control}
-                  name="atendee"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel htmlFor="name" className="text-black font-bold text-xs">Atendee</FormLabel>
-                      <FormControl>
-                        <Input
-                          id="atendee"
-                          type="text"
-                          placeholder="Enter Atendees"
-                          required
-                          {...field}
-                          className="text-black"
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-              </div>
-              <div>
-                <FormField
-                  control={form.control}
-                  name="notes"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel htmlFor="name" className="text-black font-bold text-xs">Important Notes</FormLabel>
-                      <FormControl>
-                        <Textarea
-                          id="notes"
-                          name="notes"
-                          placeholder="Enter important notes"
-                          required
-                          className="text-black"
-                          {...field}
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </div>
+                <div>
+                  <FormField
+                    control={form.control}
+                    name="atendee"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel htmlFor="name" className="text-black font-bold text-xs">Atendee</FormLabel>
+                        <FormControl>
+                          <Input
+                            id="atendee"
+                            type="text"
+                            placeholder="Enter Atendees"
+                            required
+                            {...field}
+                            className="text-black"
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </div>
+                <div>
+                  <FormField
+                    control={form.control}
+                    name="notes"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel htmlFor="name" className="text-black font-bold text-xs">Important Notes</FormLabel>
+                        <FormControl>
+                          <Textarea
+                            id="notes"
+                            name="notes"
+                            placeholder="Enter important notes"
+                            required
+                            className="text-black"
+                            {...field}
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </div>
               </div>
               <div className="mt-4 flex justify-end">
                 <Button>Save Event</Button>
