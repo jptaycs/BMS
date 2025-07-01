@@ -1,11 +1,24 @@
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { XIcon } from "lucide-react";
+import { toast } from "sonner";
 
-export default function CancelEventModal() {
+type Event = {
+  name: string,
+  type: string,
+  status: "Upcoming" | "Finished" | "Ongoing" | "Cancelled",
+  date: Date,
+  venue: string,
+  atendee: string,
+  notes: string
+}
+export default function CancelEventModal(event: Event) {
 
   function onConfirm() {
-    console.log("Event Cancelled")
+    toast.success("Event cancelled succesfully", {
+      description: `${event.name} was cancelled`
+    })
+
   }
   return (
     <>
@@ -27,7 +40,7 @@ export default function CancelEventModal() {
               <Button variant="destructive">Cancel</Button>
             </DialogClose>
             <DialogClose asChild>
-              <Button onClick={onConfirm} >Confirm</Button>
+              <Button onClick={onConfirm}>Confirm</Button>
             </DialogClose>
           </div>
         </DialogContent>

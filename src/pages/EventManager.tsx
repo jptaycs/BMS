@@ -183,7 +183,7 @@ export default function EventManager() {
           return (
             < div className="flex gap-3 ">
               <ViewEventModal {...row.original} />
-              {status !== "Cancelled" && status !== "Finished" && <CancelEventModal />}
+              {status !== "Cancelled" && status !== "Finished" && <CancelEventModal {...row.original} />}
             </div >
           )
         }

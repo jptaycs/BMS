@@ -3,6 +3,7 @@ import { SidebarProvider } from "./sidebar";
 import Header from "./header";
 import { useState } from "react";
 import { Outlet } from "react-router-dom";
+import { Toaster } from "sonner";
 
 export default function AppLayout() {
   const [open, setOpen] = useState(false)
@@ -14,6 +15,11 @@ export default function AppLayout() {
           <Header />
           <main className="flex-1 overflow-auto font-redhat bg-red  text-black mx-[10rem] my-[2rem]">
             <Outlet />
+            <Toaster
+              position="top-center"
+              richColors
+              closeButton
+            />
           </main>
         </div>
       </div>

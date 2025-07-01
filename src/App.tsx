@@ -1,5 +1,4 @@
 import { QueryClient } from '@tanstack/query-core'
-import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import { QueryClientProvider } from '@tanstack/react-query'
 import {
   BrowserRouter as Router,
@@ -29,7 +28,6 @@ function App() {
   });
   return (
     <QueryClientProvider client={queryClient}>
-      <ReactQueryDevtools initialIsOpen={false} />
       <Router>
         <Routes>
           <Route
