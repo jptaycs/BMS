@@ -1,5 +1,5 @@
 use rusqlite::{Connection, Result};
 
-pub fn establish_connection() -> Result<Connection>{
+pub fn connect() -> Result<Connection>{
     Connection::open("bms.db")
 }
