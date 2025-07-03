@@ -3,19 +3,20 @@ import { Dialog, DialogClose, DialogContent, DialogDescription, DialogHeader, Di
 import { XIcon } from "lucide-react";
 import { toast } from "sonner";
 
-type Resident = {
-  fullName: string,
-  civilStatus: string,
-  status: "Moved Out" | "Active" | "Dead" | "Missing",
-  birthday: Date,
-  gender: string,
+type Household = {
+  householdNumber: string,
+  type: string,
+  members: string,
+  head: string,
   zone: string,
+  date: Date,
+  status: "Moved Out" | "Active",
 }
-export default function DeleteResidentModal(resident: Resident) {
+export default function DeleteHouseholdModal(households: Household) {
 
   function onConfirm() {
-    toast.success("Event deleted succesfully", {
-      description: `${resident.fullName} was deleted`
+    toast.success("Event cancelled succesfully", {
+      description: `${households.householdNumber} was deleted`
     })
 
   }
@@ -25,15 +26,15 @@ export default function DeleteResidentModal(resident: Resident) {
         <DialogTrigger asChild>
           <Button variant="destructive">
             <XIcon />
-            Delete Resident
+            Delete Household
           </Button>
         </DialogTrigger>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle className="text-black font-normal">Resident Deletion</DialogTitle>
+            <DialogTitle className="text-black font-normal">Household Deletion</DialogTitle>
             <DialogDescription className="text-sm font-bold">This action cannot be undone once confirmed</DialogDescription>
           </DialogHeader>
-          <div className="text-black text-lg font-bold">Are you sure you want to delete this resident?</div>
+          <div className="text-black text-lg font-bold">Are you sure you want to delete this household?</div>
           <div className="flex w-full gap-3 justify-end">
             <DialogClose asChild>
               <Button variant="destructive">Delete</Button>
