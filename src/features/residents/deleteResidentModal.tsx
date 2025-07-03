@@ -25,18 +25,18 @@ export default function DeleteResidentModal(resident: Resident) {
         <DialogTrigger asChild>
           <Button variant="destructive">
             <XIcon />
-            Cancel Event
+            Delete Resident
           </Button>
         </DialogTrigger>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle className="text-black font-normal">Event Cancellation</DialogTitle>
+            <DialogTitle className="text-black font-normal">Resident Deletion</DialogTitle>
             <DialogDescription className="text-sm font-bold">This action cannot be undone once confirmed</DialogDescription>
           </DialogHeader>
-          <div className="text-black text-lg font-bold">Are you sure you want to cancel this event?</div>
+          <div className="text-black text-lg font-bold">Are you sure you want to delete this resident?</div>
           <div className="flex w-full gap-3 justify-end">
             <DialogClose asChild>
-              <Button variant="destructive">Cancel</Button>
+              <Button variant="destructive">Delete</Button>
             </DialogClose>
             <DialogClose asChild>
               <Button onClick={onConfirm}>Confirm</Button>

@@ -25,8 +25,11 @@ type ViewPropsResident = {
 }
 
 const selectOption: string[] = [
-  "Seminar",
-  "Assembly",
+  "Single",
+  "Married",
+  "Divorced",
+  "Widowed",
+  "Separated",
 ]
 
 export default function ViewResidentModal(props: ViewPropsResident) {
@@ -69,7 +72,7 @@ export default function ViewResidentModal(props: ViewPropsResident) {
                 <DialogDescription className="text-sm">
                   All the fields are required unless it is mentioned otherwise
                 </DialogDescription>
-                <p className="text-md font-bold text-black">Basic Event Information</p>
+                <p className="text-md font-bold text-black">Basic Resident Information</p>
               </DialogHeader>
               <div className="flex flex-col gap-3">
                 <div>
@@ -87,7 +90,6 @@ export default function ViewResidentModal(props: ViewPropsResident) {
                             required
                             {...field}
                             className="text-black"
-                            disabled={props.status === "Active"}
                           />
                         </FormControl>
                         <FormMessage />
@@ -101,15 +103,14 @@ export default function ViewResidentModal(props: ViewPropsResident) {
                     name="civilStatus"
                     render={({ field }) => (
                       <FormItem className="w-full">
-                        <FormLabel htmlFor="type" className="text-black font-bold text-xs">Type</FormLabel>
+                        <FormLabel htmlFor="civilStatus" className="text-black font-bold text-xs">Civil Status</FormLabel>
                         <Select
                           onValueChange={field.onChange}
                           defaultValue={field.value}
-                          disabled={props.status === "Active"}
                         >
                           <FormControl>
                             <SelectTrigger className="w-full text-black border-black/15">
-                              <SelectValue placeholder={"Please select the event type"} />
+                              <SelectValue placeholder={"Please select civil status"} />
                             </SelectTrigger>
                           </FormControl>
                           <SelectContent>
@@ -138,7 +139,6 @@ export default function ViewResidentModal(props: ViewPropsResident) {
                             <PopoverTrigger
                               asChild
                               className="w-full text-black hover:bg-primary hover:text-white"
-                              disabled={props.status === "Active"}
                             >
                               <Button
                                 variant="outline"
@@ -181,7 +181,6 @@ export default function ViewResidentModal(props: ViewPropsResident) {
                             placeholder="Enter Venue Location"
                             required
                             className="text-black"
-                            disabled={props.status === "Active"}
                             {...field}
                           />
                         </FormControl>
@@ -192,7 +191,7 @@ export default function ViewResidentModal(props: ViewPropsResident) {
                 </div>
               </div>
               <div className="mt-4 flex justify-end">
-                {props.status !== "Active" && <Button type="submit">Save Event</Button>}
+                {props.status == "Active" && <Button type="submit">Save Event</Button>}
               </div>
             </form>
           </Form>

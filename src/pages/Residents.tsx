@@ -13,12 +13,10 @@ import { Trash } from "lucide-react";
 const filters = [
   "All Residents",
   "Alphabetical",
-  "Civil Status",
-  "Age",
-  "Gender",
-  "Zone",
   "Moved Out",
   "Active",
+  "Dead",
+  "Missing",
 ]
 
 type Resident = {
@@ -85,19 +83,19 @@ const columns: ColumnDef<Resident>[] = [
       let color: string;
       switch (status) {
         case "Moved Out": {
-          color = "#00BD29";
+          color = "#BD0000";
           break;
         }
         case "Active": {
-          color = "#000000";
+          color = "#00BD29";
           break;
         }
         case "Dead": {
-          color = "#FFB30F";
+          color = "#000000";
           break;
         }
         case "Missing": {
-          color = "#BD0000";
+          color = "#FFB30F";
           break;
         }
         default: {
@@ -110,8 +108,6 @@ const columns: ColumnDef<Resident>[] = [
     }
   }
 ]
-
-
 
 const data: Resident[] = [
   {
@@ -128,7 +124,7 @@ const data: Resident[] = [
   birthday: new Date("June 29, 2003"),
   gender: "Male",
   zone: "Zone",
-  status: "Active",
+  status: "Dead",
 },
   {
   fullName: "Karl Abechuela",
@@ -136,7 +132,15 @@ const data: Resident[] = [
   birthday: new Date("June 29, 2003"),
   gender: "Male",
   zone: "Zone",
-  status: "Active",
+  status: "Moved Out",
+},
+  {
+  fullName: "Karl Abechuela",
+  civilStatus: "Single",
+  birthday: new Date("June 29, 2003"),
+  gender: "Male",
+  zone: "Zone",
+  status: "Missing",
 },
 ]
 
@@ -161,7 +165,7 @@ export default function Residents() {
           return (
             < div className="flex gap-3 ">
               <ViewResidentModal {...row.original} />
-              {status !== "Dead" && status !== "Moved Out" && <DeleteResidentModal {...row.original} />}
+              {status !== "Active" && <DeleteResidentModal {...row.original} />}
             </div >
           )
         }
