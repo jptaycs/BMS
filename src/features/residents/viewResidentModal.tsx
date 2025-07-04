@@ -1,12 +1,11 @@
 import { Button } from "@/components/ui/button";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { eventSchema, householdSchema, residentSchema } from "@/types/formSchema";
+import { eventSchema, residentSchema } from "@/types/formSchema";
 import { CalendarIcon, Eye } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { z } from "zod"
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
-import { Textarea } from "@/components/ui/textarea";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { format } from "date-fns"
@@ -15,14 +14,13 @@ import { Calendar } from "@/components/ui/calendar";
 import { useState } from "react";
 import { toast } from "sonner";
 
-type ViewPropsHouseholds = {
-  householdNumber: string,
-  type: string,
-  members: string,
-  head: string,
+type ViewPropsResident = {
+  fullName: string,
+  civilStatus: string,
+  status: "Moved Out" | "Active" | "Dead" | "Missing",
+  birthday: Date,
+  gender: string,
   zone: string,
-  date: Date,
-  status: "Moved Out" | "Active",
 }
 
 const selectOption: string[] = [
@@ -33,18 +31,17 @@ const selectOption: string[] = [
   "Separated",
 ]
 
-export default function ViewHouseholdModal(props: ViewPropsHouseholds) {
+export default function ViewResidentModal(props: ViewPropsResident) {
   const [openCalendar, setOpenCalendar] = useState(false)
   const [openModal, setOpenModal] = useState(false)
-  const form = useForm<z.infer<typeof householdSchema>>({
-    resolver: zodResolver(householdSchema),
+  const form = useForm<z.infer<typeof residentSchema>>({
+    resolver: zodResolver(residentSchema),
     defaultValues: {
-      fullName: props.head, 
-      civilStatus: "",
-      birthday: props.date,
-      gender: "",
+      fullName: props.fullName,
+      civilStatus: props.civilStatus,
+      birthday: props.birthday,
+      gender: props.gender,
       Zone: props.zone,
-      notes: "",
     }
   })
 
@@ -83,10 +80,10 @@ export default function ViewHouseholdModal(props: ViewPropsHouseholds) {
                     name="fullName"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel htmlFor="name" className="text-black font-bold text-xs">Name</FormLabel>
+                        <FormLabel htmlFor="fullName" className="text-black font-bold text-xs">Name</FormLabel>
                         <FormControl>
                           <Input
-                            id="name"
+                            id="fullName"
                             type="text"
                             placeholder="Enter full name"
                             required
