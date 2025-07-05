@@ -33,11 +33,12 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { format } from "date-fns";
 import { Calendar } from "@/components/ui/calendar";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { toast } from "sonner";
 import { invoke } from "@tauri-apps/api/core";
 
 const civilStatusOptions = ["Single", "Married", "Widowed", "Separated"];
+const statusOption = ["Active", "Dead", "Missing", "Moved Out"];
 const genderOptions = ["Male", "Female"];
 const suffixOptions = ["Jr.", "Sr.", "II", "III"];
 const prefixOptions = ["Mr.", "Mrs.", "Ms."];
@@ -88,12 +89,16 @@ const formSchema = z.object({
   beneficiaryType: z.string(),
   beneficiarySameAddress: z.string(),
   additionalBeneficiaries: z.string(),
+  status: z.string(),
+  photo: z.any(),
 });
 
 export default function AddResidentModal() {
   const [openCalendar, setOpenCalendar] = useState(false);
   const [openModal, setOpenModal] = useState(false);
   const [step, setStep] = useState(1);
+  const [capturedImage, setCapturedImage] = useState<string | null>(null);
+  const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -104,6 +109,7 @@ export default function AddResidentModal() {
       lastName: "",
       suffix: "",
       civilStatus: "",
+      status: "",
       gender: "",
       mobileNumber: "",
       dateOfBirth: undefined,
@@ -143,6 +149,7 @@ export default function AddResidentModal() {
       beneficiaryType: "",
       beneficiarySameAddress: "",
       additionalBeneficiaries: "",
+      photo: null,
     },
   });
 
@@ -153,6 +160,42 @@ export default function AddResidentModal() {
     setOpenModal(false);
     invoke("save_resident", { data: values });
   }
+
+  const capturePhotoDirectly = async () => {
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+      const video = document.createElement("video");
+      video.srcObject = stream;
+      await video.play();
+
+      const canvas = canvasRef.current;
+      if (!canvas) return;
+
+      canvas.width = video.videoWidth;
+      canvas.height = video.videoHeight;
+
+      const context = canvas.getContext("2d");
+      if (context) {
+        context.drawImage(video, 0, 0, canvas.width, canvas.height);
+        const dataUrl = canvas.toDataURL("image/png");
+
+        // 👇 Set captured image to state so it renders below
+        setCapturedImage(dataUrl);
+
+        // Optional: store blob to form field
+        canvas.toBlob((blob) => {
+          if (blob) {
+            form.setValue("photo", blob);
+          }
+        }, "image/png");
+
+        // Stop webcam
+        stream.getTracks().forEach((track) => track.stop());
+      }
+    } catch (err) {
+      console.error("Camera access error:", err);
+    }
+  };
 
   return (
     <Dialog open={openModal} onOpenChange={setOpenModal}>
@@ -177,7 +220,7 @@ export default function AddResidentModal() {
                   Personal Information
                 </h2>
                 <div className="grid grid-cols-4 gap-4">
-                  <div className="col-span-4">
+                  <div className="col-span-2">
                     <FormField
                       control={form.control}
                       name="prefix"
@@ -204,6 +247,27 @@ export default function AddResidentModal() {
                         </FormItem>
                       )}
                     />
+                  </div>
+
+                  <div className="col-span-2">
+                    <FormLabel>Resident Photo</FormLabel>
+                    <div className="flex flex-col gap-2">
+                      <Button type="button" onClick={capturePhotoDirectly}>
+                        Take Photo
+                      </Button>
+
+                      {/* 👇 Display the captured photo if exists */}
+                      {capturedImage && (
+                        <img
+                          src={capturedImage}
+                          alt="Captured"
+                          className="w-48 h-auto rounded-md border object-cover"
+                        />
+                      )}
+
+                      {/* Canvas is hidden, used only for internal capture */}
+                      <canvas ref={canvasRef} className="hidden" />
+                    </div>
                   </div>
 
                   <div className="col-span-2">
@@ -402,39 +466,74 @@ export default function AddResidentModal() {
                       )}
                     />
                   </div>
+
+                  <div className="col-span-2">
+                    <FormField
+                      control={form.control}
+                      name="dateOfBirth"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Date of Birth</FormLabel>
+                          <Popover
+                            open={openCalendar}
+                            onOpenChange={setOpenCalendar}
+                          >
+                            <PopoverTrigger asChild>
+                              <Button variant="outline">
+                                {field.value
+                                  ? format(field.value, "PPP")
+                                  : "Pick a date"}
+                                <CalendarIcon className="ml-auto h-4 w-4" />
+                              </Button>
+                            </PopoverTrigger>
+                            <PopoverContent
+                              className="w-auto p-0"
+                              align="center"
+                            >
+                              <Calendar
+                                mode="single"
+                                selected={field.value}
+                                onSelect={field.onChange}
+                                captionLayout="dropdown"
+                                fromYear={1900}
+                                toYear={new Date().getFullYear()}
+                              />
+                            </PopoverContent>
+                          </Popover>
+                        </FormItem>
+                      )}
+                    />
+                  </div>
+                  <div className="col-span-2">
+                    <FormField
+                      control={form.control}
+                      name="status"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Status</FormLabel>
+                          <FormControl>
+                            <Select
+                              onValueChange={field.onChange}
+                              defaultValue={field.value}
+                            >
+                              <SelectTrigger>
+                                <SelectValue placeholder="Select Status" />
+                              </SelectTrigger>
+                              <SelectContent>
+                                {statusOption.map((option) => (
+                                  <SelectItem key={option} value={option}>
+                                    {option}
+                                  </SelectItem>
+                                ))}
+                              </SelectContent>
+                            </Select>
+                          </FormControl>
+                        </FormItem>
+                      )}
+                    />
+                  </div>
                 </div>
-                <FormField
-                  control={form.control}
-                  name="dateOfBirth"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Date of Birth</FormLabel>
-                      <Popover
-                        open={openCalendar}
-                        onOpenChange={setOpenCalendar}
-                      >
-                        <PopoverTrigger asChild>
-                          <Button variant="outline">
-                            {field.value
-                              ? format(field.value, "PPP")
-                              : "Pick a date"}
-                            <CalendarIcon className="ml-auto h-4 w-4" />
-                          </Button>
-                        </PopoverTrigger>
-                        <PopoverContent className="w-auto p-0" align="center">
-                          <Calendar
-                            mode="single"
-                            selected={field.value}
-                            onSelect={field.onChange}
-                            captionLayout="dropdown"
-                            fromYear={1900}
-                            toYear={new Date().getFullYear()}
-                          />
-                        </PopoverContent>
-                      </Popover>
-                    </FormItem>
-                  )}
-                />
+
                 <div className="flex justify-end pt-4">
                   <Button type="button" onClick={() => setStep(2)}>
                     Next

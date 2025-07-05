@@ -66,7 +66,7 @@ export const residentSchema = z.object({
   }).max(50, {
     message: "Resident venue is too long"
   }),
-  notes: z.string().max(1000, {
+  status: z.string().max(1000, {
     message: "Important notes is too long"
   })
 })

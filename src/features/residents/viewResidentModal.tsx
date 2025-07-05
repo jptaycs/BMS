@@ -17,7 +17,7 @@ import { toast } from "sonner";
 type ViewPropsResident = {
   fullName: string,
   civilStatus: string,
-  status: "Moved Out" | "Active" | "Dead" | "Missing",
+  status: string,
   birthday: Date,
   gender: string,
   zone: string,
@@ -31,6 +31,13 @@ const selectOption: string[] = [
   "Separated",
 ]
 
+const selectStatus: string[] = [
+  "Moved Out",
+  "Active",
+  "Dead",
+  "Missing",
+]
+
 export default function ViewResidentModal(props: ViewPropsResident) {
   const [openCalendar, setOpenCalendar] = useState(false)
   const [openModal, setOpenModal] = useState(false)
@@ -42,12 +49,13 @@ export default function ViewResidentModal(props: ViewPropsResident) {
       birthday: props.birthday,
       gender: props.gender,
       Zone: props.zone,
+      status: props.status,
     }
   })
 
-  function onSubmit(values: z.infer<typeof eventSchema>) {
-    toast.success("Event updated successfully", {
-      description: `${values.name} was updated`
+  function onSubmit(values: z.infer<typeof residentSchema>) {
+    toast.success("Resident updated successfully", {
+      description: `${values.fullName} was updated`
     })
     setOpenModal(false)
   }
@@ -172,12 +180,12 @@ export default function ViewResidentModal(props: ViewPropsResident) {
                     name="Zone"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel htmlFor="name" className="text-black font-bold text-xs">Venue</FormLabel>
+                        <FormLabel htmlFor="name" className="text-black font-bold text-xs">Zone/Purok</FormLabel>
                         <FormControl>
                           <Input
-                            id="venue"
+                            id="Zone/Purok"
                             type="text"
-                            placeholder="Enter Venue Location"
+                            placeholder="Enter Zone or Purok"
                             required
                             className="text-black"
                             {...field}
@@ -188,9 +196,38 @@ export default function ViewResidentModal(props: ViewPropsResident) {
                     )}
                   />
                 </div>
+                
+                <div>
+                  <FormField
+                    control={form.control}
+                    name="status"
+                    render={({ field }) => (
+                      <FormItem className="w-full">
+                        <FormLabel htmlFor="status" className="text-black font-bold text-xs">Status</FormLabel>
+                        <Select
+                          onValueChange={field.onChange}
+                          defaultValue={field.value || ""}
+                        >
+                          <FormControl>
+                            <SelectTrigger className="w-full text-black border-black/15">
+                              <SelectValue placeholder={"Please select civil status"} />
+                            </SelectTrigger>
+                          </FormControl>
+                          <SelectContent>
+                            {selectStatus.map((option, i) => (
+                              <SelectItem value={option} key={i}>{option}</SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </div>
+
               </div>
               <div className="mt-4 flex justify-end">
-                {props.status == "Active" && <Button type="submit">Save Event</Button>}
+                {props.status == "Active" && <Button type="submit">Save Resident</Button>}
               </div>
             </form>
           </Form>
