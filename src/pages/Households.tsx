@@ -59,7 +59,10 @@ const columns: ColumnDef<Household>[] = [
   },
   {
     header: "Family Members",
-    accessorKey: "members"
+    accessorKey: "members",
+    cell: ({ row }) => (
+      <div className="flex ml-10">{row.original.members}</div>
+    )
   },
   {
     header: "Head of Household",
@@ -108,13 +111,13 @@ const data: Household[] = [
   {
     householdNumber: "1232",
     type: "Renter",
-    members: "5",
+    members: "15",
     head: "Karl Abechuela",
     zone: "Zone 1",
     date: new Date("June 29, 2023"),
     status: "Active",
   },
-    {
+  {
     householdNumber: "1232",
     type: "Renter",
     members: "5",
@@ -123,7 +126,7 @@ const data: Household[] = [
     date: new Date("June 29, 2023"),
     status: "Active",
   },
-    {
+  {
     householdNumber: "1232",
     type: "Renter",
     members: "5",
@@ -132,7 +135,7 @@ const data: Household[] = [
     date: new Date("June 29, 2023"),
     status: "Active",
   },
-    {
+  {
     householdNumber: "1232",
     type: "Renter",
     members: "5",
