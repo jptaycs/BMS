@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import logo from "../assets/new_logo_small.png";
 import { useNavigate } from "react-router-dom";
 import { loginSchema } from "@/types/formSchema";
+import { toast } from "sonner";
 
 
 export default function LoginPage() {
@@ -21,6 +22,9 @@ export default function LoginPage() {
   })
 
   function onSubmit(values: z.infer<typeof loginSchema>) {
+    toast.message("Hello!", {
+      description: `Welcome to BMS John Cena`
+    })
     navigate("/dashboard")
     console.log(values)
   }

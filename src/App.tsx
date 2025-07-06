@@ -17,6 +17,7 @@ import Expense from './pages/Expense';
 import BlotterRecord from './pages/BlotterRecord';
 import Official from './pages/Official';
 import Settings from './pages/Settings';
+import { Toaster } from './components/ui/sonner';
 function App() {
   const queryClient: QueryClient = new QueryClient({
     defaultOptions: {
@@ -46,6 +47,11 @@ function App() {
           </Route>
           <Route index element={<LoginPage />}></Route>
         </Routes>
+        <Toaster
+          position="top-center"
+          richColors
+          closeButton
+        />
       </Router >
     </QueryClientProvider>
   )
