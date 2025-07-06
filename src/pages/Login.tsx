@@ -22,10 +22,10 @@ export default function LoginPage() {
   })
 
   function onSubmit(values: z.infer<typeof loginSchema>) {
-    navigate("/dashboard")
     toast.message("Hello!", {
       description: `Welcome to BMS John Cena`
     })
+    navigate("/dashboard")
     console.log(values)
   }
   return (

@@ -48,7 +48,7 @@ function App() {
           <Route index element={<LoginPage />}></Route>
         </Routes>
         <Toaster
-          position="top-right"
+          position="top-center"
           richColors
           closeButton
         />
