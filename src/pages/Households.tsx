@@ -5,7 +5,7 @@ import Filter from "@/components/ui/filter";
 import Searchbar from "@/components/ui/searchbar";
 import AddHouseholdModal from "@/features/households/addHouseholdModal";
 import DeleteHouseholdModal from "@/features/households/deleteHouseholdModal";
-import ViewHouseholdModal from "@/features/residents/viewResidentModal";
+import ViewHouseholdModal from "@/features/households/viewHouseholdModal";
 import { ColumnDef } from "@tanstack/react-table";
 import { format } from "date-fns";
 import { Trash } from "lucide-react";
@@ -20,7 +20,7 @@ const filters = [
 type Household = {
   householdNumber: string,
   type: string,
-  members: string,
+  members: number,
   head: string,
   zone: string,
   date: Date,
@@ -111,7 +111,7 @@ const data: Household[] = [
   {
     householdNumber: "1232",
     type: "Renter",
-    members: "15",
+    members: 15,
     head: "Karl Abechuela",
     zone: "Zone 1",
     date: new Date("June 29, 2023"),
@@ -120,7 +120,7 @@ const data: Household[] = [
   {
     householdNumber: "1232",
     type: "Renter",
-    members: "5",
+    members: 5,
     head: "Karl Abechuela",
     zone: "Zone 1",
     date: new Date("June 29, 2023"),
@@ -129,7 +129,7 @@ const data: Household[] = [
   {
     householdNumber: "1232",
     type: "Renter",
-    members: "5",
+    members: 5,
     head: "Karl Abechuela",
     zone: "Zone 1",
     date: new Date("June 29, 2023"),
@@ -138,7 +138,7 @@ const data: Household[] = [
   {
     householdNumber: "1232",
     type: "Renter",
-    members: "5",
+    members: 5,
     head: "Karl Abechuela",
     zone: "Zone 1",
     date: new Date("June 29, 2023"),

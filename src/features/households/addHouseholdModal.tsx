@@ -2,23 +2,35 @@ import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { CalendarIcon, Plus } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { z } from "zod"
-import { format } from "date-fns"
-import { Calendar } from "@/components/ui/calendar";
-import { Textarea } from "@/components/ui/textarea";
 import { useState } from "react";
 import { toast } from "sonner";
 import { invoke } from '@tauri-apps/api/core'
 import { householdSchema } from "@/types/formSchema";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { format } from "date-fns";
+import { Calendar } from "@/components/ui/calendar";
 
 const selectOption: string[] = [
-  "Seminar",
-  "Assembly",
+  "Renter",
+]
+
+const zone: string[] = [
+  "Zone 1",
+  "Zone 2",
+  "Zone 3",
+  "Zone 4",
+  "Zone 5",
+  "Zone 6",
+]
+
+const status: string[] = [
+  "Active",
+  "Moved Out"
 ]
 
 export default function AddHouseholdModal() {
@@ -29,6 +41,7 @@ export default function AddHouseholdModal() {
     defaultValues: {
       householdNumber: "",
       type: "",
+      members: 1,
       head: "",
       zone: "",
       date: undefined,
@@ -37,7 +50,7 @@ export default function AddHouseholdModal() {
   })
 
   function onSubmit(values: z.infer<typeof householdSchema>) {
-    toast.success("Event added sucessfully", {
+    toast.success("Household added sucessfully", {
       description: `${values.householdNumber} was added`
     })
     setOpenModal(false)
@@ -73,7 +86,7 @@ export default function AddHouseholdModal() {
                     name="householdNumber"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel htmlFor="name" className="text-black font-bold text-xs">Houehold Number</FormLabel>
+                        <FormLabel htmlFor="name" className="text-black font-bold text-xs">Household Number</FormLabel>
                         <FormControl>
                           <Input
                             id="name"
@@ -116,22 +129,42 @@ export default function AddHouseholdModal() {
                 <div>
                   <FormField
                     control={form.control}
+                    name="members"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel htmlFor="members" className="text-black font-bold text-xs">Family Members</FormLabel>
+                        <FormControl>
+                          <Input
+                            id="members"
+                            type="number"
+                            placeholder="How many family members"
+                            required
+                            {...field}
+                            className="text-black"
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </div>
+                <div>
+                  <FormField
+                    control={form.control}
                     name="head"
                     render={({ field }) => (
-                      <FormItem className="w-full">
-                        <FormLabel htmlFor="type" className="text-black font-bold text-xs">Family Members</FormLabel>
-                        <Select onValueChange={field.onChange} defaultValue={field.value}>
-                          <FormControl>
-                            <SelectTrigger className="w-full text-black border-black/15">
-                              <SelectValue placeholder={"Please select the household type"} />
-                            </SelectTrigger>
-                          </FormControl>
-                          <SelectContent>
-                            {selectOption.map((option, i) => (
-                              <SelectItem value={option} key={i}>{option}</SelectItem>
-                            ))}
-                          </SelectContent>
-                        </Select>
+                      <FormItem>
+                        <FormLabel htmlFor="members" className="text-black font-bold text-xs">Head of Household</FormLabel>
+                        <FormControl>
+                          <Input
+                            id="members"
+                            type="string"
+                            placeholder="Enter head of household"
+                            required
+                            {...field}
+                            className="text-black"
+                          />
+                        </FormControl>
                         <FormMessage />
                       </FormItem>
                     )}
@@ -143,7 +176,7 @@ export default function AddHouseholdModal() {
                     name="zone"
                     render={({ field }) => (
                       <FormItem className="w-full">
-                        <FormLabel htmlFor="type" className="text-black font-bold text-xs">Type</FormLabel>
+                        <FormLabel htmlFor="type" className="text-black font-bold text-xs">Zone</FormLabel>
                         <Select onValueChange={field.onChange} defaultValue={field.value}>
                           <FormControl>
                             <SelectTrigger className="w-full text-black border-black/15">
@@ -151,7 +184,7 @@ export default function AddHouseholdModal() {
                             </SelectTrigger>
                           </FormControl>
                           <SelectContent>
-                            {selectOption.map((option, i) => (
+                            {zone.map((option, i) => (
                               <SelectItem value={option} key={i}>{option}</SelectItem>
                             ))}
                           </SelectContent>
@@ -167,7 +200,7 @@ export default function AddHouseholdModal() {
                     name="date"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel htmlFor="date" className="text-black font-bold text-xs">Date</FormLabel>
+                        <FormLabel htmlFor="date" className="text-black font-bold text-xs">Date of Residency</FormLabel>
                         <Popover
                           open={openCalendar}
                           onOpenChange={setOpenCalendar}
@@ -206,18 +239,20 @@ export default function AddHouseholdModal() {
                     control={form.control}
                     name="status"
                     render={({ field }) => (
-                      <FormItem>
-                        <FormLabel htmlFor="name" className="text-black font-bold text-xs">Venue</FormLabel>
-                        <FormControl>
-                          <Input
-                            id="venue"
-                            type="text"
-                            placeholder="Enter Venue Location"
-                            required
-                            {...field}
-                            className="text-black"
-                          />
-                        </FormControl>
+                      <FormItem className="w-full">
+                        <FormLabel htmlFor="type" className="text-black font-bold text-xs">Status</FormLabel>
+                        <Select onValueChange={field.onChange} defaultValue={field.value}>
+                          <FormControl>
+                            <SelectTrigger className="w-full text-black border-black/15">
+                              <SelectValue placeholder={"Please select the household type"} />
+                            </SelectTrigger>
+                          </FormControl>
+                          <SelectContent>
+                            {status.map((option, i) => (
+                              <SelectItem value={option} key={i}>{option}</SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
                         <FormMessage />
                       </FormItem>
                     )}
