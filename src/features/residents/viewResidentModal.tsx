@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { eventSchema, residentSchema } from "@/types/formSchema";
+import { residentSchema } from "@/types/formSchema";
 import { CalendarIcon, Eye } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { z } from "zod"
@@ -196,7 +196,7 @@ export default function ViewResidentModal(props: ViewPropsResident) {
                     )}
                   />
                 </div>
-                
+
                 <div>
                   <FormField
                     control={form.control}

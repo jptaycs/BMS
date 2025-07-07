@@ -5,7 +5,7 @@ import Filter from "@/components/ui/filter";
 import Searchbar from "@/components/ui/searchbar";
 import AddHouseholdModal from "@/features/households/addHouseholdModal";
 import DeleteHouseholdModal from "@/features/households/deleteHouseholdModal";
-import ViewHouseholdModal from "@/features/residents/viewResidentModal";
+import ViewHouseholdModal from "@/features/households/viewHouseholdModal";
 import { ColumnDef } from "@tanstack/react-table";
 import { format } from "date-fns";
 import { Trash } from "lucide-react";

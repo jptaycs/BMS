@@ -10,7 +10,6 @@ import { useForm } from "react-hook-form";
 import { z } from "zod"
 import { format } from "date-fns"
 import { Calendar } from "@/components/ui/calendar";
-import { Textarea } from "@/components/ui/textarea";
 import { useState } from "react";
 import { toast } from "sonner";
 import { invoke } from '@tauri-apps/api/core'

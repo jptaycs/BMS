@@ -1,12 +1,11 @@
 import { Button } from "@/components/ui/button";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { eventSchema, residentSchema } from "@/types/formSchema";
+import { householdSchema, residentSchema } from "@/types/formSchema";
 import { CalendarIcon, Eye } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { z } from "zod"
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
-import { Textarea } from "@/components/ui/textarea";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { format } from "date-fns"
@@ -32,7 +31,7 @@ const selectOption: string[] = [
   "Separated",
 ]
 
-export default function ViewResidentModal(props: ViewPropsResident) {
+export default function ViewHouseholdModal(props: ViewPropsResident) {
   const [openCalendar, setOpenCalendar] = useState(false)
   const [openModal, setOpenModal] = useState(false)
   const form = useForm<z.infer<typeof residentSchema>>({
@@ -46,9 +45,9 @@ export default function ViewResidentModal(props: ViewPropsResident) {
     }
   })
 
-  function onSubmit(values: z.infer<typeof eventSchema>) {
+  function onSubmit(values: z.infer<typeof householdSchema>) {
     toast.success("Event updated successfully", {
-      description: `${values.name} was updated`
+      description: `${values.householdNumber} was updated`
     })
     setOpenModal(false)
   }
