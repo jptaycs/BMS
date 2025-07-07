@@ -141,6 +141,7 @@ export default function AddHouseholdModal() {
                             required
                             {...field}
                             className="text-black"
+                            onChange={(e) => field.onChange(+e.target.value)}
                           />
                         </FormControl>
                         <FormMessage />
