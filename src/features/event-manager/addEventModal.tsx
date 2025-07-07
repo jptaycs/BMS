@@ -173,6 +173,9 @@ export default function AddEventModal() {
                               onSelect={field.onChange}
                               captionLayout="dropdown"
                               onDayClick={() => setOpenCalendar(false)}
+                              disabled={(date) =>
+                                date < new Date()
+                              }
                             />
                           </PopoverContent>
                         </Popover>
