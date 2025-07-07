@@ -150,8 +150,8 @@ export default function Households() {
   return (
     <>
       <div className="flex gap-5 w-full items-center justify-center">
-        <Searchbar placeholder="Search event" classname="flex flex-5" />
-        <Filter filters={filters} initial="All Events" classname="flex-1" />
+        <Searchbar placeholder="Search Household" classname="flex flex-5" />
+        <Filter filters={filters} initial="All Households" classname="flex-1" />
         <Button variant="destructive" size="lg" >
           <Trash />
           Delete Selected
