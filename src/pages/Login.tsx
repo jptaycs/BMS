@@ -23,7 +23,7 @@ export default function LoginPage() {
 
   function onSubmit(values: z.infer<typeof loginSchema>) {
     toast.message("Hello!", {
-      description: `Welcome to BMS John Cena`
+      description: <p>Welcome to BMS <span className="font-bold">John Cena</span></p>
     })
     navigate("/dashboard")
     console.log(values)
