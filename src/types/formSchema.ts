@@ -82,6 +82,7 @@ export const householdSchema = z.object({
   }).max(50, {
     message: "Household type is too long."
   }),
+  members: z.number().min(1),
   head: z.string().min(2, {
     message: "Household venue is too short"
   }).max(50, {

@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { householdSchema, residentSchema } from "@/types/formSchema";
+import { householdSchema } from "@/types/formSchema";
 import { CalendarIcon, Eye } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { z } from "zod"
@@ -14,39 +14,52 @@ import { Calendar } from "@/components/ui/calendar";
 import { useState } from "react";
 import { toast } from "sonner";
 
-type ViewPropsResident = {
-  fullName: string,
-  civilStatus: string,
-  status: "Moved Out" | "Active" | "Dead" | "Missing",
-  birthday: Date,
-  gender: string,
+type ViewPropsHousehold = {
+  householdNumber: string,
+  type: string,
+  head: string,
+  members: number,
   zone: string,
+  date: Date,
+  status: "Active" | "Moved Out",
 }
 
 const selectOption: string[] = [
-  "Single",
-  "Married",
-  "Divorced",
-  "Widowed",
-  "Separated",
+  "Renter",
 ]
 
-export default function ViewHouseholdModal(props: ViewPropsResident) {
+const zone: string[] = [
+  "Zone 1",
+  "Zone 2",
+  "Zone 3",
+  "Zone 4",
+  "Zone 5",
+  "Zone 6",
+]
+
+const status: string[] = [
+  "Active",
+  "Moved Out"
+]
+
+export default function ViewResidentModal(props: ViewPropsHousehold) {
   const [openCalendar, setOpenCalendar] = useState(false)
   const [openModal, setOpenModal] = useState(false)
-  const form = useForm<z.infer<typeof residentSchema>>({
-    resolver: zodResolver(residentSchema),
+  const form = useForm<z.infer<typeof householdSchema>>({
+    resolver: zodResolver(householdSchema),
     defaultValues: {
-      fullName: props.fullName,
-      civilStatus: props.civilStatus,
-      birthday: props.birthday,
-      gender: props.gender,
-      Zone: props.zone,
+      householdNumber: props.householdNumber,
+      type: props.type,
+      head: props.head,
+      members: props.members,
+      zone: props.zone,
+      date: props.date,
+      status: props.status,
     }
   })
 
   function onSubmit(values: z.infer<typeof householdSchema>) {
-    toast.success("Event updated successfully", {
+    toast.success("Household updated successfully", {
       description: `${values.householdNumber} was updated`
     })
     setOpenModal(false)
@@ -65,27 +78,27 @@ export default function ViewHouseholdModal(props: ViewPropsResident) {
         </DialogTrigger>
         <DialogContent>
           <Form {...form}>
-            <form onSubmit={form.handleSubmit((onSubmit))}>
+            <form onSubmit={form.handleSubmit(onSubmit)}>
               <DialogHeader>
-                <DialogTitle className="text-black">View More Details</DialogTitle>
+                <DialogTitle className="text-black">Create Household</DialogTitle>
                 <DialogDescription className="text-sm">
                   All the fields are required unless it is mentioned otherwise
                 </DialogDescription>
-                <p className="text-md font-bold text-black">Basic Resident Information</p>
+                <p className="text-md font-bold text-black">Basic Household Information</p>
               </DialogHeader>
               <div className="flex flex-col gap-3">
                 <div>
                   <FormField
                     control={form.control}
-                    name="fullName"
+                    name="householdNumber"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel htmlFor="name" className="text-black font-bold text-xs">Name</FormLabel>
+                        <FormLabel htmlFor="name" className="text-black font-bold text-xs">Household Number</FormLabel>
                         <FormControl>
                           <Input
                             id="name"
                             type="text"
-                            placeholder="Enter full name"
+                            placeholder="Enter Household name"
                             required
                             {...field}
                             className="text-black"
@@ -99,17 +112,14 @@ export default function ViewHouseholdModal(props: ViewPropsResident) {
                 <div>
                   <FormField
                     control={form.control}
-                    name="civilStatus"
+                    name="type"
                     render={({ field }) => (
                       <FormItem className="w-full">
-                        <FormLabel htmlFor="civilStatus" className="text-black font-bold text-xs">Civil Status</FormLabel>
-                        <Select
-                          onValueChange={field.onChange}
-                          defaultValue={field.value}
-                        >
+                        <FormLabel htmlFor="type" className="text-black font-bold text-xs">Type</FormLabel>
+                        <Select onValueChange={field.onChange} defaultValue={field.value}>
                           <FormControl>
                             <SelectTrigger className="w-full text-black border-black/15">
-                              <SelectValue placeholder={"Please select civil status"} />
+                              <SelectValue placeholder={"Please select the household type"} />
                             </SelectTrigger>
                           </FormControl>
                           <SelectContent>
@@ -126,19 +136,85 @@ export default function ViewHouseholdModal(props: ViewPropsResident) {
                 <div>
                   <FormField
                     control={form.control}
-                    name="birthday"
+                    name="members"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel htmlFor="date" className="text-black font-bold text-xs">Date</FormLabel>
+                        <FormLabel htmlFor="members" className="text-black font-bold text-xs">Family Members</FormLabel>
+                        <FormControl>
+                          <Input
+                            id="members"
+                            type="number"
+                            placeholder="How many family members"
+                            required
+                            {...field}
+                            className="text-black"
+                            onChange={(e) => field.onChange(+e.target.value)}
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </div>
+                <div>
+                  <FormField
+                    control={form.control}
+                    name="head"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel htmlFor="members" className="text-black font-bold text-xs">Head of Household</FormLabel>
+                        <FormControl>
+                          <Input
+                            id="members"
+                            type="string"
+                            placeholder="Enter head of household"
+                            required
+                            {...field}
+                            className="text-black"
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </div>
+                <div>
+                  <FormField
+                    control={form.control}
+                    name="zone"
+                    render={({ field }) => (
+                      <FormItem className="w-full">
+                        <FormLabel htmlFor="type" className="text-black font-bold text-xs">Zone</FormLabel>
+                        <Select onValueChange={field.onChange} defaultValue={field.value}>
+                          <FormControl>
+                            <SelectTrigger className="w-full text-black border-black/15">
+                              <SelectValue placeholder={"Please select the household type"} />
+                            </SelectTrigger>
+                          </FormControl>
+                          <SelectContent>
+                            {zone.map((option, i) => (
+                              <SelectItem value={option} key={i}>{option}</SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </div>
+                <div>
+                  <FormField
+                    control={form.control}
+                    name="date"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel htmlFor="date" className="text-black font-bold text-xs">Date of Residency</FormLabel>
                         <Popover
                           open={openCalendar}
                           onOpenChange={setOpenCalendar}
                         >
                           <FormControl>
-                            <PopoverTrigger
-                              asChild
-                              className="w-full text-black hover:bg-primary hover:text-white"
-                            >
+                            <PopoverTrigger asChild className="w-full text-black hover:bg-primary hover:text-white">
                               <Button
                                 variant="outline"
                               >
@@ -169,20 +245,22 @@ export default function ViewHouseholdModal(props: ViewPropsResident) {
                 <div>
                   <FormField
                     control={form.control}
-                    name="Zone"
+                    name="status"
                     render={({ field }) => (
-                      <FormItem>
-                        <FormLabel htmlFor="name" className="text-black font-bold text-xs">Venue</FormLabel>
-                        <FormControl>
-                          <Input
-                            id="venue"
-                            type="text"
-                            placeholder="Enter Venue Location"
-                            required
-                            className="text-black"
-                            {...field}
-                          />
-                        </FormControl>
+                      <FormItem className="w-full">
+                        <FormLabel htmlFor="type" className="text-black font-bold text-xs">Status</FormLabel>
+                        <Select onValueChange={field.onChange} defaultValue={field.value}>
+                          <FormControl>
+                            <SelectTrigger className="w-full text-black border-black/15">
+                              <SelectValue placeholder={"Please select the household type"} />
+                            </SelectTrigger>
+                          </FormControl>
+                          <SelectContent>
+                            {status.map((option, i) => (
+                              <SelectItem value={option} key={i}>{option}</SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
                         <FormMessage />
                       </FormItem>
                     )}
@@ -190,7 +268,7 @@ export default function ViewHouseholdModal(props: ViewPropsResident) {
                 </div>
               </div>
               <div className="mt-4 flex justify-end">
-                {props.status == "Active" && <Button type="submit">Save Event</Button>}
+                <Button>Save Household</Button>
               </div>
             </form>
           </Form>

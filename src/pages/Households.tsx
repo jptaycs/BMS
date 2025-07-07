@@ -20,7 +20,7 @@ const filters = [
 type Household = {
   householdNumber: string,
   type: string,
-  members: string,
+  members: number,
   head: string,
   zone: string,
   date: Date,
@@ -111,7 +111,7 @@ const data: Household[] = [
   {
     householdNumber: "1232",
     type: "Renter",
-    members: "15",
+    members: 15,
     head: "Karl Abechuela",
     zone: "Zone 1",
     date: new Date("June 29, 2023"),
@@ -120,7 +120,7 @@ const data: Household[] = [
   {
     householdNumber: "1232",
     type: "Renter",
-    members: "5",
+    members: 5,
     head: "Karl Abechuela",
     zone: "Zone 1",
     date: new Date("June 29, 2023"),
@@ -129,7 +129,7 @@ const data: Household[] = [
   {
     householdNumber: "1232",
     type: "Renter",
-    members: "5",
+    members: 5,
     head: "Karl Abechuela",
     zone: "Zone 1",
     date: new Date("June 29, 2023"),
@@ -138,7 +138,7 @@ const data: Household[] = [
   {
     householdNumber: "1232",
     type: "Renter",
-    members: "5",
+    members: 5,
     head: "Karl Abechuela",
     zone: "Zone 1",
     date: new Date("June 29, 2023"),

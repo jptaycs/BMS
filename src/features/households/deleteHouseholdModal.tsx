@@ -6,7 +6,7 @@ import { toast } from "sonner";
 type Household = {
   householdNumber: string,
   type: string,
-  members: string,
+  members: number,
   head: string,
   zone: string,
   date: Date,
