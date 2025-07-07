@@ -54,15 +54,12 @@ const columns: ColumnDef<Household>[] = [
     accessorKey: "householdNumber",
   },
   {
-    header: "Type",
+    header: "Type of Household",
     accessorKey: "type",
   },
   {
     header: "Family Members",
     accessorKey: "members",
-    cell: ({ row }) => (
-      <div className="flex ml-10">{row.original.members}</div>
-    )
   },
   {
     header: "Head of Household",
@@ -73,7 +70,7 @@ const columns: ColumnDef<Household>[] = [
     accessorKey: "zone"
   },
   {
-    header: "Date of Recidency",
+    header: "Date of Residency",
     accessorKey: "date",
     cell: ({ row }) => {
       return (
