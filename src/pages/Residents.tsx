@@ -58,7 +58,7 @@ const columns: ColumnDef<Resident>[] = [
     header: "Civil Status",
     accessorKey: "civilStatus",
   },
-    {
+  {
     header: "Birthday",
     accessorKey: "birthdate",
     cell: ({ row }) => {
@@ -67,11 +67,11 @@ const columns: ColumnDef<Resident>[] = [
       )
     }
   },
-    {
+  {
     header: "Gender",
     accessorKey: "gender"
   },
-      {
+  {
     header: "Zone",
     accessorKey: "zone"
   },
@@ -119,37 +119,37 @@ const data: Resident[] = [
     status: "Active",
   },
   {
-  fullName: "Karl Abechuela",
-  civilStatus: "Single",
-  birthday: new Date("June 29, 2003"),
-  gender: "Male",
-  zone: "Zone",
-  status: "Dead",
-},
+    fullName: "Karl Abechuela",
+    civilStatus: "Single",
+    birthday: new Date("June 29, 2003"),
+    gender: "Male",
+    zone: "Zone",
+    status: "Dead",
+  },
   {
-  fullName: "Karl Abechuela",
-  civilStatus: "Single",
-  birthday: new Date("June 29, 2003"),
-  gender: "Male",
-  zone: "Zone",
-  status: "Moved Out",
-},
+    fullName: "Karl Abechuela",
+    civilStatus: "Single",
+    birthday: new Date("June 29, 2003"),
+    gender: "Male",
+    zone: "Zone",
+    status: "Moved Out",
+  },
   {
-  fullName: "Karl Abechuela",
-  civilStatus: "Single",
-  birthday: new Date("June 29, 2003"),
-  gender: "Male",
-  zone: "Zone",
-  status: "Missing",
-},
+    fullName: "Karl Abechuela",
+    civilStatus: "Single",
+    birthday: new Date("June 29, 2003"),
+    gender: "Male",
+    zone: "Zone",
+    status: "Missing",
+  },
 ]
 
 export default function Residents() {
   return (
     <>
       <div className="flex gap-5 w-full items-center justify-center">
-        <Searchbar placeholder="Search event" classname="flex flex-5" />
-        <Filter filters={filters} initial="All Events" classname="flex-1" />
+        <Searchbar placeholder="Search Resident" classname="flex flex-5" />
+        <Filter filters={filters} initial="All Residents" classname="flex-1" />
         <Button variant="destructive" size="lg" >
           <Trash />
           Delete Selected
