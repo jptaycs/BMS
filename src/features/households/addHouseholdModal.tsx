@@ -2,84 +2,59 @@ import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { CalendarIcon, Plus } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { z } from "zod"
-import { format } from "date-fns"
-import { Calendar } from "@/components/ui/calendar";
-import { Textarea } from "@/components/ui/textarea";
 import { useState } from "react";
 import { toast } from "sonner";
-<<<<<<< HEAD
-=======
 import { invoke } from '@tauri-apps/api/core'
->>>>>>> origin/main
+import { householdSchema } from "@/types/formSchema";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { format } from "date-fns";
+import { Calendar } from "@/components/ui/calendar";
 
 const selectOption: string[] = [
-  "Seminar",
-  "Assembly",
+  "Renter",
 ]
 
-const formSchema = z.object({
-  name: z.string().min(2, {
-    message: "Event name is too short"
-  }).max(50, {
-    message: "Event name is too long, put other details on the 'details' form"
-  }),
-  type: z.string().min(2, {
-    message: "Event type is too short"
-  }).max(50, {
-    message: "Event type is too long."
-  }),
-  date: z.date({
-    required_error: "Please specify the event date"
-  }),
-  venue: z.string().min(2, {
-    message: "Event venue is too short"
-  }).max(50, {
-    message: "Event venue is too long"
-  }),
-  atendee: z.string().min(2, {
-    message: "Atendee too long"
-  }).max(50, {
-    message: "Event venue is too long"
-  }),
-  notes: z.string().max(1000, {
-    message: "Important notes is too long"
-  })
-})
+const zone: string[] = [
+  "Zone 1",
+  "Zone 2",
+  "Zone 3",
+  "Zone 4",
+  "Zone 5",
+  "Zone 6",
+]
 
-export default function AddEventModal() {
+const status: string[] = [
+  "Active",
+  "Moved Out"
+]
+
+export default function AddHouseholdModal() {
   const [openCalendar, setOpenCalendar] = useState(false)
   const [openModal, setOpenModal] = useState(false)
-<<<<<<< HEAD
-
-=======
->>>>>>> origin/main
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
+  const form = useForm<z.infer<typeof householdSchema>>({
+    resolver: zodResolver(householdSchema),
     defaultValues: {
-      name: "",
+      householdNumber: "",
       type: "",
+      members: 1,
+      head: "",
+      zone: "",
       date: undefined,
-      venue: "",
-      atendee: "",
-      notes: ""
+      status: ""
     }
   })
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    toast.success("Event added sucessfully", {
-      description: `${values.name} was added`
+  function onSubmit(values: z.infer<typeof householdSchema>) {
+    toast.success("Household added sucessfully", {
+      description: `${values.householdNumber} was added`
     })
     setOpenModal(false)
-<<<<<<< HEAD
-=======
     invoke("greet")
->>>>>>> origin/main
   }
 
   return (
@@ -91,32 +66,32 @@ export default function AddEventModal() {
         <DialogTrigger asChild>
           <Button size="lg" >
             <Plus />
-            Add Event
+            Add Household
           </Button>
         </DialogTrigger>
         <DialogContent>
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)}>
               <DialogHeader>
-                <DialogTitle className="text-black">Create Event</DialogTitle>
+                <DialogTitle className="text-black">Create Household</DialogTitle>
                 <DialogDescription className="text-sm">
                   All the fields are required unless it is mentioned otherwise
                 </DialogDescription>
-                <p className="text-md font-bold text-black">Basic Event Information</p>
+                <p className="text-md font-bold text-black">Basic Household Information</p>
               </DialogHeader>
               <div className="flex flex-col gap-3">
                 <div>
                   <FormField
                     control={form.control}
-                    name="name"
+                    name="householdNumber"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel htmlFor="name" className="text-black font-bold text-xs">Name</FormLabel>
+                        <FormLabel htmlFor="name" className="text-black font-bold text-xs">Household Number</FormLabel>
                         <FormControl>
                           <Input
                             id="name"
                             type="text"
-                            placeholder="Enter event name"
+                            placeholder="Enter Household name"
                             required
                             {...field}
                             className="text-black"
@@ -137,7 +112,7 @@ export default function AddEventModal() {
                         <Select onValueChange={field.onChange} defaultValue={field.value}>
                           <FormControl>
                             <SelectTrigger className="w-full text-black border-black/15">
-                              <SelectValue placeholder={"Please select the event type"} />
+                              <SelectValue placeholder={"Please select the household type"} />
                             </SelectTrigger>
                           </FormControl>
                           <SelectContent>
@@ -154,10 +129,79 @@ export default function AddEventModal() {
                 <div>
                   <FormField
                     control={form.control}
+                    name="members"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel htmlFor="members" className="text-black font-bold text-xs">Family Members</FormLabel>
+                        <FormControl>
+                          <Input
+                            id="members"
+                            type="number"
+                            placeholder="How many family members"
+                            required
+                            {...field}
+                            className="text-black"
+                            onChange={(e) => field.onChange(+e.target.value)}
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </div>
+                <div>
+                  <FormField
+                    control={form.control}
+                    name="head"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel htmlFor="members" className="text-black font-bold text-xs">Head of Household</FormLabel>
+                        <FormControl>
+                          <Input
+                            id="members"
+                            type="string"
+                            placeholder="Enter head of household"
+                            required
+                            {...field}
+                            className="text-black"
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </div>
+                <div>
+                  <FormField
+                    control={form.control}
+                    name="zone"
+                    render={({ field }) => (
+                      <FormItem className="w-full">
+                        <FormLabel htmlFor="type" className="text-black font-bold text-xs">Zone</FormLabel>
+                        <Select onValueChange={field.onChange} defaultValue={field.value}>
+                          <FormControl>
+                            <SelectTrigger className="w-full text-black border-black/15">
+                              <SelectValue placeholder={"Please select the household type"} />
+                            </SelectTrigger>
+                          </FormControl>
+                          <SelectContent>
+                            {zone.map((option, i) => (
+                              <SelectItem value={option} key={i}>{option}</SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </div>
+                <div>
+                  <FormField
+                    control={form.control}
                     name="date"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel htmlFor="date" className="text-black font-bold text-xs">Date</FormLabel>
+                        <FormLabel htmlFor="date" className="text-black font-bold text-xs">Date of Residency</FormLabel>
                         <Popover
                           open={openCalendar}
                           onOpenChange={setOpenCalendar}
@@ -183,12 +227,6 @@ export default function AddEventModal() {
                               onSelect={field.onChange}
                               captionLayout="dropdown"
                               onDayClick={() => setOpenCalendar(false)}
-<<<<<<< HEAD
-=======
-                              disabled={(date) =>
-                                date < new Date()
-                              }
->>>>>>> origin/main
                             />
                           </PopoverContent>
                         </Popover>
@@ -200,64 +238,22 @@ export default function AddEventModal() {
                 <div>
                   <FormField
                     control={form.control}
-                    name="venue"
+                    name="status"
                     render={({ field }) => (
-                      <FormItem>
-                        <FormLabel htmlFor="name" className="text-black font-bold text-xs">Venue</FormLabel>
-                        <FormControl>
-                          <Input
-                            id="venue"
-                            type="text"
-                            placeholder="Enter Venue Location"
-                            required
-                            {...field}
-                            className="text-black"
-                          />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                </div>
-                <div>
-                  <FormField
-                    control={form.control}
-                    name="atendee"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel htmlFor="name" className="text-black font-bold text-xs">Atendee</FormLabel>
-                        <FormControl>
-                          <Input
-                            id="atendee"
-                            type="text"
-                            placeholder="Enter Atendees"
-                            required
-                            {...field}
-                            className="text-black"
-                          />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                </div>
-                <div>
-                  <FormField
-                    control={form.control}
-                    name="notes"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel htmlFor="name" className="text-black font-bold text-xs">Important Notes</FormLabel>
-                        <FormControl>
-                          <Textarea
-                            id="notes"
-                            name="notes"
-                            placeholder="Enter important notes"
-                            required
-                            className="text-black"
-                            {...field}
-                          />
-                        </FormControl>
+                      <FormItem className="w-full">
+                        <FormLabel htmlFor="type" className="text-black font-bold text-xs">Status</FormLabel>
+                        <Select onValueChange={field.onChange} defaultValue={field.value}>
+                          <FormControl>
+                            <SelectTrigger className="w-full text-black border-black/15">
+                              <SelectValue placeholder={"Please select the household type"} />
+                            </SelectTrigger>
+                          </FormControl>
+                          <SelectContent>
+                            {status.map((option, i) => (
+                              <SelectItem value={option} key={i}>{option}</SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
                         <FormMessage />
                       </FormItem>
                     )}
@@ -265,7 +261,7 @@ export default function AddEventModal() {
                 </div>
               </div>
               <div className="mt-4 flex justify-end">
-                <Button>Save Event</Button>
+                <Button>Save Household</Button>
               </div>
             </form>
           </Form>

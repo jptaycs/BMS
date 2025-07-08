@@ -161,6 +161,12 @@ export default function ViewEventModal(props: ViewProps) {
                               onSelect={field.onChange}
                               captionLayout="dropdown"
                               onDayClick={() => setOpenCalendar(false)}
+<<<<<<< HEAD
+=======
+                              disabled={(date) =>
+                                date < new Date()
+                              }
+>>>>>>> origin/main
                             />
                           </PopoverContent>
                         </Popover>
