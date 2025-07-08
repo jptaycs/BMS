@@ -13,7 +13,10 @@ import { Calendar } from "@/components/ui/calendar";
 import { Textarea } from "@/components/ui/textarea";
 import { useState } from "react";
 import { toast } from "sonner";
+<<<<<<< HEAD
+=======
 import { invoke } from '@tauri-apps/api/core'
+>>>>>>> origin/main
 
 const selectOption: string[] = [
   "Seminar",
@@ -52,6 +55,10 @@ const formSchema = z.object({
 export default function AddEventModal() {
   const [openCalendar, setOpenCalendar] = useState(false)
   const [openModal, setOpenModal] = useState(false)
+<<<<<<< HEAD
+
+=======
+>>>>>>> origin/main
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -69,7 +76,10 @@ export default function AddEventModal() {
       description: `${values.name} was added`
     })
     setOpenModal(false)
+<<<<<<< HEAD
+=======
     invoke("greet")
+>>>>>>> origin/main
   }
 
   return (
@@ -173,9 +183,12 @@ export default function AddEventModal() {
                               onSelect={field.onChange}
                               captionLayout="dropdown"
                               onDayClick={() => setOpenCalendar(false)}
+<<<<<<< HEAD
+=======
                               disabled={(date) =>
                                 date < new Date()
                               }
+>>>>>>> origin/main
                             />
                           </PopoverContent>
                         </Popover>

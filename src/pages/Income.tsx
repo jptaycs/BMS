@@ -1,3 +1,8 @@
+<<<<<<< HEAD
+export default function Income() {
+  return (
+    <>This is the Income tab</>
+=======
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import DataTable from "@/components/ui/datatable";
@@ -139,5 +144,6 @@ export default function Income() {
       }
       ]} />
     </>
+>>>>>>> origin/main
   )
 }

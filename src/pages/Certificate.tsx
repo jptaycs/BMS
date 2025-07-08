@@ -1,18 +1,24 @@
+<<<<<<< HEAD
+export default function Certificate() {
+  return (
+    <>This is the certificate tab</>
+=======
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import DataTable from "@/components/ui/datatable";
 import Filter from "@/components/ui/filter";
 import Searchbar from "@/components/ui/searchbar";
+import IssueCertificateModal from "@/features/certificate/issueCertificateModal";
 import { ColumnDef } from "@tanstack/react-table";
 import { format } from "date-fns";
 import { Trash } from "lucide-react";
 
 type Certificate = {
-  no: string
+  name: string
   type: string,
-  issued: string,
-  price: number,
+  or: string,
   date: Date,
+  zone: string,
 }
 
 const columns: ColumnDef<Certificate>[] = [
@@ -38,20 +44,16 @@ const columns: ColumnDef<Certificate>[] = [
     )
   },
   {
-    header: "Cert No.",
-    accessorKey: "no"
+    header: "Issued To",
+    accessorKey: "name"
   },
   {
     header: "Type",
     accessorKey: "type"
   },
   {
-    header: "Issued To",
-    accessorKey: "issued"
-  },
-  {
-    header: "Price",
-    accessorKey: "price"
+    header: "OR#",
+    accessorKey: "or"
   },
   {
     header: "Issued On",
@@ -62,50 +64,57 @@ const columns: ColumnDef<Certificate>[] = [
       )
     }
   },
+  {
+    header: "Address",
+    accessorKey: "zone"
+  },
+  {
+    header: "Status",
+    cell: ({ row }) => {
+      const oneYearLater = new Date(row.original.date)
+      oneYearLater.setFullYear(row.original.date.getFullYear() + 1)
+      const status = (new Date() > oneYearLater) ? "Expired" : "Active"
+      console.log(status)
+      return <p>{status}</p>
+    }
+  }
 ]
 
 const date: Certificate[] = [
   {
-    no: "21214412",
-    type: "Brgy Clearance",
-    issued: "Jerome Tayco",
-    price: 200,
+    name: "John Cena",
+    type: "Barangay Certificate",
+    or: "0932",
     date: new Date("June 2, 2025"),
+    zone: "Zone 3",
   },
   {
-    no: "21214412",
-    type: "Brgy Clearance",
-    issued: "Jerome Tayco",
-    price: 200,
-    date: new Date("June 2, 2025"),
+    name: "John Cena",
+    type: "Barangay Certificate",
+    or: "0932",
+    date: new Date("July 8, 2024"),
+    zone: "Zone 3",
   },
   {
-    no: "21214412",
-    type: "Brgy Clearance",
-    issued: "Jerome Tayco",
-    price: 200,
+    name: "John Cena",
+    type: "Barangay Certificate",
+    or: "0932",
     date: new Date("June 2, 2025"),
+    zone: "Zone 3",
   },
   {
-    no: "21214412",
-    type: "Brgy Clearance",
-    issued: "Jerome Tayco",
-    price: 200,
+    name: "John Cena",
+    type: "Barangay Certificate",
+    or: "0932",
     date: new Date("June 2, 2025"),
+    zone: "Zone 3",
   },
   {
-    no: "21214412",
-    type: "Brgy Clearance",
-    issued: "Jerome Tayco",
-    price: 200,
+    name: "John Cena",
+    type: "Barangay Certificate",
+    or: "0932",
     date: new Date("June 2, 2025"),
-  },
-  {
-    no: "21214412",
-    type: "Brgy Clearance",
-    issued: "Jerome Tayco",
-    price: 200,
-    date: new Date("June 2, 2025"),
+    zone: "Zone 3",
   },
 ]
 
@@ -119,13 +128,20 @@ export default function Certificate() {
           <Trash />
           Delete Selected
         </Button>
+        <IssueCertificateModal />
       </div >
       <DataTable<Certificate> columns={[...columns, {
         id: "view",
         header: "",
+        cell: () => (
+          <>
+            <Button>View more</Button>
+          </>
+        )
       }]}
         data={date}
       />
     </>
+>>>>>>> origin/main
   )
 }

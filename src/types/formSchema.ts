@@ -162,6 +162,3 @@ export const expenseSchema = z.object({
     required_error: "Please specify the issued date"
   }),
 })
-
-
-

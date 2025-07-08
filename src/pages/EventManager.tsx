@@ -166,7 +166,11 @@ export default function EventManager() {
   return (
     <>
       <div className="flex gap-5 w-full items-center justify-center">
+<<<<<<< HEAD
+        <Searchbar placeholder="Search event" classname="flex flex-5" />
+=======
         <Searchbar placeholder="Search Event" classname="flex flex-5" />
+>>>>>>> origin/main
         <Filter filters={filters} initial="All Events" classname="flex-1" />
         <Button variant="destructive" size="lg" >
           <Trash />

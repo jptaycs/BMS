@@ -1,3 +1,8 @@
+<<<<<<< HEAD
+export default function Residents() {
+  return (
+    <>This is the residents tab</>
+=======
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import DataTable from "@/components/ui/datatable";
@@ -172,5 +177,6 @@ export default function Residents() {
       }
       ]} />
     </>
+>>>>>>> origin/main
   )
 }
