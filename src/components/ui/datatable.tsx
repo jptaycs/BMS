@@ -1,11 +1,13 @@
 import { ColumnDef, flexRender, getCoreRowModel, useReactTable } from "@tanstack/react-table"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "./table"
+import { cn } from "@/lib/utils"
 
 type TableProps<T> = {
   columns: ColumnDef<T>[]
   data: T[]
+  classname?: string
 }
-export default function DataTable<T>({ columns, data }: TableProps<T>) {
+export default function DataTable<T>({ columns, data, classname }: TableProps<T>) {
 
   const table = useReactTable({
     data,
@@ -14,7 +16,7 @@ export default function DataTable<T>({ columns, data }: TableProps<T>) {
   })
 
   return (
-    <div className="w-full my-10">
+    <div className={cn("w-full my-10 text-black", classname)}>
       <Table>
         <TableHeader >
           {table.getHeaderGroups().map((headerGroup) => (

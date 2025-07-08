@@ -8,9 +8,10 @@ import { Checkbox } from "@/components/ui/checkbox";
 import DataTable from "@/components/ui/datatable";
 import Filter from "@/components/ui/filter";
 import Searchbar from "@/components/ui/searchbar";
+import IssueCertificateModal from "@/features/certificate/issueCertificateModal";
 import { ColumnDef } from "@tanstack/react-table";
 import { format } from "date-fns";
-import { Plus, Trash } from "lucide-react";
+import { Trash } from "lucide-react";
 
 type Certificate = {
   name: string
@@ -127,10 +128,7 @@ export default function Certificate() {
           <Trash />
           Delete Selected
         </Button>
-        <Button size="lg" >
-          <Plus />
-          Issue Certificate
-        </Button>
+        <IssueCertificateModal />
       </div >
       <DataTable<Certificate> columns={[...columns, {
         id: "view",
