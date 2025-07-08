@@ -1,16 +1,8 @@
-<<<<<<< HEAD
-export default function Income() {
-  return (
-    <>This is the Income tab</>
-=======
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import DataTable from "@/components/ui/datatable";
 import Filter from "@/components/ui/filter";
 import Searchbar from "@/components/ui/searchbar";
-import AddHouseholdModal from "@/features/households/addHouseholdModal";
-import DeleteHouseholdModal from "@/features/households/deleteHouseholdModal";
-import ViewHouseholdModal from "@/features/households/viewHouseholdModal";
 import AddIncomeModal from "@/features/income/addIncomeModal";
 import DeleteIncomeModal from "@/features/income/deleteIncomeModal";
 import ViewIncomeModal from "@/features/income/viewIncomeModal";
@@ -93,7 +85,7 @@ const data: Income[] = [
     receivedBy: "John Doe",
     date: new Date("June 29, 2023"),
   },
-    {
+  {
     type: "Business Permit",
     amount: 150,
     or: 123456,
@@ -101,7 +93,7 @@ const data: Income[] = [
     receivedBy: "John Doe",
     date: new Date("June 29, 2023"),
   },
-    {
+  {
     type: "Business Permit",
     amount: 150,
     or: 123456,
@@ -109,7 +101,7 @@ const data: Income[] = [
     receivedBy: "John Doe",
     date: new Date("June 29, 2023"),
   },
-    {
+  {
     type: "Business Permit",
     amount: 150,
     or: 123456,
@@ -117,7 +109,7 @@ const data: Income[] = [
     receivedBy: "John Doe",
     date: new Date("June 29, 2023"),
   },
-  
+
 ]
 
 export default function Income() {
@@ -147,6 +139,5 @@ export default function Income() {
       }
       ]} />
     </>
->>>>>>> origin/main
   )
 }

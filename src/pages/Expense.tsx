@@ -1,8 +1,3 @@
-<<<<<<< HEAD
-export default function Expense() {
-  return (
-    <>This is the expense tab</>
-=======
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import DataTable from "@/components/ui/datatable";
@@ -90,7 +85,7 @@ const data: Expense[] = [
     paidBy: "John Doe",
     date: new Date("June 29, 2023"),
   },
-    {
+  {
     type: "Business Permit",
     amount: 150,
     or: 123456,
@@ -98,7 +93,7 @@ const data: Expense[] = [
     paidBy: "John Doe",
     date: new Date("June 29, 2023"),
   },
-    {
+  {
     type: "Business Permit",
     amount: 150,
     or: 123456,
@@ -106,7 +101,7 @@ const data: Expense[] = [
     paidBy: "John Doe",
     date: new Date("June 29, 2023"),
   },
-    {
+  {
     type: "Business Permit",
     amount: 150,
     or: 123456,
@@ -114,7 +109,7 @@ const data: Expense[] = [
     paidBy: "John Doe",
     date: new Date("June 29, 2023"),
   },
-  
+
 ]
 
 export default function Expense() {
@@ -144,6 +139,5 @@ export default function Expense() {
       }
       ]} />
     </>
->>>>>>> origin/main
   )
 }

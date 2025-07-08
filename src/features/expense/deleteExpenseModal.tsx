@@ -7,8 +7,8 @@ type Expense = {
   type: string,
   amount: number,
   or: number,
-  receivedFrom: string,
-  receivedBy: string,
+  paidFrom: string,
+  paidBy: string,
   date: Date,
 }
 export default function DeleteIncomeModal(expense: Expense) {

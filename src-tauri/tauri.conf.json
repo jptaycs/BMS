@@ -13,11 +13,8 @@
     "windows": [
       {
         "title": "Barangay Management System",
-<<<<<<< HEAD
         "width": 1100,
-=======
         "width": 1300,
->>>>>>> origin/main
         "height": 800
       }
     ],
