@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { blotterSchema, eventSchema, residentSchema } from "@/types/formSchema";
+import { eventSchema, residentSchema } from "@/types/formSchema";
 import { CalendarIcon, Eye } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { z } from "zod"
@@ -38,6 +38,45 @@ const selectStatus: string[] = [
   "Transferred to Police",
   "Closed",
 ]
+
+const blotterSchema = z.object({
+  type: z.string().min(2, {
+    message: "Resident name is too short"
+  }).max(50, {
+    message: "Resident name is too long, put other details on the 'details' form"
+  }),
+  reportedBy: z.string().min(2, {
+    message: "Resident type is too short"
+  }).max(50, {
+    message: "Resident type is too long."
+  }),
+  involved: z.string().min(2, {
+    message: "Resident venue is too short"
+  }).max(50, {
+    message: "Resident venue is too long"
+  }),
+  date: z.date({
+    required_error: "Please specify the event date"
+  }),
+  location: z.string().min(2, {
+    message: "Resident too long"
+  }).max(50, {
+    message: "Resident venue is too long"
+  }),
+  zone: z.string().min(2, {
+    message: "Resident too long"
+  }).max(50, {
+    message: "Resident venue is too long"
+  }),
+  status: z.string().max(1000, {
+    message: "Important notes is too long"
+  }),
+  narrative: z.string().min(2, {
+    message: "Resident too long"
+  }).max(50, {
+    message: "Resident venue is too long"
+  }),
+})
 
 export default function ViewBlotterModal(props: ViewPropsBlotter) {
   const [openCalendar, setOpenCalendar] = useState(false)

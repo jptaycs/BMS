@@ -14,8 +14,38 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover
 import { CalendarIcon } from "lucide-react";
 import { useState } from "react";
 import { format } from "date-fns";
-import { officialSchema} from "@/types/formSchema";
 import { z } from "zod";
+
+export const officialSchema = z.object({
+  fullName: z.string().min(2, {
+    message: "Type name is too short"
+  }).max(50, {
+    message: "Type name is too long, put other details on the 'details' form"
+  }),
+  category: z.number().min(0, {
+    message: "Amount is too short"
+  }).max(50, {
+    message: "Amount type is too long."
+  }),
+  position: z.number().min(0, {
+    message: "OR$ is too short"
+  }).max(50, {
+    message: "OR# type is too long."
+  }),
+  termStart: z.string().min(2, {
+    message: "Name too long"
+  }).max(50, {
+    message: "Name venue is too long"
+  }),
+    termEnd: z.string().min(2, {
+    message: "Name too long"
+  }).max(50, {
+    message: "Name venue is too long"
+  }),
+  assignedZone: z.date({
+    required_error: "Please specify the issued date"
+  }),
+})
 
 export default function AddOfficialModal({ open, onClose }) {
   const [form, setForm] = useState({
