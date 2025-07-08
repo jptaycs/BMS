@@ -1,8 +1,3 @@
-<<<<<<< HEAD
-export default function Certificate() {
-  return (
-    <>This is the certificate tab</>
-=======
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import DataTable from "@/components/ui/datatable";
@@ -142,6 +137,5 @@ export default function Certificate() {
         data={date}
       />
     </>
->>>>>>> origin/main
   )
 }

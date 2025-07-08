@@ -41,8 +41,6 @@ export const eventSchema = z.object({
     message: "Important notes is too long"
   })
 })
-<<<<<<< HEAD
-=======
 
 export const residentSchema = z.object({
   fullName: z.string().min(2, {
@@ -124,7 +122,7 @@ export const incomeSchema = z.object({
   }).max(50, {
     message: "Name venue is too long"
   }),
-    paidBy: z.string().min(2, {
+  paidBy: z.string().min(2, {
     message: "Name too long"
   }).max(50, {
     message: "Name venue is too long"
@@ -155,7 +153,7 @@ export const expenseSchema = z.object({
   }).max(50, {
     message: "Name venue is too long"
   }),
-    paidBy: z.string().min(2, {
+  paidBy: z.string().min(2, {
     message: "Name too long"
   }).max(50, {
     message: "Name venue is too long"
@@ -164,4 +162,3 @@ export const expenseSchema = z.object({
     required_error: "Please specify the issued date"
   }),
 })
->>>>>>> origin/main
