@@ -23,8 +23,8 @@ export default function AddExpenseModal() {
       type: "",
       amount: 0,
       or: 0,
-      receivedFrom: "",
-      receivedBy: "",
+      paidFrom: "",
+      paidBy: "",
       date: undefined,
     }
   })
@@ -129,15 +129,15 @@ export default function AddExpenseModal() {
                 <div>
                   <FormField
                     control={form.control}
-                    name="receivedFrom"
+                    name="paidFrom"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel htmlFor="receivedFrom" className="text-black font-bold text-xs">Received From</FormLabel>
+                        <FormLabel htmlFor="paidFrom" className="text-black font-bold text-xs">Paid From</FormLabel>
                         <FormControl>
                           <Input
-                            id="receivedFrom"
+                            id="paidFrom"
                             type="text"
-                            placeholder="Enter Received From"
+                            placeholder="Enter Paid From"
                             required
                             {...field}
                             className="text-black"
@@ -151,15 +151,15 @@ export default function AddExpenseModal() {
                 <div>
                   <FormField
                     control={form.control}
-                    name="receivedBy"
+                    name="paidBy"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel htmlFor="receivedBy" className="text-black font-bold text-xs">Received From</FormLabel>
+                        <FormLabel htmlFor="paidBy" className="text-black font-bold text-xs">Paid From</FormLabel>
                         <FormControl>
                           <Input
-                            id="receivedBy"
+                            id="paidBy"
                             type="text"
-                            placeholder="Enter Received By"
+                            placeholder="Enter Paid By"
                             required
                             {...field}
                             className="text-black"
