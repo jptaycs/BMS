@@ -13,7 +13,6 @@ type Certificate = {
   or: string,
   date: Date,
   zone: string,
-  status: "Active" | "Expired"
 }
 
 const columns: ColumnDef<Certificate>[] = [
@@ -63,6 +62,16 @@ const columns: ColumnDef<Certificate>[] = [
     header: "Address",
     accessorKey: "zone"
   },
+  {
+    header: "Status",
+    cell: ({ row }) => {
+      const oneYearLater = new Date(row.original.date)
+      oneYearLater.setFullYear(row.original.date.getFullYear() + 1)
+      const status = (new Date() > oneYearLater) ? "Expired" : "Active"
+      console.log(status)
+      return <p>{status}</p>
+    }
+  }
 ]
 
 const date: Certificate[] = [
@@ -72,7 +81,13 @@ const date: Certificate[] = [
     or: "0932",
     date: new Date("June 2, 2025"),
     zone: "Zone 3",
-    status: "Expired",
+  },
+  {
+    name: "John Cena",
+    type: "Barangay Certificate",
+    or: "0932",
+    date: new Date("July 8, 2024"),
+    zone: "Zone 3",
   },
   {
     name: "John Cena",
@@ -80,7 +95,6 @@ const date: Certificate[] = [
     or: "0932",
     date: new Date("June 2, 2025"),
     zone: "Zone 3",
-    status: "Expired",
   },
   {
     name: "John Cena",
@@ -88,7 +102,6 @@ const date: Certificate[] = [
     or: "0932",
     date: new Date("June 2, 2025"),
     zone: "Zone 3",
-    status: "Expired",
   },
   {
     name: "John Cena",
@@ -96,15 +109,6 @@ const date: Certificate[] = [
     or: "0932",
     date: new Date("June 2, 2025"),
     zone: "Zone 3",
-    status: "Expired",
-  },
-  {
-    name: "John Cena",
-    type: "Barangay Certificate",
-    or: "0932",
-    date: new Date("June 2, 2025"),
-    zone: "Zone 3",
-    status: "Expired",
   },
 ]
 
