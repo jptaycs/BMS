@@ -17,14 +17,31 @@ export default function ViewOfficialModal({ person, onClose }) {
     termStart: person.info?.termStart || "",
     termEnd: person.info?.termEnd || "",
     zone: person.info?.zone || "",
+    image: person.image,
   });
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setFormData((prev) => ({ ...prev, image: reader.result }));
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
   const handleSave = () => {
     console.log("Updated Official Info:", formData);
+    onClose();
+  };
+
+  const handleDelete = () => {
+    console.log("Deleted Official:", formData);
     onClose();
   };
 
@@ -37,10 +54,19 @@ export default function ViewOfficialModal({ person, onClose }) {
 
         <div className="text-center text-black">
           <img
-            src={person.image}
+            src={formData.image}
             alt={formData.name}
-            className="w-24 h-24 rounded-full mx-auto mb-4 object-cover"
+            className="w-24 h-24 rounded-full mx-auto mb-2 object-cover"
           />
+
+          <div className="flex justify-center mb-4 cursor-pointer">
+            <Input
+              type="file"
+              accept="image/*"
+              onChange={handleImageChange}
+              className="w-25 h-10 text-blue-600 bg-blue-600 hover:bg-blue-700 "
+            />
+          </div>
 
           <div className="space-y-2">
             <Input
@@ -94,10 +120,16 @@ export default function ViewOfficialModal({ person, onClose }) {
             />
           </div>
 
-          <div className="flex justify-end pt-4">
+          <div className="flex justify-end pt-4 space-x-2">
+            <button
+              onClick={handleDelete}
+              className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700"
+            >
+              Delete
+            </button>
             <button
               onClick={handleSave}
-              className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+              className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
             >
               Save Changes
             </button>
