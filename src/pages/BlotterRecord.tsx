@@ -29,7 +29,7 @@ type Blotter = {
   date: Date,
   location: string,
   zone: string,
-  status: "On Going" | "Active" |  "Transferred to Police" | "Closed",
+  status: "On Going" | "Active" | "Transferred to Police" | "Closed",
   // narrative: string,
   // action: string,
   // witnesses: string,
@@ -68,18 +68,18 @@ const columns: ColumnDef<Blotter>[] = [
     header: "Type",
     accessorKey: "type",
   },
-   {
+  {
     header: "Reported By",
     accessorKey: "reportedBy",
   },
-   {
+  {
     header: "involved",
     accessorKey: "type",
   },
   {
     header: "Date Incident",
     accessorKey: "date",
-    cell: ({ row }) => { 
+    cell: ({ row }) => {
       return (
         <div>{format(row.original.date, "MMMM do, yyyy")}</div>
       )
@@ -138,7 +138,7 @@ const data: Blotter[] = [
     zone: "Zone 4",
     status: "On Going",
   },
-    {
+  {
     id: 323,
     type: "Theft",
     reportedBy: "Karl Abechuela",
@@ -148,7 +148,7 @@ const data: Blotter[] = [
     zone: "Zone 4",
     status: "On Going",
   },
-    {
+  {
     id: 323,
     type: "Theft",
     reportedBy: "Karl Abechuela",
@@ -172,7 +172,7 @@ export default function Blotters() {
         </Button>
         <AddBlotterModal />
       </div >
-      <DataTable<Blotter> data={data} columns={[...columns,
+      <DataTable<Blotter> maxHeight="max-h-[29rem]" data={data} columns={[...columns,
       {
         id: "view",
         header: "",

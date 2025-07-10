@@ -135,6 +135,7 @@ export default function Certificate() {
         )
       }]}
         data={date}
+        maxHeight="max-h-[29rem]"
       />
     </>
   )

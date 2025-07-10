@@ -18,6 +18,7 @@ import BlotterRecord from './pages/BlotterRecord';
 import Official from './pages/Official';
 import Settings from './pages/Settings';
 import { Toaster } from './components/ui/sonner';
+import CertificateTemplate from './pages/CertificateTemplate';
 function App() {
   const queryClient: QueryClient = new QueryClient({
     defaultOptions: {
@@ -34,16 +35,17 @@ function App() {
           <Route
             element={<AppLayout />}
           >
-            <Route path='/dashboard' element={<Dashboard />} />
-            <Route path='/event-manager' element={<EventManager />} />
-            <Route path='/residents' element={<Residents />} />
-            <Route path='/households' element={<Households />} />
-            <Route path='/certificates' element={<Certificate />} />
-            <Route path='/income' element={<Income />} />
-            <Route path='/expense' element={<Expense />} />
-            <Route path='/blotter' element={<BlotterRecord />} />
-            <Route path='/officials' element={<Official />} />
-            <Route path='/settings' element={<Settings />} />
+            <Route path='dashboard' element={<Dashboard />} />
+            <Route path='event-manager' element={<EventManager />} />
+            <Route path='residents' element={<Residents />} />
+            <Route path='households' element={<Households />} />
+            <Route path='certificates' element={<Certificate />} />
+            <Route path='/certificates/template/:template' element={<CertificateTemplate />} />
+            <Route path='income' element={<Income />} />
+            <Route path='expense' element={<Expense />} />
+            <Route path='blotter' element={<BlotterRecord />} />
+            <Route path='officials' element={<Official />} />
+            <Route path='settings' element={<Settings />} />
           </Route>
           <Route index element={<LoginPage />}></Route>
         </Routes>

@@ -3,6 +3,7 @@ import DataTable from "@/components/ui/datatable";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { ColumnDef } from "@tanstack/react-table";
 import { Plus } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 type Certificate = {
   price: number,
@@ -19,13 +20,6 @@ const column: ColumnDef<Certificate>[] = [
     id: "type",
     header: "Type",
     accessorKey: "type"
-  },
-  {
-    id: "action",
-    header: "",
-    cell: () => (
-      <Button>Select</Button>
-    )
   },
 ]
 
@@ -63,6 +57,7 @@ const data: Certificate[] =
 
 
 export default function IssueCertificateModal() {
+  const navigate = useNavigate()
   return (
     <>
       <Dialog>
@@ -72,15 +67,24 @@ export default function IssueCertificateModal() {
             Issue Certificate
           </Button>
         </DialogTrigger>
-        <DialogContent className="overflow-scroll max-h-[30rem]">
+        <DialogContent className="max-w-80">
           <DialogHeader className="">
             <DialogTitle className="text-black">Select Certificate Type</DialogTitle>
             <DialogDescription>Please choose the type of certificate you’d like to generate. This helps us customize the content and layout based on your selection.</DialogDescription>
           </DialogHeader>
           <DataTable <Certificate>
-            columns={column}
+            columns={[...column,
+            {
+              id: "action",
+              header: "",
+              cell: ({ row }) => (
+                <Button onClick={() => navigate(`/certificates/template/${row.original.type}`)}>Select</Button>
+              )
+            },
+            ]}
             data={data}
             classname="mt-0 mb-0"
+            maxHeight="max-h-80"
           />
         </DialogContent>
       </Dialog>
