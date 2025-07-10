@@ -155,7 +155,7 @@ export default function Households() {
         </Button>
         <AddHouseholdModal />
       </div >
-      <DataTable<Household> maxHeight="max-h-[29rem]" data={data} columns={[...columns,
+      <DataTable<Household> data={data} columns={[...columns,
       {
         id: "view",
         header: "",

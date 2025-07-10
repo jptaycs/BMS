@@ -172,7 +172,7 @@ export default function Blotters() {
         </Button>
         <AddBlotterModal />
       </div >
-      <DataTable<Blotter> maxHeight="max-h-[29rem]" data={data} columns={[...columns,
+      <DataTable<Blotter> data={data} columns={[...columns,
       {
         id: "view",
         header: "",
