@@ -1,7 +1,6 @@
 import { Event } from "@/types/types";
 
 export function sort(data: Event[], term: string): Event[] {
-  console.log(term)
   switch (term) {
     case "Date ASC":
       return sortDateAsc(data)

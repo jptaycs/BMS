@@ -7,3 +7,12 @@ export type Event = {
   atendee: string,
   notes: string
 }
+
+export type Resident = {
+  fullName: string,
+  civilStatus: string,
+  status: "Moved Out" | "Active" | "Dead" | "Missing",
+  birthday: Date,
+  gender: string,
+  zone: string,
+}

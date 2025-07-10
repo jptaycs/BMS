@@ -9,6 +9,10 @@ import ViewResidentModal from "@/features/residents/viewResidentModal";
 import { ColumnDef } from "@tanstack/react-table";
 import { format } from "date-fns";
 import { Trash } from "lucide-react";
+import { Resident } from "@/types/types";
+import { useSearchParams } from "react-router-dom";
+import { useMemo } from "react";
+import { sort } from "@/service/residentSort";
 
 const filters = [
   "All Residents",
@@ -19,14 +23,6 @@ const filters = [
   "Missing",
 ]
 
-type Resident = {
-  fullName: string,
-  civilStatus: string,
-  status: "Moved Out" | "Active" | "Dead" | "Missing",
-  birthday: Date,
-  gender: string,
-  zone: string,
-}
 
 const columns: ColumnDef<Resident>[] = [
   {
@@ -145,18 +141,28 @@ const data: Resident[] = [
 ]
 
 export default function Residents() {
+  const [searchParams, setSearchParams] = useSearchParams()
+
+  const handleSortChange = (sortValue: string) => {
+    searchParams.set("sort", sortValue)
+    setSearchParams(searchParams)
+  }
+
+  const filteredData = useMemo(() => {
+    return sort(data, searchParams.get("sort") ?? "All Residents")
+  }, [searchParams, data])
   return (
     <>
       <div className="flex gap-5 w-full items-center justify-center">
         <Searchbar placeholder="Search Resident" classname="flex flex-5" />
-        <Filter filters={filters} initial="All Residents" classname="flex-1" />
+        <Filter onChange={handleSortChange} filters={filters} initial="All Residents" classname="flex-1" />
         <Button variant="destructive" size="lg" >
           <Trash />
           Delete Selected
         </Button>
         <AddResidentModal />
       </div >
-      <DataTable<Resident> maxHeight="max-h-[29rem]" data={data} columns={[...columns,
+      <DataTable<Resident> maxHeight="max-h-[29rem]" data={filteredData} columns={[...columns,
       {
         id: "view",
         header: "",
