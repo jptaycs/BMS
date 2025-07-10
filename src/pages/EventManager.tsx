@@ -6,14 +6,17 @@ import Searchbar from "@/components/ui/searchbar";
 import AddEventModal from "@/features/event-manager/addEventModal";
 import CancelEventModal from "@/features/event-manager/cancelEventModal";
 import ViewEventModal from "@/features/event-manager/viewEventModal";
+import { sort } from "@/service/eventSort";
 import { ColumnDef } from "@tanstack/react-table";
 import { format } from "date-fns";
 import { Trash } from "lucide-react";
+import { useMemo } from "react";
+import { useSearchParams } from "react-router-dom";
 
 const filters = [
   "All Events",
-  "Alphabetical",
-  "Date",
+  "Date ASC",
+  "Date DESC",
   "Venue",
   "Upcoming",
   "Finished",
@@ -119,7 +122,7 @@ const data: Event[] = [
     name: "Meeting for event",
     type: "Assembly",
     status: "Upcoming",
-    date: new Date("June 2, 2025"),
+    date: new Date("June 12, 2025"),
     venue: "Barangay Hall",
     atendee: "All Officials",
     notes: "Sample Notes",
@@ -128,7 +131,7 @@ const data: Event[] = [
     name: "Meeting for event",
     type: "Assembly",
     status: "Upcoming",
-    date: new Date("June 2, 2025"),
+    date: new Date("June 10, 2025"),
     venue: "Barangay Hall",
     atendee: "All Officials",
     notes: "Sample Notes",
@@ -271,18 +274,29 @@ const data: Event[] = [
 ]
 
 export default function EventManager() {
+  const [searchParams, setSearchParams] = useSearchParams()
+
+  const handleSortChange = (sortValue: string) => {
+    searchParams.set("sort", sortValue)
+    setSearchParams(searchParams)
+  }
+
+  const filteredData = useMemo(() => {
+    return sort(data, searchParams.get("sort") ?? "All Events")
+  }, [searchParams, data])
+
   return (
     <>
       <div className="flex gap-5 w-full items-center justify-center">
         <Searchbar placeholder="Search Event" classname="flex flex-5" />
-        <Filter filters={filters} initial="All Events" classname="flex-1" />
+        <Filter onChange={handleSortChange} filters={filters} initial="All Events" classname="flex-1" />
         <Button variant="destructive" size="lg" >
           <Trash />
           Delete Selected
         </Button>
         <AddEventModal />
       </div >
-      <DataTable<Event> maxHeight="max-h-[29rem]" data={data} columns={[...columns,
+      <DataTable<Event> maxHeight="max-h-[29rem]" data={filteredData} columns={[...columns,
       {
         id: "view",
         header: "",

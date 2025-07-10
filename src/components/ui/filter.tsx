@@ -6,12 +6,13 @@ type FilterOption = {
   initial: string,
   filters: string[],
   classname?: string
+  onChange: (value: string) => void
 }
 
-export default function Filter({ initial, filters, classname }: FilterOption) {
+export default function Filter({ initial, filters, classname, onChange }: FilterOption) {
   return (
     <div className={cn("relative ", classname)}>
-      <Select>
+      <Select onValueChange={onChange}>
         <SelectTrigger className="min-h-12 border-1 w-full">
           <div className="flex gap-2 ">
             <FilterIcon />
