@@ -124,7 +124,7 @@ export default function Expense() {
         </Button>
         <AddExpenseModal />
       </div >
-      <DataTable<Expense> maxHeight="max-h-[29rem]" data={data} columns={[...columns,
+      <DataTable<Expense> data={data} columns={[...columns,
       {
         id: "view",
         header: "",

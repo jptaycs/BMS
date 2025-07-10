@@ -296,7 +296,7 @@ export default function EventManager() {
         </Button>
         <AddEventModal />
       </div >
-      <DataTable<Event> maxHeight="max-h-[29rem]" data={filteredData} columns={[...columns,
+      <DataTable<Event> data={filteredData} columns={[...columns,
       {
         id: "view",
         header: "",

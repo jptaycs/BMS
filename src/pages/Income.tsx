@@ -124,7 +124,7 @@ export default function Income() {
         </Button>
         <AddIncomeModal />
       </div >
-      <DataTable<Income> maxHeight="max-h-29rem" data={data} columns={[...columns,
+      <DataTable<Income> data={data} columns={[...columns,
       {
         id: "view",
         header: "",

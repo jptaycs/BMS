@@ -162,7 +162,7 @@ export default function Residents() {
         </Button>
         <AddResidentModal />
       </div >
-      <DataTable<Resident> maxHeight="max-h-[29rem]" data={filteredData} columns={[...columns,
+      <DataTable<Resident> data={filteredData} columns={[...columns,
       {
         id: "view",
         header: "",
