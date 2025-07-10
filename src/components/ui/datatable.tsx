@@ -16,9 +16,9 @@ export default function DataTable<T>({ columns, data, classname }: TableProps<T>
   })
 
   return (
-    <div className={cn("w-full my-10 text-black h-full", classname)}>
+    <div className={cn("w-full my-10 text-black", classname)}>
       <Table>
-        <TableHeader >
+        <TableHeader className="sticky top-0 bg-background z-10" >
           {table.getHeaderGroups().map((headerGroup) => (
             <TableRow key={headerGroup.id}  >
               {headerGroup.headers.map((header) => {
