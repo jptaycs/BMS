@@ -72,7 +72,7 @@ export const residentSchema = z.object({
 })
 
 export const householdSchema = z.object({
-  householdNumber: z.string().min(2, {
+  householdNumber: z.number().min(2, {
     message: "Household name is too short"
   }).max(50, {
     message: "Household name is too long, put other details on the 'details' form"

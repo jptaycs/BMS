@@ -13,16 +13,8 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover
 import { Calendar } from "@/components/ui/calendar";
 import { useState } from "react";
 import { toast } from "sonner";
+import { Household } from "@/types/types";
 
-type ViewPropsHousehold = {
-  householdNumber: string,
-  type: string,
-  head: string,
-  members: number,
-  zone: string,
-  date: Date,
-  status: "Active" | "Moved Out",
-}
 
 const selectOption: string[] = [
   "Renter",
@@ -42,7 +34,7 @@ const status: string[] = [
   "Moved Out"
 ]
 
-export default function ViewResidentModal(props: ViewPropsHousehold) {
+export default function ViewResidentModal(props: Household) {
   const [openCalendar, setOpenCalendar] = useState(false)
   const [openModal, setOpenModal] = useState(false)
   const form = useForm<z.infer<typeof householdSchema>>({
