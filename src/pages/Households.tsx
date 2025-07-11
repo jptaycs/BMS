@@ -9,6 +9,10 @@ import ViewHouseholdModal from "@/features/households/viewHouseholdModal";
 import { ColumnDef } from "@tanstack/react-table";
 import { format } from "date-fns";
 import { Trash } from "lucide-react";
+import { useMemo } from "react";
+import { useSearchParams } from "react-router-dom";
+import { Household } from "@/types/types";
+import { sort } from "@/service/householdSort";
 
 const filters = [
   "All Households",
@@ -17,15 +21,6 @@ const filters = [
   "Owner",
 ]
 
-type Household = {
-  householdNumber: string,
-  type: string,
-  members: number,
-  head: string,
-  zone: string,
-  date: Date,
-  status: "Moved Out" | "Active",
-}
 
 const columns: ColumnDef<Household>[] = [
   {
@@ -106,7 +101,7 @@ const columns: ColumnDef<Household>[] = [
 
 const data: Household[] = [
   {
-    householdNumber: "1232",
+    householdNumber: 1232,
     type: "Renter",
     members: 15,
     head: "Karl Abechuela",
@@ -115,7 +110,16 @@ const data: Household[] = [
     status: "Active",
   },
   {
-    householdNumber: "1232",
+    householdNumber: 1242,
+    type: "Owner",
+    members: 5,
+    head: "Karl Abechuela",
+    zone: "Zone 1",
+    date: new Date("June 29, 2023"),
+    status: "Active",
+  },
+  {
+    householdNumber: 1132,
     type: "Renter",
     members: 5,
     head: "Karl Abechuela",
@@ -124,16 +128,7 @@ const data: Household[] = [
     status: "Active",
   },
   {
-    householdNumber: "1232",
-    type: "Renter",
-    members: 5,
-    head: "Karl Abechuela",
-    zone: "Zone 1",
-    date: new Date("June 29, 2023"),
-    status: "Active",
-  },
-  {
-    householdNumber: "1232",
+    householdNumber: 1432,
     type: "Renter",
     members: 5,
     head: "Karl Abechuela",
@@ -144,18 +139,28 @@ const data: Household[] = [
 ]
 
 export default function Households() {
+  const [searchParams, setSearchParams] = useSearchParams()
+
+  const handleSortChange = (sortValue: string) => {
+    searchParams.set("sort", sortValue)
+    setSearchParams(searchParams)
+  }
+
+  const filteredData = useMemo(() => {
+    return sort(data, searchParams.get("sort") ?? "All Household")
+  }, [searchParams, data])
   return (
     <>
       <div className="flex gap-5 w-full items-center justify-center">
         <Searchbar placeholder="Search Household" classname="flex flex-5" />
-        <Filter filters={filters} initial="All Households" classname="flex-1" />
+        <Filter onChange={handleSortChange} filters={filters} initial="All Households" classname="flex-1" />
         <Button variant="destructive" size="lg" >
           <Trash />
           Delete Selected
         </Button>
         <AddHouseholdModal />
       </div >
-      <DataTable<Household> data={data} columns={[...columns,
+      <DataTable<Household> data={filteredData} columns={[...columns,
       {
         id: "view",
         header: "",

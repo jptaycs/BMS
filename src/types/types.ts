@@ -16,3 +16,12 @@ export type Resident = {
   gender: string,
   zone: string,
 }
+export type Household = {
+  householdNumber: number,
+  type: string,
+  members: number,
+  head: string,
+  zone: string,
+  date: Date,
+  status: "Moved Out" | "Active",
+}

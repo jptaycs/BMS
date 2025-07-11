@@ -1,17 +1,9 @@
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Household } from "@/types/types";
 import { XIcon } from "lucide-react";
 import { toast } from "sonner";
 
-type Household = {
-  householdNumber: string,
-  type: string,
-  members: number,
-  head: string,
-  zone: string,
-  date: Date,
-  status: "Moved Out" | "Active",
-}
 export default function DeleteHouseholdModal(households: Household) {
 
   function onConfirm() {
