@@ -11,7 +11,7 @@ import { format } from "date-fns";
 import { Trash } from "lucide-react";
 import { Resident } from "@/types/types";
 import { useSearchParams } from "react-router-dom";
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { sort } from "@/service/residentSort";
 
 const filters = [
@@ -123,7 +123,7 @@ const data: Resident[] = [
     status: "Dead",
   },
   {
-    fullName: "Karl Abechuela",
+    fullName: "Sheer Jay Francisco",
     civilStatus: "Single",
     birthday: new Date("June 29, 2003"),
     gender: "Male",
@@ -131,7 +131,7 @@ const data: Resident[] = [
     status: "Moved Out",
   },
   {
-    fullName: "Karl Abechuela",
+    fullName: "Jerome Tayco",
     civilStatus: "Single",
     birthday: new Date("June 29, 2003"),
     gender: "Male",
@@ -142,19 +142,29 @@ const data: Resident[] = [
 
 export default function Residents() {
   const [searchParams, setSearchParams] = useSearchParams()
+  const [searchQuery, setSearchQuery] = useState<string>("")
 
   const handleSortChange = (sortValue: string) => {
     searchParams.set("sort", sortValue)
     setSearchParams(searchParams)
   }
+  const handleSearch = (searchTerm: string) => {
+    setSearchQuery(searchTerm)
+  }
 
   const filteredData = useMemo(() => {
+    if (searchQuery.trim()) {
+      let result = [...data]
+      const pattern = new RegExp(`${searchQuery}`, "i")
+      return result.filter((resident) => pattern.test(resident.fullName))
+    }
+
     return sort(data, searchParams.get("sort") ?? "All Residents")
-  }, [searchParams, data])
+  }, [searchParams, data, searchQuery])
   return (
     <>
       <div className="flex gap-5 w-full items-center justify-center">
-        <Searchbar placeholder="Search Resident" classname="flex flex-5" />
+        <Searchbar onChange={handleSearch} placeholder="Search Resident" classname="flex flex-5" />
         <Filter onChange={handleSortChange} filters={filters} initial="All Residents" classname="flex-1" />
         <Button variant="destructive" size="lg" >
           <Trash />
