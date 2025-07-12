@@ -10,7 +10,7 @@ import { sort } from "@/service/eventSort";
 import { ColumnDef } from "@tanstack/react-table";
 import { format } from "date-fns";
 import { Trash } from "lucide-react";
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 
 const filters = [
@@ -218,7 +218,7 @@ const data: Event[] = [
     notes: "Sample Notes",
   },
   {
-    name: "Meeting for event",
+    name: "Meeting for Youth Program",
     type: "Assembly",
     status: "Upcoming",
     date: new Date("June 2, 2025"),
@@ -227,7 +227,7 @@ const data: Event[] = [
     notes: "Sample Notes",
   },
   {
-    name: "Meeting for event",
+    name: "Quarterly Seminar",
     type: "Assembly",
     status: "Upcoming",
     date: new Date("June 3, 2025"),
@@ -236,7 +236,7 @@ const data: Event[] = [
     notes: "Sample Notes",
   },
   {
-    name: "Livelihood Progra",
+    name: "Livelihood Program",
     type: "Seminar",
     status: "Finished",
     date: new Date("June 2, 2025"),
@@ -245,7 +245,7 @@ const data: Event[] = [
     notes: "Sample Notes",
   },
   {
-    name: "Livelihood Progra",
+    name: "Livelihood Program",
     type: "Seminar",
     status: "Cancelled",
     date: new Date("June 2, 2025"),
@@ -254,7 +254,7 @@ const data: Event[] = [
     notes: "Sample Notes",
   },
   {
-    name: "Livelihood Progra",
+    name: "Livelihood Program",
     type: "Seminar",
     status: "Ongoing",
     date: new Date("June 2, 2025"),
@@ -263,7 +263,7 @@ const data: Event[] = [
     notes: "Sample Notes",
   },
   {
-    name: "Livelihood Progra",
+    name: "Livelihood Program",
     type: "Seminar",
     status: "Finished",
     date: new Date("June 2, 2025"),
@@ -275,20 +275,29 @@ const data: Event[] = [
 
 export default function EventManager() {
   const [searchParams, setSearchParams] = useSearchParams()
+  const [searchQuery, setSearchQuery] = useState("")
 
   const handleSortChange = (sortValue: string) => {
     searchParams.set("sort", sortValue)
     setSearchParams(searchParams)
   }
 
+  const handleSearch = (searchTerm: string) => {
+    setSearchQuery(searchTerm)
+  }
   const filteredData = useMemo(() => {
+    if (searchQuery.trim()) {
+      let result = [...data]
+      const pattern = new RegExp(`${searchQuery}`, "i")
+      return result.filter((event) => pattern.test(event.name))
+    }
     return sort(data, searchParams.get("sort") ?? "All Events")
-  }, [searchParams, data])
+  }, [searchParams, data, searchQuery])
 
   return (
     <>
       <div className="flex gap-5 w-full items-center justify-center">
-        <Searchbar placeholder="Search Event" classname="flex flex-5" />
+        <Searchbar onChange={handleSearch} placeholder="Search Event" classname="flex flex-5" />
         <Filter onChange={handleSortChange} filters={filters} initial="All Events" classname="flex-1" />
         <Button variant="destructive" size="lg" >
           <Trash />

@@ -153,15 +153,13 @@ export default function Residents() {
   }
 
   const filteredData = useMemo(() => {
-    let result = [...data]
-
     if (searchQuery.trim()) {
+      let result = [...data]
       const pattern = new RegExp(`${searchQuery}`, "i")
       return result.filter((resident) => pattern.test(resident.fullName))
     }
 
-    result = sort(data, searchParams.get("sort") ?? "All Residents")
-    return result
+    return sort(data, searchParams.get("sort") ?? "All Residents")
   }, [searchParams, data, searchQuery])
   return (
     <>
