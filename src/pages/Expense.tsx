@@ -9,6 +9,10 @@ import ViewExpenseModal from "@/features/expense/viewExpenseModal";
 import { ColumnDef } from "@tanstack/react-table";
 import { format } from "date-fns";
 import { Trash } from "lucide-react";
+import type { Expense } from "@/types/types";
+import { useSearchParams } from "react-router-dom";
+import { useMemo } from "react";
+import { sort } from "@/service/expenseSort";
 
 const filters = [
   "All Expense",
@@ -18,14 +22,6 @@ const filters = [
   "This Week",
 ]
 
-type Expense = {
-  type: string,
-  amount: number,
-  or: number,
-  paidFrom: string,
-  paidBy: string,
-  date: Date,
-}
 
 const columns: ColumnDef<Expense>[] = [
   {
@@ -91,7 +87,7 @@ const data: Expense[] = [
     or: 123456,
     paidFrom: "Treasurer Office",
     paidBy: "John Doe",
-    date: new Date("June 29, 2023"),
+    date: new Date(),
   },
   {
     type: "Business Permit",
@@ -99,11 +95,11 @@ const data: Expense[] = [
     or: 123456,
     paidFrom: "Treasurer Office",
     paidBy: "John Doe",
-    date: new Date("June 29, 2023"),
+    date: new Date("July 1, 2025"),
   },
   {
     type: "Business Permit",
-    amount: 150,
+    amount: 1500,
     or: 123456,
     paidFrom: "Treasurer Office",
     paidBy: "John Doe",
@@ -113,18 +109,27 @@ const data: Expense[] = [
 ]
 
 export default function Expense() {
+  const [searchParams, setSearchParams] = useSearchParams()
+  const handleSortChange = (sortValue: string) => {
+    searchParams.set("sort", sortValue)
+    setSearchParams(searchParams)
+  }
+
+  const filteredData = useMemo(() => {
+    return sort(data, searchParams.get("sort") ?? "All Expenses")
+  }, [searchParams, data])
   return (
     <>
       <div className="flex gap-5 w-full items-center justify-center">
         <Searchbar placeholder="Search Income" classname="flex flex-5" />
-        <Filter filters={filters} initial="All Income" classname="flex-1" />
+        <Filter onChange={handleSortChange} filters={filters} initial="All Income" classname="flex-1" />
         <Button variant="destructive" size="lg" >
           <Trash />
           Delete Selected
         </Button>
         <AddExpenseModal />
       </div >
-      <DataTable<Expense> data={data} columns={[...columns,
+      <DataTable<Expense> data={filteredData} columns={[...columns,
       {
         id: "view",
         header: "",

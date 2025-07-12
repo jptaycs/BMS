@@ -34,3 +34,11 @@ export type Income = {
   receivedBy: string,
   date: Date,
 }
+export type Expense = {
+  type: string,
+  amount: number,
+  or: number,
+  paidFrom: string,
+  paidBy: string,
+  date: Date,
+}
