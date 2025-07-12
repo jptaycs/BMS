@@ -25,3 +25,12 @@ export type Household = {
   date: Date,
   status: "Moved Out" | "Active",
 }
+
+export type Income = {
+  type: string,
+  amount: number,
+  or: number,
+  receivedFrom: string,
+  receivedBy: string,
+  date: Date,
+}

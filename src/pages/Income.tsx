@@ -6,9 +6,13 @@ import Searchbar from "@/components/ui/searchbar";
 import AddIncomeModal from "@/features/income/addIncomeModal";
 import DeleteIncomeModal from "@/features/income/deleteIncomeModal";
 import ViewIncomeModal from "@/features/income/viewIncomeModal";
+import { sort } from "@/service/incomeSort";
+import type { Income } from "@/types/types";
 import { ColumnDef } from "@tanstack/react-table";
 import { format } from "date-fns";
 import { Trash } from "lucide-react";
+import { useMemo } from "react";
+import { useSearchParams } from "react-router-dom";
 
 const filters = [
   "All Income",
@@ -18,14 +22,6 @@ const filters = [
   "This Week",
 ]
 
-type Income = {
-  type: string,
-  amount: number,
-  or: number,
-  receivedFrom: string,
-  receivedBy: string,
-  date: Date,
-}
 
 const columns: ColumnDef<Income>[] = [
   {
@@ -83,7 +79,15 @@ const data: Income[] = [
     or: 123456,
     receivedFrom: "Treasurer Office",
     receivedBy: "John Doe",
-    date: new Date("June 29, 2023"),
+    date: new Date("July 1, 2025"),
+  },
+  {
+    type: "Business Permit",
+    amount: 150,
+    or: 123456,
+    receivedFrom: "Treasurer Office",
+    receivedBy: "John Doe",
+    date: new Date(),
   },
   {
     type: "Business Permit",
@@ -95,15 +99,7 @@ const data: Income[] = [
   },
   {
     type: "Business Permit",
-    amount: 150,
-    or: 123456,
-    receivedFrom: "Treasurer Office",
-    receivedBy: "John Doe",
-    date: new Date("June 29, 2023"),
-  },
-  {
-    type: "Business Permit",
-    amount: 150,
+    amount: 1500,
     or: 123456,
     receivedFrom: "Treasurer Office",
     receivedBy: "John Doe",
@@ -113,18 +109,27 @@ const data: Income[] = [
 ]
 
 export default function Income() {
+  const [searchParams, setSearchParams] = useSearchParams()
+  const handleSortChange = (sortValue: string) => {
+    searchParams.set("sort", sortValue)
+    setSearchParams(searchParams)
+  }
+
+  const filteredData = useMemo(() => {
+    return sort(data, searchParams.get("sort") ?? "All Income")
+  }, [searchParams, data])
   return (
     <>
       <div className="flex gap-5 w-full items-center justify-center">
         <Searchbar placeholder="Search Income" classname="flex flex-5" />
-        <Filter filters={filters} initial="All Income" classname="flex-1" />
+        <Filter onChange={handleSortChange} filters={filters} initial="All Income" classname="flex-1" />
         <Button variant="destructive" size="lg" >
           <Trash />
           Delete Selected
         </Button>
         <AddIncomeModal />
       </div >
-      <DataTable<Income> data={data} columns={[...columns,
+      <DataTable<Income> data={filteredData} columns={[...columns,
       {
         id: "view",
         header: "",
