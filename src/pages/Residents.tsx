@@ -13,6 +13,7 @@ import { Resident } from "@/types/types";
 import { useSearchParams } from "react-router-dom";
 import { useMemo, useState } from "react";
 import { sort } from "@/service/residentSort";
+import searchResident from "@/service/searchResident";
 
 const filters = [
   "All Residents",
@@ -154,9 +155,8 @@ export default function Residents() {
 
   const filteredData = useMemo(() => {
     if (searchQuery.trim()) {
-      let result = [...data]
-      const pattern = new RegExp(`${searchQuery}`, "i")
-      return result.filter((resident) => pattern.test(resident.fullName))
+      const processedData = sort(data, searchParams.get("sort") ?? "All Residents")
+      return searchResident(searchQuery, processedData)
     }
 
     return sort(data, searchParams.get("sort") ?? "All Residents")

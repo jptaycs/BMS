@@ -7,6 +7,7 @@ import AddEventModal from "@/features/event-manager/addEventModal";
 import CancelEventModal from "@/features/event-manager/cancelEventModal";
 import ViewEventModal from "@/features/event-manager/viewEventModal";
 import { sort } from "@/service/eventSort";
+import searchEvent from "@/service/searchEvent";
 import { ColumnDef } from "@tanstack/react-table";
 import { format } from "date-fns";
 import { Trash } from "lucide-react";
@@ -209,9 +210,9 @@ const data: Event[] = [
     notes: "Sample Notes",
   },
   {
-    name: "Meeting for event",
+    name: "Meeting for Youth Program",
     type: "Assembly",
-    status: "Upcoming",
+    status: "Cancelled",
     date: new Date("June 2, 2025"),
     venue: "Barangay Hall",
     atendee: "All Officials",
@@ -287,9 +288,8 @@ export default function EventManager() {
   }
   const filteredData = useMemo(() => {
     if (searchQuery.trim()) {
-      let result = [...data]
-      const pattern = new RegExp(`${searchQuery}`, "i")
-      return result.filter((event) => pattern.test(event.name))
+      const processedData = sort(data, searchParams.get("sort") ?? "All Events")
+      return searchEvent(searchQuery, processedData)
     }
     return sort(data, searchParams.get("sort") ?? "All Events")
   }, [searchParams, data, searchQuery])
