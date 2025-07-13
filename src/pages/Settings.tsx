@@ -19,7 +19,7 @@ export default function Settings() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 flex items-center justify-center p-4">
+    <div className="min-h-screen bg-gray-100 flex items-top justify-center p-4">
       <div className="w-full max-w-4xl bg-white shadow-md rounded-lg p-8">
         <h1 className="text-center text-2xl font-semibold mb-10">
           Barangay Information
