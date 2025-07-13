@@ -52,35 +52,34 @@ const categories = [
     count: 2,
     icon: CustomPWD,
   },
-]
+];
 
 const PopulationData = [
   {
     population: 100,
-    zone: 1
+    zone: 1,
   },
   {
     population: 100,
-    zone: 2
+    zone: 2,
   },
   {
     population: 100,
-    zone: 3
+    zone: 3,
   },
   {
     population: 100,
-    zone: 4
+    zone: 4,
   },
   {
     population: 100,
-    zone: 5
+    zone: 5,
   },
   {
     population: 200,
-    zone: 6
+    zone: 6,
   },
-]
-
+];
 
 const IncomeData = [
   {
@@ -119,27 +118,36 @@ const IncomeData = [
     fill: "#4E3D8F",
     value: 3.5,
   },
-]
+];
 
 export default function Dashboard() {
   return (
-    <>
-      <Greet />
-      <div className="flex gap-7 my-7 overflow-clip flex-wrap justify-around flex-1 ">
-        {categories.map((category, i) => (
-          <div key={i}>
-            < CategoryCard title={category.title} count={category.count} icon={category.icon} />
+    <div className="w-screen h-screen overflow-y-auto overflow-x-hidden">
+      {/* Wrapper that controls overall scale and margin */}
+      <div className="scale-[81%] origin-top-left mx-auto w-[100%] box-border">
+        <Greet />
+
+        <div className="flex gap-6 my-6 flex-wrap justify-around flex-1">
+          {categories.map((category, i) => (
+            <div key={i} className="w-[22%] min-w-[150px]">
+              <CategoryCard
+                title={category.title}
+                count={category.count}
+                icon={category.icon}
+              />
+            </div>
+          ))}
+        </div>
+
+        <div className="flex flex-row gap-5 ml-3 mr-0 w-full">
+          <div className="w-[50%] min-w-[300px]">
+            <PopulationChart data={PopulationData} />
           </div>
-        ))}
-      </div>
-      <div className="flex flex-wrap overflow-clip gap-10">
-        <div className="flex-1 md:flex-2">
-          <PopulationChart data={PopulationData} />
-        </div>
-        <div className="flex-1 md:flex-2">
-          <IncomeChart data={IncomeData} />
+          <div className="w-[50%] min-w-[300px]">
+            <IncomeChart data={IncomeData} />
+          </div>
         </div>
       </div>
-    </>
-  )
+    </div>
+  );
 }
