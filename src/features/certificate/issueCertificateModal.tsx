@@ -25,7 +25,7 @@ const column: ColumnDef<Certificate>[] = [
 
 const data: Certificate[] =
   [
-    { "price": 30, "type": "4PS Certification" },
+    { "price": 10, "type": "4PS Certification" },
     { "price": 30, "type": "Barangay Certificate" },
     { "price": 30, "type": "Barangay Clearance" },
     { "price": 30, "type": "Barangay Indigency" },
@@ -67,25 +67,28 @@ export default function IssueCertificateModal() {
             Issue Certificate
           </Button>
         </DialogTrigger>
-        <DialogContent className="max-w-80">
-          <DialogHeader className="">
-            <DialogTitle className="text-black">Select Certificate Type</DialogTitle>
-            <DialogDescription>Please choose the type of certificate you’d like to generate. This helps us customize the content and layout based on your selection.</DialogDescription>
-          </DialogHeader>
-          <DataTable <Certificate>
-            columns={[...column,
-            {
-              id: "action",
-              header: "",
-              cell: ({ row }) => (
-                <Button onClick={() => navigate(`/certificates/template/${row.original.type}`)}>Select</Button>
-              )
-            },
-            ]}
-            data={data}
-            classname="mt-0 mb-0"
-            maxHeight="max-h-80"
-          />
+        <DialogContent className="max-h-[30rem] p-0 flex flex-col gap-0 overflow-auto ">
+          <div className="p-6  border-b bg-background">
+            <DialogHeader>
+              <DialogTitle className="text-black">Select Certificate Type</DialogTitle>
+              <DialogDescription>Please choose the type of certificate you’d like to generate. This helps us customize the content and layout based on your selection.</DialogDescription>
+            </DialogHeader>
+          </div>
+          <div className="flex-1 px-6 ">
+            <DataTable <Certificate>
+              columns={[...column,
+              {
+                id: "action",
+                header: "",
+                cell: ({ row }) => (
+                  <Button onClick={() => navigate(`/certificates/template/${row.original.type}`)}>Select</Button>
+                )
+              },
+              ]}
+              data={data}
+              classname="mt-0 mb-0"
+            />
+          </div>
         </DialogContent>
       </Dialog>
     </>

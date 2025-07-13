@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
+import Fourps from "@/features/certificate/4ps"
 import { ArrowLeftCircleIcon, Printer } from "lucide-react"
 import { useNavigate, useParams } from "react-router-dom"
 
@@ -18,7 +19,7 @@ export default function CertificateTemplate() {
             <CardDescription className="text-center">{`Please fill out the necessary information needed for ${template}`}</CardDescription>
           </CardHeader>
           <CardContent>
-            <div className="h-fill"></div>
+            <Fourps />
           </CardContent>
           <CardFooter className="flex justify-center">
             <Button>
