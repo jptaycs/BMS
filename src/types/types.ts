@@ -9,6 +9,7 @@ export type Event = {
 }
 
 export type Resident = {
+  type(type: any): unknown
   fullName: string,
   civilStatus: string,
   status: "Moved Out" | "Active" | "Dead" | "Missing",
@@ -41,4 +42,23 @@ export type Expense = {
   paidFrom: string,
   paidBy: string,
   date: Date,
+}
+
+export type Certificate = {
+  name: string;
+  type: string;
+  or: string;
+  date: Date;
+  zone: string;
+};
+
+export type Blotter = {
+  status: string
+  id: number,
+  type: string,
+  reportedBy: string,
+  involved: string,
+  date: Date,
+  location: string,
+  zone: string,
 }

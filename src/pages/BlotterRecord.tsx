@@ -131,7 +131,7 @@ const data: Blotter[] = [
   {
     id: 323,
     type: "Theft",
-    reportedBy: "Karl Abechuela",
+    reportedBy: "John Abechuela",
     involved: "Lincoln",
     date: new Date("June 29, 2003"),
     location: "Brgy. Tambo",
@@ -164,8 +164,12 @@ export default function Blotters() {
   return (
     <>
       <div className="flex gap-5 w-full items-center justify-center">
-        <Searchbar placeholder="Search Blotter" classname="flex flex-5" />
-        <Filter filters={filters} initial="All Blotter" classname="flex-1" />
+        <Searchbar placeholder="Search Blotter" classname="flex flex-5" onChange={function (searchTerm: string): void {
+          throw new Error("Function not implemented.");
+        } } />
+        <Filter filters={filters} initial="All Blotter" classname="flex-1" onChange={function (value: string): void {
+          throw new Error("Function not implemented.");
+        } } />
         <Button variant="destructive" size="lg" >
           <Trash />
           Delete Selected

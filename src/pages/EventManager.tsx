@@ -139,7 +139,7 @@ const data: Event[] = [
   },
   {
     name: "Meeting for event",
-    type: "Assembly",
+    type: "Session",
     status: "Upcoming",
     date: new Date("June 2, 2025"),
     venue: "Barangay Hall",
@@ -148,7 +148,7 @@ const data: Event[] = [
   },
   {
     name: "Meeting for event",
-    type: "Assembly",
+    type: "Session",
     status: "Upcoming",
     date: new Date("June 2, 2025"),
     venue: "Barangay Hall",
