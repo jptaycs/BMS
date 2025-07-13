@@ -11,7 +11,7 @@ import type { Income } from "@/types/types";
 import { ColumnDef } from "@tanstack/react-table";
 import { format } from "date-fns";
 import { Trash } from "lucide-react";
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 
 const filters = [
@@ -20,17 +20,14 @@ const filters = [
   "Date Issued",
   "This Month",
   "This Week",
-]
-
+];
 
 const columns: ColumnDef<Income>[] = [
   {
     id: "select",
     header: ({ table }) => (
       <Checkbox
-        checked={
-          table.getIsAllPageRowsSelected() ? true : table.getIsSomePageRowsSelected() ? "indeterminate" : false
-        }
+        checked={table.getIsAllPageRowsSelected() ? true : table.getIsSomePageRowsSelected() ? "indeterminate" : false}
         onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
         aria-label="Select all"
         className="flex items-center justify-center"
@@ -45,32 +42,16 @@ const columns: ColumnDef<Income>[] = [
       />
     ),
   },
-  {
-    header: "Type",
-    accessorKey: "type",
-  },
-  {
-    header: "Amount",
-    accessorKey: "amount",
-  },
-  {
-    header: "Received From",
-    accessorKey: "receivedFrom",
-  },
-  {
-    header: "Received By",
-    accessorKey: "receivedBy",
-  },
+  { header: "Type", accessorKey: "type" },
+  { header: "Amount", accessorKey: "amount" },
+  { header: "Received From", accessorKey: "receivedFrom" },
+  { header: "Received By", accessorKey: "receivedBy" },
   {
     header: "Date Issued",
     accessorKey: "date",
-    cell: ({ row }) => {
-      return (
-        <div>{format(row.original.date, "MMMM do, yyyy")}</div>
-      )
-    }
+    cell: ({ row }) => <div>{format(row.original.date, "MMMM do, yyyy")}</div>,
   },
-]
+];
 
 const data: Income[] = [
   {
@@ -105,44 +86,72 @@ const data: Income[] = [
     receivedBy: "John Doe",
     date: new Date("June 29, 2023"),
   },
-
-]
+];
 
 export default function Income() {
-  const [searchParams, setSearchParams] = useSearchParams()
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchQuery, setSearchQuery] = useState("");
+
   const handleSortChange = (sortValue: string) => {
-    searchParams.set("sort", sortValue)
-    setSearchParams(searchParams)
-  }
+    searchParams.set("sort", sortValue);
+    setSearchParams(searchParams);
+  };
+
+  const handleSearch = (term: string) => {
+    setSearchQuery(term);
+  };
 
   const filteredData = useMemo(() => {
-    return sort(data, searchParams.get("sort") ?? "All Income")
-  }, [searchParams, data])
+    const sortValue = searchParams.get("sort") ?? "All Income";
+    let sorted = sort(data, sortValue);
+
+    if (searchQuery.trim()) {
+      const query = searchQuery.toLowerCase();
+      sorted = sorted.filter(item =>
+        item.type.toLowerCase().includes(query) ||
+        item.receivedFrom.toLowerCase().includes(query)
+      );
+    }
+
+    return sorted;
+  }, [searchParams, searchQuery]);
+
   return (
     <>
       <div className="flex gap-5 w-full items-center justify-center">
-        <Searchbar placeholder="Search Income" classname="flex flex-5" />
-        <Filter onChange={handleSortChange} filters={filters} initial="All Income" classname="flex-1" />
-        <Button variant="destructive" size="lg" >
+        <Searchbar
+          placeholder="Search Income"
+          onChange={handleSearch}
+          classname="flex flex-5"
+        />
+        <Filter
+          onChange={handleSortChange}
+          filters={filters}
+          initial="All Income"
+          classname="flex-1"
+        />
+        <Button variant="destructive" size="lg">
           <Trash />
           Delete Selected
         </Button>
         <AddIncomeModal />
-      </div >
-      <DataTable<Income> data={filteredData} columns={[...columns,
-      {
-        id: "view",
-        header: "",
-        cell: ({ row }) => {
-          return (
-            < div className="flex gap-3 ">
-              <ViewIncomeModal {...row.original} />
-              {<DeleteIncomeModal {...row.original} />}
-            </div >
-          )
-        }
-      }
-      ]} />
+      </div>
+      <DataTable<Income>
+        data={filteredData}
+        columns={[
+          ...columns,
+          {
+            id: "view",
+            header: "",
+            cell: ({ row }) => (
+              <div className="flex gap-3">
+                <ViewIncomeModal {...row.original} />
+                <DeleteIncomeModal {...row.original} />
+              </div>
+            ),
+          },
+        ]}
+      />
     </>
-  )
+  );
 }

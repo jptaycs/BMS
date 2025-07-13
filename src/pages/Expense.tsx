@@ -11,8 +11,9 @@ import { format } from "date-fns";
 import { Trash } from "lucide-react";
 import type { Expense } from "@/types/types";
 import { useSearchParams } from "react-router-dom";
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { sort } from "@/service/expenseSort";
+import searchExpense from "@/service/searchExpense"; // 👈 Import your search logic
 
 const filters = [
   "All Expense",
@@ -20,8 +21,7 @@ const filters = [
   "Date Issued",
   "This Month",
   "This Week",
-]
-
+];
 
 const columns: ColumnDef<Expense>[] = [
   {
@@ -29,9 +29,15 @@ const columns: ColumnDef<Expense>[] = [
     header: ({ table }) => (
       <Checkbox
         checked={
-          table.getIsAllPageRowsSelected() ? true : table.getIsSomePageRowsSelected() ? "indeterminate" : false
+          table.getIsAllPageRowsSelected()
+            ? true
+            : table.getIsSomePageRowsSelected()
+            ? "indeterminate"
+            : false
         }
-        onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
+        onCheckedChange={(value) =>
+          table.toggleAllPageRowsSelected(!!value)
+        }
         aria-label="Select all"
         className="flex items-center justify-center"
       />
@@ -67,18 +73,18 @@ const columns: ColumnDef<Expense>[] = [
     cell: ({ row }) => {
       return (
         <div>{format(row.original.date, "MMMM do, yyyy")}</div>
-      )
-    }
+      );
+    },
   },
-]
+];
 
 const data: Expense[] = [
   {
-    type: "Business Permit",
+    type: "Certificate",
     amount: 150,
     or: 123456,
-    paidFrom: "Treasurer Office",
-    paidBy: "John Doe",
+    paidFrom: "Kagawad Office",
+    paidBy: "John John",
     date: new Date("June 29, 2023"),
   },
   {
@@ -105,44 +111,65 @@ const data: Expense[] = [
     paidBy: "John Doe",
     date: new Date("June 29, 2023"),
   },
-
-]
+];
 
 export default function Expense() {
-  const [searchParams, setSearchParams] = useSearchParams()
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchQuery, setSearchQuery] = useState("");
+
   const handleSortChange = (sortValue: string) => {
-    searchParams.set("sort", sortValue)
-    setSearchParams(searchParams)
-  }
+    searchParams.set("sort", sortValue);
+    setSearchParams(searchParams);
+  };
+
+  const handleSearch = (term: string) => {
+    setSearchQuery(term);
+  };
 
   const filteredData = useMemo(() => {
-    return sort(data, searchParams.get("sort") ?? "All Expenses")
-  }, [searchParams, data])
+    const sorted = sort(data, searchParams.get("sort") ?? "All Expense");
+    if (searchQuery.trim()) {
+      return searchExpense(searchQuery, sorted);
+    }
+    return sorted;
+  }, [searchParams, data, searchQuery]);
+
   return (
     <>
       <div className="flex gap-5 w-full items-center justify-center">
-        <Searchbar placeholder="Search Income" classname="flex flex-5" />
-        <Filter onChange={handleSortChange} filters={filters} initial="All Income" classname="flex-1" />
-        <Button variant="destructive" size="lg" >
+        <Searchbar
+          placeholder="Search Expense"
+          classname="flex flex-5"
+          onChange={handleSearch}
+        />
+        <Filter
+          onChange={handleSortChange}
+          filters={filters}
+          initial="All Expense"
+          classname="flex-1"
+        />
+        <Button variant="destructive" size="lg">
           <Trash />
           Delete Selected
         </Button>
         <AddExpenseModal />
-      </div >
-      <DataTable<Expense> data={filteredData} columns={[...columns,
-      {
-        id: "view",
-        header: "",
-        cell: ({ row }) => {
-          return (
-            < div className="flex gap-3 ">
-              <ViewExpenseModal {...row.original} />
-              {<DeleteExpenseModal {...row.original} />}
-            </div >
-          )
-        }
-      }
-      ]} />
+      </div>
+      <DataTable<Expense>
+        data={filteredData}
+        columns={[
+          ...columns,
+          {
+            id: "view",
+            header: "",
+            cell: ({ row }) => (
+              <div className="flex gap-3">
+                <ViewExpenseModal {...row.original} />
+                <DeleteExpenseModal {...row.original} />
+              </div>
+            ),
+          },
+        ]}
+      />
     </>
-  )
+  );
 }

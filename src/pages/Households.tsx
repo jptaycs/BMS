@@ -13,14 +13,10 @@ import { useMemo } from "react";
 import { useSearchParams } from "react-router-dom";
 import { Household } from "@/types/types";
 import { sort } from "@/service/householdSort";
+import { useState } from "react";
+import searchHousehold from "@/service/searchHousehold";
 
-const filters = [
-  "All Households",
-  "Numerical",
-  "Renter",
-  "Owner",
-]
-
+const filters = ["All Households", "Numerical", "Renter", "Owner"];
 
 const columns: ColumnDef<Household>[] = [
   {
@@ -28,7 +24,11 @@ const columns: ColumnDef<Household>[] = [
     header: ({ table }) => (
       <Checkbox
         checked={
-          table.getIsAllPageRowsSelected() ? true : table.getIsSomePageRowsSelected() ? "indeterminate" : false
+          table.getIsAllPageRowsSelected()
+            ? true
+            : table.getIsSomePageRowsSelected()
+            ? "indeterminate"
+            : false
         }
         onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
         aria-label="Select all"
@@ -58,20 +58,18 @@ const columns: ColumnDef<Household>[] = [
   },
   {
     header: "Head of Household",
-    accessorKey: "head"
+    accessorKey: "head",
   },
   {
     header: "Zone",
-    accessorKey: "zone"
+    accessorKey: "zone",
   },
   {
     header: "Date of Residency",
     accessorKey: "date",
     cell: ({ row }) => {
-      return (
-        <div>{format(row.original.date, "MMMM do, yyyy")}</div>
-      )
-    }
+      return <div>{format(row.original.date, "MMMM do, yyyy")}</div>;
+    },
   },
   {
     header: "Status",
@@ -92,19 +90,17 @@ const columns: ColumnDef<Household>[] = [
           color = "#000000";
         }
       }
-      return (
-        <div style={{ color: color }}>{status}</div>
-      );
-    }
-  }
-]
+      return <div style={{ color: color }}>{status}</div>;
+    },
+  },
+];
 
 const data: Household[] = [
   {
     householdNumber: 1232,
     type: "Renter",
     members: 15,
-    head: "Karl Abechuela",
+    head: "Jerome Tayco",
     zone: "Zone 1",
     date: new Date("June 29, 2023"),
     status: "Active",
@@ -122,7 +118,7 @@ const data: Household[] = [
     householdNumber: 1132,
     type: "Renter",
     members: 5,
-    head: "Karl Abechuela",
+    head: "Sheerjay FranciscoS",
     zone: "Zone 1",
     date: new Date("June 29, 2023"),
     status: "Active",
@@ -136,45 +132,69 @@ const data: Household[] = [
     date: new Date("June 29, 2023"),
     status: "Moved Out",
   },
-]
+];
 
 export default function Households() {
-  const [searchParams, setSearchParams] = useSearchParams()
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchQuery, setSearchQuery] = useState("");
 
   const handleSortChange = (sortValue: string) => {
-    searchParams.set("sort", sortValue)
-    setSearchParams(searchParams)
-  }
+    searchParams.set("sort", sortValue);
+    setSearchParams(searchParams);
+  };
 
   const filteredData = useMemo(() => {
-    return sort(data, searchParams.get("sort") ?? "All Household")
-  }, [searchParams, data])
+    const sortedData = sort(data, searchParams.get("sort") ?? "All Households");
+
+    if (searchQuery.trim()) {
+      return searchHousehold(searchQuery, sortedData);
+    }
+
+    return sortedData;
+  }, [searchParams, data, searchQuery]);
+
   return (
     <>
       <div className="flex gap-5 w-full items-center justify-center">
-        <Searchbar placeholder="Search Household" classname="flex flex-5" />
-        <Filter onChange={handleSortChange} filters={filters} initial="All Households" classname="flex-1" />
-        <Button variant="destructive" size="lg" >
+        <Searchbar
+          onChange={(value) => setSearchQuery(value)}
+          placeholder="Search by Head or Type"
+          classname="flex flex-5"
+        />
+
+        <Filter
+          onChange={handleSortChange}
+          filters={filters}
+          initial="All Households"
+          classname="flex-1"
+        />
+        <Button variant="destructive" size="lg">
           <Trash />
           Delete Selected
         </Button>
         <AddHouseholdModal />
-      </div >
-      <DataTable<Household> data={filteredData} columns={[...columns,
-      {
-        id: "view",
-        header: "",
-        cell: ({ row }) => {
-          const status = row.original.status
-          return (
-            < div className="flex gap-3 ">
-              <ViewHouseholdModal {...row.original} />
-              {status == "Moved Out" && <DeleteHouseholdModal {...row.original} />}
-            </div >
-          )
-        }
-      }
-      ]} />
+      </div>
+      <DataTable<Household>
+        data={filteredData}
+        columns={[
+          ...columns,
+          {
+            id: "view",
+            header: "",
+            cell: ({ row }) => {
+              const status = row.original.status;
+              return (
+                <div className="flex gap-3 ">
+                  <ViewHouseholdModal {...row.original} />
+                  {status == "Moved Out" && (
+                    <DeleteHouseholdModal {...row.original} />
+                  )}
+                </div>
+              );
+            },
+          },
+        ]}
+      />
     </>
-  )
+  );
 }
