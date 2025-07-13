@@ -13,7 +13,7 @@ import type { Expense } from "@/types/types";
 import { useSearchParams } from "react-router-dom";
 import { useMemo, useState } from "react";
 import { sort } from "@/service/expenseSort";
-import searchExpense from "@/service/searchExpense"; // 👈 Import your search logic
+import searchExpense from "@/service/searchExpense";
 
 const filters = [
   "All Expense",
@@ -32,8 +32,8 @@ const columns: ColumnDef<Expense>[] = [
           table.getIsAllPageRowsSelected()
             ? true
             : table.getIsSomePageRowsSelected()
-            ? "indeterminate"
-            : false
+              ? "indeterminate"
+              : false
         }
         onCheckedChange={(value) =>
           table.toggleAllPageRowsSelected(!!value)

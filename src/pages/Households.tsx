@@ -27,8 +27,8 @@ const columns: ColumnDef<Household>[] = [
           table.getIsAllPageRowsSelected()
             ? true
             : table.getIsSomePageRowsSelected()
-            ? "indeterminate"
-            : false
+              ? "indeterminate"
+              : false
         }
         onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
         aria-label="Select all"
@@ -158,7 +158,7 @@ export default function Households() {
       <div className="flex gap-5 w-full items-center justify-center">
         <Searchbar
           onChange={(value) => setSearchQuery(value)}
-          placeholder="Search by Head or Type"
+          placeholder="Search Household"
           classname="flex flex-5"
         />
 
