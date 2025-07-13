@@ -1,24 +1,8 @@
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Blotter } from "@/types/types";
 import { XIcon } from "lucide-react";
 import { toast } from "sonner";
-
-type Blotter = {
-  id: number,
-  type: string,
-  reportedBy: string,
-  involved: string,
-  date: Date,
-  location: string,
-  zone: string,
-  status: "On Going" | "Active" |  "Transferred to Police" | "Closed",
-  // narrative: string,
-  // action: string,
-  // witnesses: string,
-  // evidence: string,
-  // resolution: string,
-  // hearingDate: Date,
-}
 
 export default function DeleteBlotterModal(blotter: Blotter) {
 

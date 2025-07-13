@@ -9,6 +9,10 @@ import ViewBlotterModal from "@/features/blotter/viewBlotterModal";
 import { ColumnDef } from "@tanstack/react-table";
 import { format } from "date-fns";
 import { Trash } from "lucide-react";
+import { useMemo, useState } from "react";
+import { useSearchParams } from "react-router-dom";
+import { Blotter } from "@/types/types";
+import sort from "@/service/blotterSort";
 
 const filters = [
   "All Blotter Records",
@@ -21,22 +25,6 @@ const filters = [
   "Date Incident",
 ]
 
-type Blotter = {
-  id: number,
-  type: string,
-  reportedBy: string,
-  involved: string,
-  date: Date,
-  location: string,
-  zone: string,
-  status: "On Going" | "Active" | "Transferred to Police" | "Closed",
-  // narrative: string,
-  // action: string,
-  // witnesses: string,
-  // evidence: string,
-  // resolution: string,
-  // hearingDate: Date,
-}
 
 const columns: ColumnDef<Blotter>[] = [
   {
@@ -139,7 +127,7 @@ const data: Blotter[] = [
     status: "On Going",
   },
   {
-    id: 323,
+    id: 223,
     type: "Theft",
     reportedBy: "Karl Abechuela",
     involved: "Lincoln",
@@ -149,7 +137,7 @@ const data: Blotter[] = [
     status: "On Going",
   },
   {
-    id: 323,
+    id: 123,
     type: "Theft",
     reportedBy: "Karl Abechuela",
     involved: "Lincoln",
@@ -161,22 +149,35 @@ const data: Blotter[] = [
 ]
 
 export default function Blotters() {
+  const [searchParams, setSearchParams] = useSearchParams()
+  const [searchQuery, setSearchQuery] = useState("")
+
+  const handleSortChange = (sortValue: string) => {
+    searchParams.set("sort", sortValue)
+    setSearchParams(searchParams)
+  }
+
+  const handleSearch = (searchTerm: string) => {
+    setSearchQuery(searchTerm)
+  }
+
+  const filteredData = useMemo(() => {
+    const sortedData = sort(data, searchParams.get("sort") ?? "All Blotters")
+
+    return sortedData
+  }, [setSearchParams, data, searchQuery])
   return (
     <>
       <div className="flex gap-5 w-full items-center justify-center">
-        <Searchbar placeholder="Search Blotter" classname="flex flex-5" onChange={function (searchTerm: string): void {
-          throw new Error("Function not implemented.");
-        } } />
-        <Filter filters={filters} initial="All Blotter" classname="flex-1" onChange={function (value: string): void {
-          throw new Error("Function not implemented.");
-        } } />
+        <Searchbar onChange={handleSearch} placeholder="Search Blotter" classname="flex flex-5" />
+        <Filter onChange={handleSortChange} filters={filters} initial="All Blotter" classname="flex-1" />
         <Button variant="destructive" size="lg" >
           <Trash />
           Delete Selected
         </Button>
         <AddBlotterModal />
       </div >
-      <DataTable<Blotter> data={data} columns={[...columns,
+      <DataTable<Blotter> data={filteredData} columns={[...columns,
       {
         id: "view",
         header: "",
