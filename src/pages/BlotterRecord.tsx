@@ -13,6 +13,7 @@ import { useMemo, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { Blotter } from "@/types/types";
 import sort from "@/service/blotterSort";
+import searchBlotter from "@/service/searchBlotter";
 
 const filters = [
   "All Blotter Records",
@@ -61,8 +62,8 @@ const columns: ColumnDef<Blotter>[] = [
     accessorKey: "reportedBy",
   },
   {
-    header: "involved",
-    accessorKey: "type",
+    header: "Involved",
+    accessorKey: "involved",
   },
   {
     header: "Date Incident",
@@ -119,9 +120,9 @@ const data: Blotter[] = [
   {
     id: 323,
     type: "Theft",
-    reportedBy: "John Abechuela",
-    involved: "Lincoln",
-    date: new Date("June 29, 2003"),
+    reportedBy: "Jerome Patrick Tayco",
+    involved: "Sheer Jay Francisco",
+    date: new Date("June 29, 2025"),
     location: "Brgy. Tambo",
     zone: "Zone 4",
     status: "On Going",
@@ -130,7 +131,7 @@ const data: Blotter[] = [
     id: 223,
     type: "Theft",
     reportedBy: "Karl Abechuela",
-    involved: "Lincoln",
+    involved: "Lincoln Armann Bonecile",
     date: new Date("June 29, 2003"),
     location: "Brgy. Tambo",
     zone: "Zone 4",
@@ -140,7 +141,7 @@ const data: Blotter[] = [
     id: 123,
     type: "Theft",
     reportedBy: "Karl Abechuela",
-    involved: "Lincoln",
+    involved: "Lincoln Armann Bonecile",
     date: new Date("June 29, 2003"),
     location: "Brgy. Tambo",
     zone: "Zone 4",
@@ -163,6 +164,10 @@ export default function Blotters() {
 
   const filteredData = useMemo(() => {
     const sortedData = sort(data, searchParams.get("sort") ?? "All Blotters")
+
+    if (searchQuery.trim()) {
+      return searchBlotter(searchQuery, sortedData)
+    }
 
     return sortedData
   }, [setSearchParams, data, searchQuery])
