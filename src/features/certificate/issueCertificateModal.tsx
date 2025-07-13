@@ -25,7 +25,7 @@ const column: ColumnDef<Certificate>[] = [
 
 const data: Certificate[] =
   [
-    { "price": 30, "type": "4PS Certification" },
+    { "price": 10, "type": "4PS Certification" },
     { "price": 30, "type": "Barangay Certificate" },
     { "price": 30, "type": "Barangay Clearance" },
     { "price": 30, "type": "Barangay Indigency" },
