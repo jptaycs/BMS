@@ -11,7 +11,6 @@ import { ColumnDef } from "@tanstack/react-table";
 import { format } from "date-fns";
 import { Trash } from "lucide-react";
 import searchCertificate from "@/service/searchCertificate";
-import { sort } from "@/service/certificateSort";
 
 const filters = [
   "All Certificates",
@@ -42,8 +41,8 @@ const columns: ColumnDef<Certificate>[] = [
           table.getIsAllPageRowsSelected()
             ? true
             : table.getIsSomePageRowsSelected()
-            ? "indeterminate"
-            : false
+              ? "indeterminate"
+              : false
         }
         onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
         aria-label="Select all"
@@ -128,7 +127,6 @@ export default function Certificate() {
   const [searchParams, setSearchParams] = useSearchParams();
   const [searchQuery, setSearchQuery] = useState("");
 
-  // Sorting and search logic combined
   const filteredData = useMemo(() => {
     const sortValue = searchParams.get("sort") ?? "All Certificates";
 

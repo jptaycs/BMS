@@ -13,24 +13,7 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover
 import { Calendar } from "@/components/ui/calendar";
 import { useState } from "react";
 import { toast } from "sonner";
-
-type ViewPropsBlotter = {
- id: number,
-  type: string,
-  reportedBy: string,
-  involved: string,
-  date: Date,
-  location: string,
-  zone: string,
-  status: "On Going" | "Active" |  "Transferred to Police" | "Closed",
-  // narrative: string,
-  // action: string,
-  // witnesses: string,
-  // evidence: string,
-  // resolution: string,
-  // hearingDate: Date,
-}
-
+import { Blotter } from "@/types/types";
 
 const selectStatus: string[] = [
   "On Going",
@@ -78,7 +61,7 @@ const blotterSchema = z.object({
   }),
 })
 
-export default function ViewBlotterModal(props: ViewPropsBlotter) {
+export default function ViewBlotterModal(props: Blotter) {
   const [openCalendar, setOpenCalendar] = useState(false)
   const [openModal, setOpenModal] = useState(false)
   const form = useForm<z.infer<typeof blotterSchema>>({
@@ -198,7 +181,7 @@ export default function ViewBlotterModal(props: ViewPropsBlotter) {
                     )}
                   />
                 </div>
-                
+
                 <div>
                   <FormField
                     control={form.control}
