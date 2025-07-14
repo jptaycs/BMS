@@ -32,7 +32,7 @@ export default function IncomeChart({ data }: ChartProps) {
       <CardContent className="flex  ">
         <div className="hidden xl:block" >
           {data.map((d, i) => {
-            return <div key={i} className="flex gap-1 items-normal mt-2">
+            return <div key={i} className="flex gap-1 items-normal mt-1">
               <div className="w-[1.5rem] h-[1rem] rounded-[4px]" style={{ backgroundColor: d.fill }} />
               <div className="flex flex-col min-w-0">
                 <h2 className="font-bold text-[1rem] leading-2 md:text-red">{d.source}</h2>
