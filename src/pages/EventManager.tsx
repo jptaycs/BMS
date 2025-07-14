@@ -305,7 +305,7 @@ export default function EventManager() {
         </Button>
         <AddEventModal />
       </div >
-      <DataTable<Event> data={filteredData} columns={[...columns,
+      <DataTable<Event> height="43.3rem" data={filteredData} columns={[...columns,
       {
         id: "view",
         header: "",
