@@ -175,6 +175,7 @@ export default function Households() {
         <AddHouseholdModal />
       </div>
       <DataTable<Household>
+        height="43.3rem"
         data={filteredData}
         columns={[
           ...columns,

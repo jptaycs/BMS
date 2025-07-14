@@ -138,16 +138,16 @@ export default function Expense() {
   return (
     <>
       <div className="flex flex-wrap gap-5 justify-around mb-5 mt-1">
-        <SummaryCardExpense title="Total Expenditure" value={2050} icon={<DollarSign size={50}/>} />
-        <SummaryCardExpense title="Infrastructure Expenses" value={750} icon={<Landmark size={50}/>} />
-        <SummaryCardExpense title="Honoraria" value={300} icon={<PiggyBank size={50}/>} />
-        <SummaryCardExpense title="Utilities" value={500} icon={<Wallet size={50}/>} />
-        <SummaryCardExpense title="Local Funds Used" value={200} icon={<Banknote size={50}/>} />
-        <SummaryCardExpense title="Foods" value={100} icon={<Salad size={50}/>} />
-        <SummaryCardExpense title="IRA Used" value={100} icon={<Layers size={50}/>} />
-        <SummaryCardExpense title="Others" value={100} icon={<Shirt size={50}/>} />
+        <SummaryCardExpense title="Total Expenditure" value={2050} icon={<DollarSign size={50} />} />
+        <SummaryCardExpense title="Infrastructure Expenses" value={750} icon={<Landmark size={50} />} />
+        <SummaryCardExpense title="Honoraria" value={300} icon={<PiggyBank size={50} />} />
+        <SummaryCardExpense title="Utilities" value={500} icon={<Wallet size={50} />} />
+        <SummaryCardExpense title="Local Funds Used" value={200} icon={<Banknote size={50} />} />
+        <SummaryCardExpense title="Foods" value={100} icon={<Salad size={50} />} />
+        <SummaryCardExpense title="IRA Used" value={100} icon={<Layers size={50} />} />
+        <SummaryCardExpense title="Others" value={100} icon={<Shirt size={50} />} />
       </div>
-      
+
 
       <div className="flex gap-5 w-full items-center justify-center mb-4">
         <Searchbar
@@ -169,6 +169,7 @@ export default function Expense() {
       </div>
 
       <DataTable<Expense>
+        height="43.3rem"
         data={filteredData}
         columns={[
           ...columns,
