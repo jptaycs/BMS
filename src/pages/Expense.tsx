@@ -8,12 +8,13 @@ import DeleteExpenseModal from "@/features/expense/deleteExpenseModal";
 import ViewExpenseModal from "@/features/expense/viewExpenseModal";
 import { ColumnDef } from "@tanstack/react-table";
 import { format } from "date-fns";
-import { Trash } from "lucide-react";
+import { Trash, Banknote, Coins, Gift, Landmark, Layers, PiggyBank, DollarSign, Wallet, Home, Salad, Shirt } from "lucide-react";
 import type { Expense } from "@/types/types";
 import { useSearchParams } from "react-router-dom";
 import { useMemo, useState } from "react";
 import { sort } from "@/service/expenseSort";
 import searchExpense from "@/service/searchExpense";
+import SummaryCardExpense from "@/components/ui/summarycardexpense";
 
 const filters = [
   "All Expense",
@@ -96,18 +97,18 @@ const data: Expense[] = [
     date: new Date(),
   },
   {
-    type: "Business Permit",
+    type: "Infrastructure",
     amount: 150,
     or: 123456,
-    paidFrom: "Treasurer Office",
+    paidFrom: "IRA",
     paidBy: "John Doe",
     date: new Date("July 1, 2025"),
   },
   {
-    type: "Business Permit",
+    type: "Honorarium",
     amount: 1500,
     or: 123456,
-    paidFrom: "Treasurer Office",
+    paidFrom: "Local Fund",
     paidBy: "John Doe",
     date: new Date("June 29, 2023"),
   },
@@ -136,7 +137,19 @@ export default function Expense() {
 
   return (
     <>
-      <div className="flex gap-5 w-full items-center justify-center">
+      <div className="flex flex-wrap gap-5 justify-around mb-5 mt-1">
+        <SummaryCardExpense title="Total Expenditure" value={2050} icon={<DollarSign size={50}/>} />
+        <SummaryCardExpense title="Infrastructure Expenses" value={750} icon={<Landmark size={50}/>} />
+        <SummaryCardExpense title="Honoraria" value={300} icon={<PiggyBank size={50}/>} />
+        <SummaryCardExpense title="Utilities" value={500} icon={<Wallet size={50}/>} />
+        <SummaryCardExpense title="Local Funds Used" value={200} icon={<Banknote size={50}/>} />
+        <SummaryCardExpense title="Foods" value={100} icon={<Salad size={50}/>} />
+        <SummaryCardExpense title="IRA Used" value={100} icon={<Layers size={50}/>} />
+        <SummaryCardExpense title="Others" value={100} icon={<Shirt size={50}/>} />
+      </div>
+      
+
+      <div className="flex gap-5 w-full items-center justify-center mb-4">
         <Searchbar
           placeholder="Search Expense"
           classname="flex flex-5"
@@ -154,6 +167,7 @@ export default function Expense() {
         </Button>
         <AddExpenseModal />
       </div>
+
       <DataTable<Expense>
         data={filteredData}
         columns={[

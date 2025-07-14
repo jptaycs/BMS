@@ -13,6 +13,17 @@ import { format } from "date-fns";
 import { Trash } from "lucide-react";
 import { useMemo, useState } from "react";
 import { useSearchParams } from "react-router-dom";
+import {
+  DollarSign,
+  Banknote,
+  PiggyBank,
+  Gift,
+  Landmark,
+  Coins,
+  Wallet,
+  Layers,
+} from "lucide-react"; // or custom icons
+import SummaryCardIncome from "@/components/ui/summarycardincome";
 
 const filters = [
   "All Income",
@@ -27,7 +38,13 @@ const columns: ColumnDef<Income>[] = [
     id: "select",
     header: ({ table }) => (
       <Checkbox
-        checked={table.getIsAllPageRowsSelected() ? true : table.getIsSomePageRowsSelected() ? "indeterminate" : false}
+        checked={
+          table.getIsAllPageRowsSelected()
+            ? true
+            : table.getIsSomePageRowsSelected()
+            ? "indeterminate"
+            : false
+        }
         onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
         aria-label="Select all"
         className="flex items-center justify-center"
@@ -86,6 +103,30 @@ const data: Income[] = [
     receivedBy: "John Doe",
     date: new Date("June 29, 2023"),
   },
+  {
+    type: "Business Permit",
+    amount: 1500,
+    or: 123456,
+    receivedFrom: "Treasurer Office",
+    receivedBy: "John Doe",
+    date: new Date("June 29, 2023"),
+  },
+  {
+    type: "Business Permit",
+    amount: 1500,
+    or: 123456,
+    receivedFrom: "Treasurer Office",
+    receivedBy: "John Doe",
+    date: new Date("June 29, 2023"),
+  },
+  {
+    type: "Business Permit",
+    amount: 1500,
+    or: 123456,
+    receivedFrom: "Treasurer Office",
+    receivedBy: "John Doe",
+    date: new Date("June 29, 2023"),
+  },
 ];
 
 export default function Income() {
@@ -107,9 +148,10 @@ export default function Income() {
 
     if (searchQuery.trim()) {
       const query = searchQuery.toLowerCase();
-      sorted = sorted.filter(item =>
-        item.type.toLowerCase().includes(query) ||
-        item.receivedFrom.toLowerCase().includes(query)
+      sorted = sorted.filter(
+        (item) =>
+          item.type.toLowerCase().includes(query) ||
+          item.receivedFrom.toLowerCase().includes(query)
       );
     }
 
@@ -118,7 +160,20 @@ export default function Income() {
 
   return (
     <>
-      <div className="flex gap-5 w-full items-center justify-center">
+      {/* Summary Cards */}
+      <div className="flex flex-wrap gap-5 justify-around mb-5 mt-1">
+        <SummaryCardIncome title="Total Revenue" value={2050} icon={<DollarSign size={50}/>} />
+        <SummaryCardIncome title="Local Revenue" value={750} icon={<Banknote size={50}/>} />
+        <SummaryCardIncome title="Tax Revenue" value={300} icon={<PiggyBank size={50}/>} />
+        <SummaryCardIncome title="Government Grants" value={500} icon={<Gift size={50}/>} />
+        <SummaryCardIncome title="Donations" value={200} icon={<Landmark size={50}/>} />
+        <SummaryCardIncome title="Service Revenue" value={100} icon={<Coins size={50}/>} />
+        <SummaryCardIncome title="Rental Income" value={100} icon={<Wallet size={50}/>} />
+        <SummaryCardIncome title="Government Funds (IRA)" value={100} icon={<Layers size={50}/>} />
+      </div>
+
+      {/* Search + Filter */}
+      <div className="flex gap-5 w-full items-center justify-center mb-0">
         <Searchbar
           placeholder="Search Income"
           onChange={handleSearch}
@@ -136,6 +191,8 @@ export default function Income() {
         </Button>
         <AddIncomeModal />
       </div>
+
+      {/* Data Table */}
       <DataTable<Income>
         data={filteredData}
         columns={[

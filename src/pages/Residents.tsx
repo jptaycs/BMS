@@ -14,6 +14,7 @@ import { useSearchParams } from "react-router-dom";
 import { useMemo, useState } from "react";
 import { sort } from "@/service/residentSort";
 import searchResident from "@/service/searchResident";
+import { mockResidents } from "@/mock/residents";
 
 const filters = [
   "All Residents",
@@ -106,40 +107,6 @@ const columns: ColumnDef<Resident>[] = [
   }
 ]
 
-const data: Resident[] = [
-  {
-    fullName: "Karl Abechuela",
-    civilStatus: "Single",
-    birthday: new Date("June 29, 2003"),
-    gender: "Male",
-    zone: "Zone",
-    status: "Active",
-  },
-  {
-    fullName: "Karl Abechuela",
-    civilStatus: "Single",
-    birthday: new Date("June 29, 2003"),
-    gender: "Male",
-    zone: "Zone",
-    status: "Dead",
-  },
-  {
-    fullName: "Sheer Jay Francisco",
-    civilStatus: "Single",
-    birthday: new Date("June 29, 2003"),
-    gender: "Male",
-    zone: "Zone",
-    status: "Moved Out",
-  },
-  {
-    fullName: "Jerome Tayco",
-    civilStatus: "Single",
-    birthday: new Date("June 29, 2003"),
-    gender: "Male",
-    zone: "Zone",
-    status: "Missing",
-  },
-]
 
 export default function Residents() {
   const [searchParams, setSearchParams] = useSearchParams()
@@ -155,12 +122,12 @@ export default function Residents() {
 
   const filteredData = useMemo(() => {
     if (searchQuery.trim()) {
-      const processedData = sort(data, searchParams.get("sort") ?? "All Residents")
+      const processedData = sort(mockResidents, searchParams.get("sort") ?? "All Residents")
       return searchResident(searchQuery, processedData)
     }
 
-    return sort(data, searchParams.get("sort") ?? "All Residents")
-  }, [searchParams, data, searchQuery])
+    return sort(mockResidents, searchParams.get("sort") ?? "All Residents")
+  }, [searchParams, mockResidents, searchQuery])
   return (
     <>
       <div className="flex gap-5 w-full items-center justify-center">
@@ -172,7 +139,7 @@ export default function Residents() {
         </Button>
         <AddResidentModal />
       </div >
-      <DataTable<Resident> data={filteredData} columns={[...columns,
+      <DataTable<Resident> data={filteredData} height="43.3rem" columns={[...columns,
       {
         id: "view",
         header: "",
