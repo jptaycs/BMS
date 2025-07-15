@@ -305,21 +305,23 @@ export default function EventManager() {
         </Button>
         <AddEventModal />
       </div >
-      <DataTable<Event> height="43.3rem" data={filteredData} columns={[...columns,
-      {
-        id: "view",
-        header: "",
-        cell: ({ row }) => {
-          const status = row.original.status
-          return (
-            < div className="flex gap-3 ">
-              <ViewEventModal {...row.original} />
-              {status !== "Cancelled" && status !== "Finished" && <CancelEventModal {...row.original} />}
-            </div >
-          )
+      <DataTable<Event>
+        classname="py-5"
+        height="43.3rem" data={filteredData} columns={[...columns,
+        {
+          id: "view",
+          header: "",
+          cell: ({ row }) => {
+            const status = row.original.status
+            return (
+              < div className="flex gap-3 ">
+                <ViewEventModal {...row.original} />
+                {status !== "Cancelled" && status !== "Finished" && <CancelEventModal {...row.original} />}
+              </div >
+            )
+          }
         }
-      }
-      ]} />
+        ]} />
     </>
   )
 }

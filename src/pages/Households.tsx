@@ -175,6 +175,7 @@ export default function Households() {
         <AddHouseholdModal />
       </div>
       <DataTable<Household>
+        classname="py-5"
         height="43.3rem"
         data={filteredData}
         columns={[

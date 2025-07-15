@@ -139,21 +139,25 @@ export default function Residents() {
         </Button>
         <AddResidentModal />
       </div >
-      <DataTable<Resident> data={filteredData} height="43.3rem" columns={[...columns,
-      {
-        id: "view",
-        header: "",
-        cell: ({ row }) => {
-          const status = row.original.status
-          return (
-            < div className="flex gap-3 ">
-              <ViewResidentModal {...row.original} />
-              {status !== "Active" && <DeleteResidentModal {...row.original} />}
-            </div >
-          )
+      <DataTable<Resident>
+        classname="py-5"
+        data={filteredData}
+        height="43.3rem"
+        columns={[...columns,
+        {
+          id: "view",
+          header: "",
+          cell: ({ row }) => {
+            const status = row.original.status
+            return (
+              < div className="flex gap-3 ">
+                <ViewResidentModal {...row.original} />
+                {status !== "Active" && <DeleteResidentModal {...row.original} />}
+              </div >
+            )
+          }
         }
-      }
-      ]} />
+        ]} />
     </>
   )
 }

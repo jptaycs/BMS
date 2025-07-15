@@ -194,6 +194,7 @@ export default function Income() {
 
       {/* Data Table */}
       <DataTable<Income>
+        classname="py-5"
         height="43.3rem"
         data={filteredData}
         columns={[
