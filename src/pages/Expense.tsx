@@ -169,6 +169,7 @@ export default function Expense() {
       </div>
 
       <DataTable<Expense>
+        classname="py-5"
         height="43.3rem"
         data={filteredData}
         columns={[
