@@ -2,6 +2,7 @@ import { ColumnDef, flexRender, getCoreRowModel, Row, useReactTable } from "@tan
 import { Table, TableCell, TableHead, TableRow } from "./table"
 import { TableVirtuoso } from "react-virtuoso";
 import { HTMLAttributes } from "react";
+import { cn } from "@/lib/utils";
 
 const TableRowComponent = <TData,>(rows: Row<TData>[]) =>
   function getTableRow(props: HTMLAttributes<HTMLTableRowElement>) {
@@ -27,8 +28,9 @@ type TableProps<T> = {
   columns: ColumnDef<T>[]
   data: T[]
   height: string
+  classname?: string
 }
-export default function DataTable<T>({ columns, data, height }: TableProps<T>) {
+export default function DataTable<T>({ columns, data, height, classname }: TableProps<T>) {
 
   const table = useReactTable({
     data,
@@ -37,7 +39,7 @@ export default function DataTable<T>({ columns, data, height }: TableProps<T>) {
   })
   const { rows } = table.getRowModel()
   return (
-    <div className="rounded-md my-10">
+    <div className={cn("rounded-md", classname)}>
       <TableVirtuoso
         style={{ height }}
         totalCount={rows.length}
@@ -79,50 +81,3 @@ export default function DataTable<T>({ columns, data, height }: TableProps<T>) {
   )
 }
 
-/*<div className={cn("w-full my-10 text-black", classname)}>
-  <Table>
-    <TableHeader className="sticky top-0 bg-background z-10" >
-      {table.getHeaderGroups().map((headerGroup) => (
-        <TableRow key={headerGroup.id}  >
-          {headerGroup.headers.map((header) => {
-            return (
-              <TableHead key={header.id} className="text-black font-redhat font-bold py-5">
-                {header.isPlaceholder ? null : flexRender(header.column.columnDef.header,
-                  header.getContext()
-                )}
-              </TableHead>
-            )
-          })}
-        </TableRow>
-      ))}
-    </TableHeader>
-    <TableBody>
-      {table.getRowModel().rows.length ? (
-        table.getRowModel().rows.map((row) => (
-          <TableRow
-            key={row.id}
-            data-state={row.getIsSelected() && "selected"}
-          >
-            {row.getVisibleCells().map((cell) => (
-              <TableCell key={cell.id} className="py-3">
-                {flexRender(
-                  cell.column.columnDef.cell,
-                  cell.getContext()
-                )}
-              </TableCell>
-            ))}
-          </TableRow>
-        ))
-      ) : (
-        <TableRow>
-          <TableCell
-            colSpan={columns.length}
-            className="h-24 text-center"
-          >
-            No results
-          </TableCell>
-        </TableRow>
-      )}
-    </TableBody>
-  </Table>
-</div>*/

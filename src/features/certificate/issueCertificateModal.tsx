@@ -67,15 +67,16 @@ export default function IssueCertificateModal() {
             Issue Certificate
           </Button>
         </DialogTrigger>
-        <DialogContent className="max-h-[30rem] p-0 flex flex-col gap-0 overflow-auto ">
+        <DialogContent className=" p-0 flex flex-col gap-0 overflow-auto ">
           <div className="p-6  border-b bg-background">
             <DialogHeader>
               <DialogTitle className="text-black">Select Certificate Type</DialogTitle>
               <DialogDescription>Please choose the type of certificate you’d like to generate. This helps us customize the content and layout based on your selection.</DialogDescription>
             </DialogHeader>
           </div>
-          <div className="flex-1 px-6 ">
+          <div className="flex-1 text-black px-6  ">
             <DataTable <Certificate>
+              height="25rem"
               columns={[...column,
               {
                 id: "action",
@@ -86,7 +87,6 @@ export default function IssueCertificateModal() {
               },
               ]}
               data={data}
-              classname="mt-0 mb-0"
             />
           </div>
         </DialogContent>

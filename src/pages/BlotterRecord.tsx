@@ -182,21 +182,25 @@ export default function Blotters() {
         </Button>
         <AddBlotterModal />
       </div >
-      <DataTable<Blotter> height="43.3rem" data={filteredData} columns={[...columns,
-      {
-        id: "view",
-        header: "",
-        cell: ({ row }) => {
-          const status = row.original.status
-          return (
-            < div className="flex gap-3 ">
-              <ViewBlotterModal {...row.original} />
-              {status !== "Active" && <DeleteBlotterModal {...row.original} />}
-            </div >
-          )
+      <DataTable<Blotter>
+        classname="py-5"
+        height="43.3rem"
+        data={filteredData}
+        columns={[...columns,
+        {
+          id: "view",
+          header: "",
+          cell: ({ row }) => {
+            const status = row.original.status
+            return (
+              < div className="flex gap-3 ">
+                <ViewBlotterModal {...row.original} />
+                {status !== "Active" && <DeleteBlotterModal {...row.original} />}
+              </div >
+            )
+          }
         }
-      }
-      ]} />
+        ]} />
     </>
   )
 }

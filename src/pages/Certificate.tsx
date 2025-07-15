@@ -196,6 +196,7 @@ export default function Certificate() {
         <IssueCertificateModal />
       </div>
       <DataTable<Certificate>
+        classname="py-5"
         height="43.3rem"
         columns={[
           ...columns,
