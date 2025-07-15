@@ -182,7 +182,7 @@ export default function Blotters() {
         </Button>
         <AddBlotterModal />
       </div >
-      <DataTable<Blotter> data={filteredData} columns={[...columns,
+      <DataTable<Blotter> height="43.3rem" data={filteredData} columns={[...columns,
       {
         id: "view",
         header: "",
